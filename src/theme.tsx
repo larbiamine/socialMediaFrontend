@@ -44,9 +44,7 @@ export const myTheme = createTheme({
 			main: "#FFFFFF",
 			contrastText: "#000",
 		},
-		myDanger: {
-			main: "#FBD1A2",
-		},
+
 		mySuccess: {
 			main: "#7DCFB6",
 			contrastText: "#fff",
@@ -57,6 +55,10 @@ export const myTheme = createTheme({
 		},
 		mySecondary: {
 			main: "#00B2CA",
+			contrastText: "#fff",
+		},
+		myDanger: {
+			main: "#FF715B",
 			contrastText: "#fff",
 		},
 	},

@@ -64,31 +64,64 @@ type MessageProps = {
 	message: string;
 	avatar: string;
 };
+type NotificationProps = {
+	message: string;
+};
 
 function Message({ message, avatar }: MessageProps) {
 	return (
 		<>
 			<Avatar sx={{ mr: 2 }} src={avatar} />
-			<span>{message}</span>
+			<span
+				style={{
+					display: "block",
+					width: "250px",
+					overflow: "hidden",
+					whiteSpace: "nowrap",
+					textOverflow: "ellipsis",
+				}}
+			>
+				{message}
+			</span>
 		</>
+	);
+}
+function Notification({ message }: NotificationProps) {
+	return (
+		<span
+			style={{
+				display: "block",
+				width: "250px",
+				overflow: "hidden",
+				whiteSpace: "nowrap",
+				textOverflow: "ellipsis",
+			}}
+		>
+			{message}
+		</span>
 	);
 }
 
 function Navbar() {
 	const settings = ["Profile", "Account", "Dashboard", "Logout"];
-	const notifications = ["Notification 1", "Notification 2", "Notification 3"];
+	const notifications = [
+		"Notification 1",
+		"Notification 2 Tempore ullam magni labor",
+		"Mor sit, am Notification 3",
+	];
 	const messages = [
 		{
-			message: "message 1 💥💢",
+			message: "message 1 💥💢 Tempore ullam magni labor ",
+
 			avatar:
 				"https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png",
 		},
 		{
-			message: "message 3 💚",
+			message: "message 3 💚 Lorem ipsum dolor sit, amet crillo,",
 			avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
 		},
 		{
-			message: "message 5",
+			message: "message 5 asperiores earum harum delectusrum",
 			avatar:
 				"https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png",
 		},
@@ -163,6 +196,7 @@ function Navbar() {
 								<PublicIcon
 									fontSize="large"
 									sx={{ display: { xs: "none", md: "flex" }, mt: 1, ml: 0 }}
+									color="mySecondary"
 								/>
 								<Typography
 									variant="h6"
@@ -199,13 +233,13 @@ function Navbar() {
 							</Box>
 							<Box sx={{ display: "flex", justifyContent: "flex-start" }}>
 								<IconButton color="inherit">
-									<HomeIcon fontSize="large" />
+									<HomeIcon color="mySecondary" fontSize="large" />
 								</IconButton>
 								<IconButton color="inherit" sx={{ ml: 1, mr: 1 }}>
-									<Diversity1Icon fontSize="large" />
+									<Diversity1Icon color="mySecondary" fontSize="large" />
 								</IconButton>
 								<IconButton color="inherit">
-									<GroupIcon fontSize="large" />
+									<GroupIcon color="mySecondary" fontSize="large" />
 								</IconButton>
 							</Box>
 							<Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -215,8 +249,8 @@ function Navbar() {
 										onClick={handleOpenMessages}
 										sx={{ mt: 0 }}
 									>
-										<Badge badgeContent={messages.length} color="error">
-											<ForumIcon fontSize="large" />
+										<Badge badgeContent={messages.length} color="myDanger">
+											<ForumIcon color="mySecondary" fontSize="large" />
 										</Badge>
 									</IconButton>
 								</Tooltip>
@@ -226,8 +260,8 @@ function Navbar() {
 										sx={{ ml: 1, mr: 1 }}
 										color="inherit"
 									>
-										<Badge badgeContent={notifications.length} color="error">
-											<NotificationsIcon fontSize="large" />
+										<Badge badgeContent={notifications.length} color="myDanger">
+											<NotificationsIcon color="mySecondary" fontSize="large" />
 										</Badge>
 									</IconButton>
 								</Tooltip>
@@ -295,7 +329,7 @@ function Navbar() {
 													color: "black",
 												}}
 											>
-												{notification}
+												<Notification message={notification} />
 											</Link>
 										</MenuItem>
 									))}
@@ -322,14 +356,6 @@ function Navbar() {
 											key={message.message}
 											onClick={handleCloseMessages}
 										>
-											{/* <Link
-												sx={{
-													textDecoration: "none",
-													color: "black",
-												}}
-											>
-												{message}
-											</Link> */}
 											<Message
 												message={message.message}
 												avatar={message.avatar}
