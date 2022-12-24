@@ -21,6 +21,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import GroupIcon from "@mui/icons-material/Group";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ForumIcon from "@mui/icons-material/Forum";
+import Badge from "@mui/material/Badge";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -30,7 +31,7 @@ const Search = styled("div")(({ theme }) => ({
 		backgroundColor: alpha(theme.palette.common.white, 0.25),
 	},
 	marginLeft: 0,
-	marginRight: "-100px",
+	marginRight: "-140px",
 	width: "100%",
 	[theme.breakpoints.up("sm")]: {
 		marginLeft: theme.spacing(1),
@@ -78,12 +79,12 @@ function Navbar() {
 	const notifications = ["Notification 1", "Notification 2", "Notification 3"];
 	const messages = [
 		{
-			message: "message 1",
+			message: "message 1 💥💢",
 			avatar:
 				"https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png",
 		},
 		{
-			message: "message 3",
+			message: "message 3 💚",
 			avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
 		},
 		{
@@ -92,7 +93,7 @@ function Navbar() {
 				"https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png",
 		},
 		{
-			message: "message 4",
+			message: "message 4 💤💦",
 			avatar:
 				"https://www.shareicon.net/data/512x512/2016/08/05/806962_user_512x512.png",
 		},
@@ -147,12 +148,8 @@ function Navbar() {
 		};
 	}, []);
 
-	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-		null
-	);
-
 	return (
-		<AppBar sx={{ borderRadius: "15px" }} position="static" color="primary">
+		<AppBar sx={{ width: "100%" }} position="fixed" color="myPrimary">
 			<Container maxWidth="xl">
 				<Toolbar>
 					<div style={{ width: "100%" }}>
@@ -165,7 +162,7 @@ function Navbar() {
 							<Box sx={{ display: "flex", justifyContent: "flex-start" }}>
 								<PublicIcon
 									fontSize="large"
-									sx={{ display: { xs: "none", md: "flex" }, mt: 1 }}
+									sx={{ display: { xs: "none", md: "flex" }, mt: 1, ml: 0 }}
 								/>
 								<Typography
 									variant="h6"
@@ -183,7 +180,7 @@ function Navbar() {
 										textDecoration: "none",
 									}}
 								>
-									LOGO
+									LOGO☢
 								</Typography>
 								<Search>
 									<SearchIconWrapper>
@@ -195,29 +192,46 @@ function Navbar() {
 										value={search}
 										onChange={(event) => setSearch(event.target.value)}
 									/>
-									<button style={{ display: "none" }} type="submit"></button>
+									<button style={{ display: "none" }} type="submit">
+										😀
+									</button>
 								</Search>
 							</Box>
 							<Box sx={{ display: "flex", justifyContent: "flex-start" }}>
-								<HomeIcon sx={{ mt: 1 }} fontSize="large" />
-								<Diversity1Icon sx={{ mt: 1, ml: 3 }} fontSize="large" />
-								<GroupIcon sx={{ mt: 1, ml: 3 }} fontSize="large" />
+								<IconButton color="inherit">
+									<HomeIcon fontSize="large" />
+								</IconButton>
+								<IconButton color="inherit" sx={{ ml: 1, mr: 1 }}>
+									<Diversity1Icon fontSize="large" />
+								</IconButton>
+								<IconButton color="inherit">
+									<GroupIcon fontSize="large" />
+								</IconButton>
 							</Box>
 							<Box sx={{ display: "flex", justifyContent: "flex-end" }}>
 								<Tooltip sx={{}} title="Open Messages">
-									<IconButton onClick={handleOpenMessages} sx={{ mt: 0 }}>
-										<ForumIcon sx={{}} fontSize="large" />
+									<IconButton
+										color="inherit"
+										onClick={handleOpenMessages}
+										sx={{ mt: 0 }}
+									>
+										<Badge badgeContent={messages.length} color="error">
+											<ForumIcon fontSize="large" />
+										</Badge>
 									</IconButton>
 								</Tooltip>
-								<Tooltip sx={{}} title="Open notifications">
+								<Tooltip title="Open notifications">
 									<IconButton
 										onClick={handleOpenNotifications}
-										sx={{ mt: 0, ml: 0 }}
+										sx={{ ml: 1, mr: 1 }}
+										color="inherit"
 									>
-										<NotificationsIcon sx={{}} fontSize="large" />
+										<Badge badgeContent={notifications.length} color="error">
+											<NotificationsIcon fontSize="large" />
+										</Badge>
 									</IconButton>
 								</Tooltip>
-								<Tooltip sx={{}} title="Open settings">
+								<Tooltip title="Open settings">
 									<IconButton onClick={handleOpenUserMenu} sx={{ ml: 0, p: 0 }}>
 										<Avatar src="https://www.w3schools.com/howto/img_avatar.png" />
 									</IconButton>
@@ -304,7 +318,10 @@ function Navbar() {
 									onClose={handleCloseMessages}
 								>
 									{messages.map((message) => (
-										<MenuItem key={message} onClick={handleCloseMessages}>
+										<MenuItem
+											key={message.message}
+											onClick={handleCloseMessages}
+										>
 											{/* <Link
 												sx={{
 													textDecoration: "none",
@@ -319,6 +336,16 @@ function Navbar() {
 											/>
 										</MenuItem>
 									))}
+									<MenuItem key="close" onClick={handleCloseMessages}>
+										<Link
+											sx={{
+												textDecoration: "none",
+												color: "black",
+											}}
+										>
+											<span>{"See All"}</span>
+										</Link>
+									</MenuItem>
 								</Menu>
 							</Box>
 						</Box>
