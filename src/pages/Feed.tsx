@@ -10,40 +10,52 @@ const LeftSideBar = () => {
 
 const posts = [
 	{
-		user: "user name 1",
+		user: {
+			username: "user name 1",
+			avatar:
+				"https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png",
+		},
 		date: "September 14, 2016",
 		img: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
 		message:
 			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
-		avatar:
-			"https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png",
+		reactions: 3,
 	},
 	{
-		user: "user name 4",
+		user: {
+			username: "user name 4",
+			avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
+		},
 		img: "https://a.cdn-hotels.com/gdcs/production196/d970/cd40235b-5990-4067-8c05-c7d04711a312.jpg?impolicy=fcrop&w=800&h=533&q=medium",
 
 		date: "September 24, 2016",
 		message:
 			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
-		avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
+		reactions: 1,
 	},
 	{
-		user: "user name 5",
 		date: "September 22, 2016",
 		img: "https://iamafoodblog.b-cdn.net/wp-content/uploads/2012/07/paella-9174.jpg",
 		message:
 			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
-		avatar:
-			"https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png",
+		user: {
+			username: "user name 5",
+			avatar:
+				"https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png",
+		},
+		reactions: 7,
 	},
 	{
-		user: "user name 2",
 		date: "September 21, 2016",
 		img: "https://img.buzzfeed.com/buzzfeed-static/static/2022-03/5/0/asset/6201713e5c7e/sub-buzz-1009-1646440684-8.jpg",
 		message:
 			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
-		avatar:
-			"https://www.shareicon.net/data/512x512/2016/08/05/806962_user_512x512.png",
+		user: {
+			username: "user name 2",
+			avatar:
+				"https://www.shareicon.net/data/512x512/2016/08/05/806962_user_512x512.png",
+		},
+		reactions: 4,
 	},
 ];
 
