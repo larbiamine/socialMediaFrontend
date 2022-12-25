@@ -72,6 +72,16 @@ const comments = [
 		avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
 		reactions: 3,
 	},
+	{
+		user: {
+			username: "user name 4",
+			avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
+		},
+		date: "September 24, 2016",
+		comment: "whats up negro ☢ ⬛",
+		avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
+		reactions: 47,
+	},
 ];
 
 export default function PostCard({

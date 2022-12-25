@@ -1,26 +1,7 @@
-import {
-	Avatar,
-	Badge,
-	BadgeProps,
-	Grid,
-	IconButton,
-	Paper,
-	Typography,
-} from "@mui/material";
-
+import { Avatar, Grid, IconButton, Paper } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import React from "react";
-import styled from "@emotion/styled";
-import AddCommentIcon from "@mui/icons-material/AddComment";
-const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-	"& .MuiBadge-badge": {
-		fontSize: 10,
-		height: 15,
-		width: 10,
-	},
-}));
 
 interface User {
 	username: string;
@@ -44,10 +25,11 @@ function AddComment(user: User) {
 							id="outlined-adornment-password"
 							type="text"
 							size="small"
+							fullWidth
 							endAdornment={
 								<InputAdornment position="end">
 									<IconButton onClick={handleSubmitComment} edge="end">
-										<AddCommentIcon />
+										<SendIcon />
 									</IconButton>
 								</InputAdornment>
 							}

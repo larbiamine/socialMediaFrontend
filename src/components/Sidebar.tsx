@@ -6,14 +6,13 @@ import Divider from "@mui/material/Divider";
 import Diversity1Icon from "@mui/icons-material/Diversity1";
 import HomeIcon from "@mui/icons-material/Home";
 import GroupIcon from "@mui/icons-material/Group";
+import ExploreIcon from "@mui/icons-material/Explore";
 import ForumIcon from "@mui/icons-material/Forum";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
-import Button from "@mui/material/Button";
+import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar/Avatar";
-
-import { FcHome } from "react-icons/fc";
 
 const listItems = [
 	{
@@ -21,20 +20,28 @@ const listItems = [
 		listText: "User Name",
 	},
 	{
-		listIcon: <FcHome size={30} />,
+		listIcon: <HomeIcon color="mySecondary" />,
 		listText: "Home",
 	},
 	{
-		listIcon: <GroupIcon />,
+		listIcon: <ForumIcon color="mySecondary" />,
+		listText: "Messages",
+	},
+	{
+		listIcon: <ExploreIcon color="mySecondary" />,
+		listText: "Explore",
+	},
+	{
+		listIcon: <GroupIcon color="mySecondary" />,
 		listText: "Friends",
 	},
 	{
-		listIcon: <Diversity1Icon />,
-		listText: "Portfolio",
+		listIcon: <Diversity1Icon color="mySecondary" />,
+		listText: "Groups",
 	},
 	{
-		listIcon: <HomeIcon />,
-		listText: "Contacts",
+		listIcon: <BookmarksIcon color="mySecondary" />,
+		listText: "Saved",
 	},
 ];
 

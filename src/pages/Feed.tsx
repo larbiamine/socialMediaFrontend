@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import PostCard from "../components/feed/PostCard";
 import Grid from "@mui/material/Grid/Grid";
+import Suggestions from "../components/Suggestions";
 
 const LeftSideBar = () => {
 	return <Sidebar />;
@@ -64,20 +65,20 @@ function Feed() {
 		<>
 			<Navbar />
 			<Grid container spacing={12}>
-				<Grid item xs={4}>
+				<Grid item xs={3}>
 					<Sidebar />
 				</Grid>
-				<Grid sx={{ marginTop: "80px" }} item xs={4}>
+				<Grid sx={{ marginTop: "80px" }} item xs={6}>
 					<Grid container rowSpacing={3}>
-						{posts.map((posta) => (
+						{posts.map((post) => (
 							<Grid item xs={12}>
-								<PostCard {...posta} />
+								<PostCard {...post} />
 							</Grid>
 						))}
 					</Grid>
 				</Grid>
-				<Grid item xs={4}>
-					{/* <LeftSideBar /> */}
+				<Grid item xs={3}>
+					<Suggestions />
 				</Grid>
 			</Grid>
 		</>

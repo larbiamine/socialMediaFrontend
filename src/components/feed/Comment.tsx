@@ -38,7 +38,7 @@ function Comment(comment: Comment) {
 				style={{ marginBottom: "10px", padding: "10px 10px" }}
 				elevation={3}
 			>
-				<Grid style={{}} container wrap="nowrap" spacing={2}>
+				<Grid container wrap="nowrap" spacing={2}>
 					<Grid item>
 						<Avatar src={comment.user.avatar} />
 					</Grid>
