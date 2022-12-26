@@ -1,9 +1,7 @@
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
 import PostCard from "../components/feed/PostCard";
-import Suggestions from "../components/Suggestions";
-import Sidebar from "../components/Sidebar";
+
 const myProfile = false;
 
 const profile = {
