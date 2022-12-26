@@ -1,41 +1,46 @@
 import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import Diversity1Icon from "@mui/icons-material/Diversity1";
-import HomeIcon from "@mui/icons-material/Home";
-import GroupIcon from "@mui/icons-material/Group";
-import ExploreIcon from "@mui/icons-material/Explore";
-import ForumIcon from "@mui/icons-material/Forum";
+
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
-import BookmarksIcon from "@mui/icons-material/Bookmarks";
-import ListItemButton from "@mui/material/ListItemButton";
+
 import Avatar from "@mui/material/Avatar/Avatar";
 import Typography from "@mui/material/Typography";
-import { Button, Paper, Grid, IconButton } from "@mui/material";
+import { Paper, Grid, IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircleOutline";
+
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useState } from "react";
+
 const listItems = [
 	{
 		listIcon: <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />,
-		listText: "User Name",
+		listText: "User Name1",
 	},
 	{
 		listIcon: <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />,
-		listText: "User Name",
+		listText: "User Name2",
 	},
 	{
 		listIcon: <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />,
-		listText: "User Name",
+		listText: "User Name3",
 	},
 	{
 		listIcon: <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />,
-		listText: "User Name",
+		listText: "User Name4",
 	},
 ];
 
 function Suggestions() {
+	const [checked, setChecked] = useState([false, false, false, false]);
+
+	const handleCheck = (index: number) => {
+		const oldState = checked;
+		oldState[index] = !oldState[index];
+		setChecked(oldState);
+	};
+
 	const theme = useTheme();
 	const styles = {
 		menuSliderContainer: {
@@ -72,12 +77,17 @@ function Suggestions() {
 										</Typography>
 										<Typography color={"grey"}>Nice User</Typography>
 									</Grid>
-									<Grid xs={1} justifyContent={"right"}>
+									<Grid xs={1} item justifyContent={"right"}>
 										<IconButton
 											style={{ marginRight: 0 }}
 											aria-label="add to favorites"
+											onClick={() => handleCheck(index)}
 										>
-											<AddCircleIcon color="mySecondary" />
+											{checked[index] ? (
+												<CheckCircleIcon color="mySecondary" />
+											) : (
+												<AddCircleIcon color="mySecondary" />
+											)}
 										</IconButton>
 									</Grid>
 								</ListItem>

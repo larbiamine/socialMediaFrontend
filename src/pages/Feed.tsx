@@ -5,10 +5,6 @@ import PostCard from "../components/feed/PostCard";
 import Grid from "@mui/material/Grid/Grid";
 import Suggestions from "../components/Suggestions";
 
-const LeftSideBar = () => {
-	return <Sidebar />;
-};
-
 const posts = [
 	{
 		user: {
@@ -19,7 +15,7 @@ const posts = [
 		date: "September 14, 2016",
 		img: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
 		message:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
+			"Lorem ipsum dowrqett consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
 		reactions: 3,
 	},
 	{
@@ -31,14 +27,14 @@ const posts = [
 
 		date: "September 24, 2016",
 		message:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
+			"Lorem ipsum dasdsit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
 		reactions: 1,
 	},
 	{
 		date: "September 22, 2016",
 		img: "https://iamafoodblog.b-cdn.net/wp-content/uploads/2012/07/paella-9174.jpg",
 		message:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
+			"Lorem ipsum dfg sit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
 		user: {
 			username: "user name 5",
 			avatar:
@@ -50,7 +46,7 @@ const posts = [
 		date: "September 21, 2016",
 		img: "https://img.buzzfeed.com/buzzfeed-static/static/2022-03/5/0/asset/6201713e5c7e/sub-buzz-1009-1646440684-8.jpg",
 		message:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
+			"Lorem ipsum dsdfor sit amet consectetur adipisicing elit. Cupiditate laborum reiciendis molestiae perferendis in, accusamus consequuntur, sed excepturi nisi voluptate nulla aspernatur beatae sapiente dolorem impedit pariatur vero velit repellendus 1 💥💢",
 		user: {
 			username: "user name 2",
 			avatar:
@@ -63,7 +59,6 @@ const posts = [
 function Feed() {
 	return (
 		<>
-			<Navbar />
 			<Grid container spacing={12}>
 				<Grid item xs={3}>
 					<Sidebar />
@@ -71,7 +66,7 @@ function Feed() {
 				<Grid sx={{ marginTop: "80px" }} item xs={6}>
 					<Grid container rowSpacing={3}>
 						{posts.map((post) => (
-							<Grid item xs={12}>
+							<Grid key={post.message} item xs={12}>
 								<PostCard {...post} />
 							</Grid>
 						))}

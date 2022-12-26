@@ -59,7 +59,7 @@ const comments = [
 				"https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png",
 		},
 		date: "September 14, 2016",
-		comment: "Loum dolor sitng le pelpellendus 1 💥💢",
+		comment: "Loum dolor sitng le pelpeshellendus 1 💥💢",
 		reactions: 4,
 	},
 	{
@@ -68,7 +68,7 @@ const comments = [
 			avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
 		},
 		date: "September 24, 2016",
-		comment: "Lorem ipng elit. Crem impedi 💥💢",
+		comment: "Lorem ipng argwelit. Crem impedi 💥💢",
 		avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
 		reactions: 3,
 	},
@@ -98,7 +98,7 @@ export default function PostCard({
 	};
 
 	return (
-		<Card sx={{ maxWidth: "100%" }}>
+		<Card sx={{ maxWidth: "70%" }}>
 			<CardHeader
 				avatar={
 					<Avatar
@@ -115,7 +115,7 @@ export default function PostCard({
 				title={user.username}
 				subheader={date}
 			/>
-			<CardMedia component="img" height="194" image={img} alt="Paella dish" />
+			<CardMedia component="img" height="60%" image={img} alt="Paella dish" />
 			<CardContent>
 				<Typography variant="body2" color="text.secondary">
 					{message}
@@ -143,7 +143,7 @@ export default function PostCard({
 				<CardContent>
 					<AddComment {...currentUser} />
 					{comments.map((comment) => (
-						<Comment {...comment} />
+						<Comment key={comment.comment} {...comment} />
 					))}
 				</CardContent>
 			</Collapse>
