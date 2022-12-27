@@ -1,4 +1,5 @@
-import { Box, Button } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Box } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -7,26 +8,50 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
+import { useQuery } from "react-query";
+import { loginUserFn } from "../authApi";
+
+import { loginUser, LoginResponse } from "../authTypes";
 
 function Login() {
 	const [passwordError, setPasswordError] = useState(false);
 	const [usernameError, setUsernameError] = useState(false);
+
+	const [password, setPassword] = useState<string | FormDataEntryValue | null>(
+		""
+	);
+	const [username, setUsername] = useState<string | FormDataEntryValue | null>(
+		""
+	);
+
 	const [checked, setChecked] = useState(false);
+
+	const { isLoading, error, data, refetch } = useQuery(
+		"user",
+		() => loginUserFn({ username, password }),
+		{
+			refetchOnWindowFocus: false,
+			enabled: false, // disable this query from automatically running
+		}
+	);
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const data = new FormData(e.currentTarget);
-		const username = data.get("username");
-		const password = data.get("password");
-		console.log(data);
+		const dataa = new FormData(e.currentTarget);
+		const username = dataa.get("username");
+		const password = dataa.get("password");
 
 		password === "" && setPasswordError(true);
 		username === "" && setUsernameError(true);
 
 		const validation = password != "" && username != "";
-		console.log(checked);
 
 		if (validation) {
-			console.log("good");
+			setPassword(password);
+			setUsername(username);
+			refetch();
+
+			console.log(data);
 		} else {
 			console.log("not good");
 		}
@@ -90,7 +115,7 @@ function Login() {
 						label="Stay Logged in"
 					/>
 
-					<Button
+					{/* <Button
 						fullWidth
 						sx={{ mt: 0.5, mb: 1 }}
 						variant="contained"
@@ -98,7 +123,17 @@ function Login() {
 						type="submit"
 					>
 						Login
-					</Button>
+					</Button> */}
+					<LoadingButton
+						loading={false}
+						fullWidth
+						sx={{ mt: 0.5, mb: 1 }}
+						loadingPosition="start"
+						variant="contained"
+						type="submit"
+					>
+						Login
+					</LoadingButton>
 					<Grid sx={{ mt: 1 }} container>
 						<Grid item xs>
 							<Link sx={{ m: 1 }} href="#" variant="body2">
@@ -106,7 +141,7 @@ function Login() {
 							</Link>
 						</Grid>
 						<Grid item>
-							<Link sx={{ m: 1 }} href="#" variant="body2">
+							<Link sx={{ m: 1 }} href="/register" variant="body2">
 								{"Don't have an account? Sign Up"}
 							</Link>
 						</Grid>
