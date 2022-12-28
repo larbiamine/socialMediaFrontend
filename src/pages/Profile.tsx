@@ -1,8 +1,8 @@
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import PostCard from "../components/feed/PostCard";
-
-const myProfile = false;
+import { useSelector } from "react-redux";
+import { IRootState } from "../redux/store";
 
 const profile = {
 	username: "jliam.exe",
@@ -78,6 +78,8 @@ const avatar = {
 	height: 200,
 };
 function Profile() {
+	const { currentUser } = useSelector((state: IRootState) => state);
+	const myProfile = currentUser ? true : false;
 	return (
 		<Box sx={profileBox}>
 			<Grid container spacing={2}>
@@ -111,17 +113,20 @@ function Profile() {
 					>
 						<Grid item xs={4}>
 							<Typography fontSize={16} color="initial">
-								Posts: {profile.posts}
+								Posts
+								<br /> {profile.posts}
 							</Typography>
 						</Grid>
 						<Grid item xs={4}>
 							<Typography fontSize={16} color="initial">
-								Followers: {profile.followers}
+								Followers
+								<br /> {profile.followers}
 							</Typography>
 						</Grid>
 						<Grid item xs={4}>
 							<Typography fontSize={16} color="initial">
-								Following: {profile.following}
+								Following
+								<br /> {profile.following}
 							</Typography>
 						</Grid>
 					</Grid>

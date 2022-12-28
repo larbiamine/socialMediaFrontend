@@ -22,6 +22,8 @@ import GroupIcon from "@mui/icons-material/Group";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ForumIcon from "@mui/icons-material/Forum";
 import Badge from "@mui/material/Badge";
+import { logout } from "../redux/userRedux";
+import { useDispatch } from "react-redux";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -103,7 +105,7 @@ function Notification({ message }: NotificationProps) {
 }
 
 function Navbar() {
-	const settings = ["Profile", "Account", "Dashboard", "Logout"];
+	const dispatch = useDispatch();
 	const notifications = [
 		"Notification 1",
 		"Notification 2 Tempore ullam magni labor",
@@ -288,18 +290,38 @@ function Navbar() {
 									open={Boolean(anchorElUser)}
 									onClose={handleCloseUserMenu}
 								>
-									{settings.map((setting) => (
-										<MenuItem key={setting} onClick={handleCloseUserMenu}>
-											<Link
-												sx={{
-													textDecoration: "none",
-													color: "black",
-												}}
-											>
-												{setting}
-											</Link>
-										</MenuItem>
-									))}
+									<MenuItem key={"profile"} onClick={handleCloseUserMenu}>
+										<Link
+											sx={{
+												textDecoration: "none",
+												color: "black",
+											}}
+										>
+											profile
+										</Link>
+									</MenuItem>
+									<MenuItem key={"Account"} onClick={handleCloseUserMenu}>
+										<Link
+											sx={{
+												textDecoration: "none",
+												color: "black",
+											}}
+										>
+											Account
+										</Link>
+									</MenuItem>
+
+									<MenuItem key={"Logout"} onClick={handleCloseUserMenu}>
+										<Link
+											sx={{
+												textDecoration: "none",
+												color: "black",
+											}}
+											onClick={() => dispatch(logout())}
+										>
+											Logout
+										</Link>
+									</MenuItem>
 								</Menu>
 								<Menu
 									//Notifications DropDown Menu

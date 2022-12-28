@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Box } from "@mui/material";
+import { Box, FormHelperText } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -8,32 +8,22 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { loginUserFn } from "../authApi";
-
+import { useQuery } from "@tanstack/react-query";
+import { login, loginUserFn } from "../authApi";
+import { initialState } from "../redux/userRedux";
 import { loginUser, LoginResponse } from "../authTypes";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState } from "../redux/store";
 
 function Login() {
 	const [passwordError, setPasswordError] = useState(false);
 	const [usernameError, setUsernameError] = useState(false);
 
-	const [password, setPassword] = useState<string | FormDataEntryValue | null>(
-		""
-	);
-	const [username, setUsername] = useState<string | FormDataEntryValue | null>(
-		""
-	);
+	const dispatch = useDispatch();
+
+	const { isFetching, isError } = useSelector((state: IRootState) => state);
 
 	const [checked, setChecked] = useState(false);
-
-	const { isLoading, error, data, refetch } = useQuery(
-		"user",
-		() => loginUserFn({ username, password }),
-		{
-			refetchOnWindowFocus: false,
-			enabled: false, // disable this query from automatically running
-		}
-	);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -47,11 +37,7 @@ function Login() {
 		const validation = password != "" && username != "";
 
 		if (validation) {
-			setPassword(password);
-			setUsername(username);
-			refetch();
-
-			console.log(data);
+			login(dispatch, { username: username, password: password });
 		} else {
 			console.log("not good");
 		}
@@ -125,7 +111,7 @@ function Login() {
 						Login
 					</Button> */}
 					<LoadingButton
-						loading={false}
+						loading={isFetching}
 						fullWidth
 						sx={{ mt: 0.5, mb: 1 }}
 						loadingPosition="start"
@@ -134,6 +120,12 @@ function Login() {
 					>
 						Login
 					</LoadingButton>
+					{isError && (
+						<FormHelperText style={{ color: "red" }}>
+							Wrong Credendials !
+						</FormHelperText>
+					)}
+
 					<Grid sx={{ mt: 1 }} container>
 						<Grid item xs>
 							<Link sx={{ m: 1 }} href="#" variant="body2">
