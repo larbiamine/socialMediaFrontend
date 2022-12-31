@@ -1,0 +1,66 @@
+* [33mcommit e8aa5f98ece84dcf48271b555539a0bb222b4349[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mproduction[m[33m)[m
+[31m|[m Author: larbiamine <larbiaminelj@gmail.com>
+[31m|[m Date:   Wed Dec 28 19:24:47 2022 +0100
+[31m|[m 
+[31m|[m     added login and register
+[31m|[m 
+* [33mcommit 36fc4f43d59e9a58a601d5319f17569abf05b476[m
+[31m|[m Author: larbiamine <larbiaminelj@gmail.com>
+[31m|[m Date:   Tue Dec 27 23:06:06 2022 +0100
+[31m|[m 
+[31m|[m     added register page, and redux
+[31m|[m   
+*   [33mcommit ea7236f968344776d2c95c4304bda7a7b18fde5b[m
+[32m|[m[33m\[m  Merge: 6c87528 43920ea
+[32m|[m [33m|[m Author: larbiamine <larbiaminelj@gmail.com>
+[32m|[m [33m|[m Date:   Mon Dec 26 16:26:05 2022 +0100
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     Merge branch 'main' of https://github.com/larbiamine/socialMediaFrontend
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 43920ea170814fb9dd244939d6d24f0d363ffa27[m
+[32m|[m [33m|[m Author: Amine Larbi <larbiaminelj@gmail.com>
+[32m|[m [33m|[m Date:   Sun Dec 25 16:07:49 2022 +0000
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     Create README.md
+[32m|[m [33m|[m 
+* [33m|[m [33mcommit 6c875286e19ec5b64c79ee2cb17aa5a439fc69cd[m
+[33m|[m [33m|[m Author: larbiamine <larbiaminelj@gmail.com>
+[33m|[m [33m|[m Date:   Mon Dec 26 16:25:46 2022 +0100
+[33m|[m [33m|[m 
+[33m|[m [33m|[m     added router
+[33m|[m [33m|[m 
+* [33m|[m [33mcommit 3d7a865aae80199df22f5c701fb82df2182e7903[m
+[33m|[m[33m/[m  Author: larbiamine <larbiaminelj@gmail.com>
+[33m|[m   Date:   Mon Dec 26 16:13:25 2022 +0100
+[33m|[m   
+[33m|[m       added profile page
+[33m|[m 
+* [33mcommit 1c607303714c2582c1d0a7cfa131a14496be3866[m
+[33m|[m Author: larbiamine <larbiaminelj@gmail.com>
+[33m|[m Date:   Sun Dec 25 16:43:10 2022 +0100
+[33m|[m 
+[33m|[m     added suggestions
+[33m|[m 
+* [33mcommit 664686e8723111bbbc2ecfa9837adf30d042af87[m
+[33m|[m Author: larbiamine <larbiaminelj@gmail.com>
+[33m|[m Date:   Sun Dec 25 15:27:59 2022 +0100
+[33m|[m 
+[33m|[m     added comments to postcard
+[33m|[m 
+* [33mcommit a2e568edd43808c8c8cf2fae3b5cf9dd7d0cc466[m
+[33m|[m Author: larbiamine <larbiaminelj@gmail.com>
+[33m|[m Date:   Sat Dec 24 23:30:43 2022 +0100
+[33m|[m 
+[33m|[m     added posts
+[33m|[m 
+* [33mcommit 95b6a259fe198dda377e6740c674087a6debf614[m
+[33m|[m Author: larbiamine <larbiaminelj@gmail.com>
+[33m|[m Date:   Sat Dec 24 22:27:48 2022 +0100
+[33m|[m 
+[33m|[m     added theming and sidebar
+[33m|[m 
+* [33mcommit 30a3d2243a4f6e7cc6755a04f7ae7a685a720b4b[m
+  Author: larbiamine <larbiaminelj@gmail.com>
+  Date:   Sat Dec 24 19:00:44 2022 +0100
+  
+      first commit

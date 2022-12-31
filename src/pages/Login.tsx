@@ -21,7 +21,9 @@ function Login() {
 
 	const dispatch = useDispatch();
 
-	const { isFetching, isError } = useSelector((state: IRootState) => state);
+	const { isFetching, isLoginError } = useSelector(
+		(state: IRootState) => state
+	);
 
 	const [checked, setChecked] = useState(false);
 
@@ -120,7 +122,7 @@ function Login() {
 					>
 						Login
 					</LoadingButton>
-					{isError && (
+					{isLoginError && (
 						<FormHelperText style={{ color: "red" }}>
 							Wrong Credendials !
 						</FormHelperText>
