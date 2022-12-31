@@ -57,10 +57,7 @@ function Suggestions() {
 	return (
 		<div style={{ marginTop: "60px", position: "fixed" }}>
 			<Box style={styles.menuSliderContainer} component="div">
-				<Paper
-					style={{ marginBottom: "0px", padding: "15px 10px" }}
-					elevation={3}
-				>
+				<Paper style={{ padding: "15px 10px" }} elevation={3}>
 					<Typography variant="h6" color="initial">
 						{"People You May Know"}
 					</Typography>

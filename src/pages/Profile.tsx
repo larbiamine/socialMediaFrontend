@@ -1,6 +1,6 @@
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import PostCard from "../components/feed/PostCard";
+import PostCard from "../components/post/PostCard";
 import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 
