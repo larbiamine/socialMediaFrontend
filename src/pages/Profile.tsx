@@ -5,11 +5,11 @@ import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 
 const profile = {
-	username: "jliam.exe",
-	firstname: "Amine",
-	lastname: "Larbi",
+	username: "John.doe",
+	firstname: "John",
+	lastname: "Doe",
 	avatar:
-		"https://scontent.fcfk1-1.fna.fbcdn.net/v/t39.30808-6/239368917_3061858877418525_1779566369340735942_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGDxH3M0DbReoYlr8rtexzmLUSv3yWoCAItRK_fJagIAoqSbIXqnzpZR1YthJJ-wNC7fwPugHKO6dQBJhIdmaGp&_nc_ohc=xZuZJpK_wCsAX8OEpgI&tn=EFRiGTKvuk0DjdEO&_nc_ht=scontent.fcfk1-1.fna&oh=00_AfDLuUTRqaUrlbUq4r-z2xoJyfTapbyq8EKPUT7CvhTUjw&oe=63AE6014",
+		"https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
 	posts: 82,
 	followers: 885,
 	following: 273,

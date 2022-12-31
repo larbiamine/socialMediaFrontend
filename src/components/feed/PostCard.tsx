@@ -78,7 +78,7 @@ const comments = [
 			avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
 		},
 		date: "September 24, 2016",
-		comment: "whats up negro ☢ ⬛",
+		comment: "whats up ☢ ⬛",
 		avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
 		reactions: 47,
 	},

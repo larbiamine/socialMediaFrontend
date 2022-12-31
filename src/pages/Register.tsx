@@ -15,7 +15,7 @@ function Register() {
 	const [cpasswordError, setCpasswordError] = useState(false);
 	const [usernameError, setUsernameError] = useState(false);
 	const [emailError, setEmailError] = useState(false);
-	const { isError, error, isFetching } = useSelector(
+	const { isRegisterError, registerError, isFetching } = useSelector(
 		(state: IRootState) => state
 	);
 	const [password, setPassword] = useState("");
@@ -148,9 +148,9 @@ function Register() {
 					>
 						Register
 					</LoadingButton>
-					{isError && (
+					{isRegisterError && (
 						<FormHelperText style={{ fontSize: 16, color: "red" }}>
-							{error}
+							{registerError}
 						</FormHelperText>
 					)}
 					<Grid sx={{ mt: 1 }} container>

@@ -296,6 +296,7 @@ function Navbar() {
 												textDecoration: "none",
 												color: "black",
 											}}
+											href="/profile"
 										>
 											profile
 										</Link>

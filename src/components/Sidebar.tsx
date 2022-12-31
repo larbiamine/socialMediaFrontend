@@ -13,39 +13,48 @@ import { useTheme } from "@mui/material/styles";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar/Avatar";
+import { useNavigate } from "react-router-dom";
 
 const listItems = [
 	{
 		listIcon: <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />,
 		listText: "User Name",
+		link: "/profile",
 	},
 	{
 		listIcon: <HomeIcon color="mySecondary" />,
 		listText: "Home",
+		link: "",
 	},
 	{
 		listIcon: <ForumIcon color="mySecondary" />,
 		listText: "Messages",
+		link: "",
 	},
 	{
 		listIcon: <ExploreIcon color="mySecondary" />,
 		listText: "Explore",
+		link: "",
 	},
 	{
 		listIcon: <GroupIcon color="mySecondary" />,
 		listText: "Friends",
+		link: "",
 	},
 	{
 		listIcon: <Diversity1Icon color="mySecondary" />,
 		listText: "Groups",
+		link: "",
 	},
 	{
 		listIcon: <BookmarksIcon color="mySecondary" />,
 		listText: "Saved",
+		link: "",
 	},
 ];
 
 function Sidebar() {
+	const navigate = useNavigate();
 	const theme = useTheme();
 	const styles = {
 		menuSliderContainer: {
@@ -65,7 +74,12 @@ function Sidebar() {
 				<List>
 					{listItems.map((listItem, index) => (
 						<ListItem style={styles.listItem} key={index}>
-							<ListItemButton selected={false}>
+							<ListItemButton
+								onClick={() => {
+									navigate(listItem.link);
+								}}
+								selected={false}
+							>
 								<ListItemIcon sx={styles.listItem}>
 									{listItem.listIcon}
 								</ListItemIcon>

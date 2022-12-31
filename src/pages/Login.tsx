@@ -103,15 +103,6 @@ function Login() {
 						label="Stay Logged in"
 					/>
 
-					{/* <Button
-						fullWidth
-						sx={{ mt: 0.5, mb: 1 }}
-						variant="contained"
-						color="primary"
-						type="submit"
-					>
-						Login
-					</Button> */}
 					<LoadingButton
 						loading={isFetching}
 						fullWidth
