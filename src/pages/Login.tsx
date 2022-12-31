@@ -110,6 +110,7 @@ function Login() {
 						loadingPosition="start"
 						variant="contained"
 						type="submit"
+						color="mySecondary"
 					>
 						Login
 					</LoadingButton>

@@ -2,6 +2,7 @@ import Sidebar from "../components/feed/Sidebar";
 import Grid from "@mui/material/Grid/Grid";
 import Suggestions from "../components/feed/Suggestions";
 import FeedPosts from "../components/feed/FeedPosts";
+import AddPost from "../components/post/AddPost";
 
 function Feed() {
 	return (
@@ -11,6 +12,7 @@ function Feed() {
 					<Sidebar />
 				</Grid>
 				<Grid sx={{ marginTop: "80px" }} item xs={3}>
+					<AddPost />
 					<FeedPosts />
 				</Grid>
 				<Grid item xs={1}>

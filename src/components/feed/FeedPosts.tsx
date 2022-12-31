@@ -1,4 +1,4 @@
-import { Grid } from "@mui/joy";
+import { Grid } from "@mui/material";
 
 import PostCard from "../post/PostCard";
 const posts = [
