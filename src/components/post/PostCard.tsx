@@ -98,7 +98,7 @@ export default function PostCard({
 	};
 
 	return (
-		<Card sx={{ maxWidth: "70%" }}>
+		<Card sx={{ marginLeft: "auto", marginRight: "auto", maxWidth: "70%" }}>
 			<CardHeader
 				avatar={
 					<Avatar

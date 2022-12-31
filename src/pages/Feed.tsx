@@ -6,14 +6,14 @@ import FeedPosts from "../components/feed/FeedPosts";
 function Feed() {
 	return (
 		<>
-			<Grid container columns={25} justifyContent="space-evenly" spacing={0}>
-				<Grid item xs={5}>
+			<Grid container columns={5}>
+				<Grid item xs={1}>
 					<Sidebar />
 				</Grid>
-				<Grid sx={{ marginTop: "80px" }} item xs={15}>
+				<Grid sx={{ marginTop: "80px" }} item xs={3}>
 					<FeedPosts />
 				</Grid>
-				<Grid item xs={5}>
+				<Grid item xs={1}>
 					<Suggestions />
 				</Grid>
 			</Grid>

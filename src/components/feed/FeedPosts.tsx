@@ -53,7 +53,7 @@ const posts = [
 ];
 function FeedPosts() {
 	return (
-		<Grid alignItems="center" container rowSpacing={3}>
+		<Grid container rowSpacing={3}>
 			{posts.map((post) => (
 				<Grid key={post.message} item xs={12}>
 					<PostCard {...post} />
