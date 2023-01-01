@@ -4,14 +4,12 @@ import CardHeader from "@mui/material/CardHeader";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import CardMedia from "@mui/material/CardMedia";
+
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
+
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -20,6 +18,8 @@ import FormControl from "@mui/material/FormControl";
 
 import { TextField } from "@mui/material";
 import { Button, MenuItem } from "@mui/material";
+
+import { uploadImage, getRandomId } from "../../utilities/image";
 
 interface User {
 	username: string;
@@ -31,20 +31,38 @@ const currentUser = {
 	avatar: "https://www.w3schools.com/howto/img_avatar.png",
 };
 
-const PostButton = () => {
-	return (
-		<Button style={{ margin: 10 }} color="mySecondary" variant="outlined">
-			{"Post"}
-		</Button>
-	);
-};
-
 export default function AddPost() {
 	// ["public", "friends", "private"]
 
 	const imgFileRef = useRef(null);
+	const [postBody, setPostBody] = useState("");
 	const [photos, setPhotos] = useState<File[]>([]);
-	console.log(photos);
+	const [privacy, setPrivacy] = useState("friends");
+
+	const onSubmit = async () => {
+		var photoIds: string[] = [];
+
+		if (photos.length > 0) {
+			for (const file of photos) {
+				const id = getRandomId();
+				photoIds.push(id);
+				await uploadImage(id, file);
+			}
+		}
+	};
+
+	const PostButton = () => {
+		return (
+			<Button
+				onClick={onSubmit}
+				style={{ margin: 10 }}
+				color="mySecondary"
+				variant="outlined"
+			>
+				{"Post"}
+			</Button>
+		);
+	};
 
 	const EndEndorcement = () => {
 		return (
@@ -62,9 +80,7 @@ export default function AddPost() {
 						onChange={(e: FormEvent<HTMLInputElement>) => {
 							const filesList = e.target.files;
 							var files: File[] = [];
-							Array.from(filesList).forEach((f) =>
-								files.push(URL.createObjectURL(f))
-							);
+							Array.from(filesList).forEach((f) => files.push(f));
 							setPhotos((old) => files.concat(old));
 						}}
 					/>
@@ -73,14 +89,20 @@ export default function AddPost() {
 			</>
 		);
 	};
-	const [privacy, setPrivacy] = useState("friends");
 
 	const ListOfImages = () => {
 		return (
-			<ImageList variant="masonry" cols={3} gap={8}>
+			<ImageList
+				style={{
+					margin: 10,
+				}}
+				variant="masonry"
+				cols={3}
+				gap={8}
+			>
 				{photos.map((item) => (
-					<ImageListItem key={item}>
-						<img src={item} />
+					<ImageListItem key={URL.createObjectURL(item)}>
+						<img src={URL.createObjectURL(item)} />
 					</ImageListItem>
 				))}
 			</ImageList>
@@ -157,17 +179,13 @@ export default function AddPost() {
 					id="post-body"
 					placeholder="What's on your mind"
 					maxRows={6}
+					onChange={(e) => {
+						setPostBody(e.target.value);
+					}}
 					InputProps={{ endAdornment: <EndEndorcement /> }}
 				/>
 			</CardContent>
-			{/* <CardMedia
-				component="img"
-				height="60%"
-				image={
-					"https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574"
-				}
-				alt="Paella dish"
-			/> */}
+
 			<ListOfImages />
 		</Card>
 	);
