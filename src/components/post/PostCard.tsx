@@ -1,6 +1,8 @@
 import * as React from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
-
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 import Comment from "./Comment";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -19,17 +21,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Badge } from "@mui/material";
 
-interface User {
-	username: string;
-	avatar: string;
-}
-
 interface Post {
-	user: User;
-	message: string;
-	date: string;
-	img: string;
-	reactions: number;
+	userId: string;
+	body: string;
+	createdAt: string;
+	photos: Array<string>;
+	comments: Array<string>;
+	likes: Array<string>;
 }
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -85,12 +83,43 @@ const comments = [
 ];
 
 export default function PostCard({
-	img,
-	user,
-	message,
-	date,
-	reactions,
+	photos,
+	userId,
+	body,
+	createdAt,
+	likes,
 }: Post) {
+	const ListOfImages = () => {
+		var listimgs: any[] = [];
+		const asyncfetch = async () => {
+			for (const key in photos) {
+				if (Object.prototype.hasOwnProperty.call(photos, key)) {
+					const element = photos[key];
+
+					listimgs.push(
+						<ImageListItem key={element}>
+							<img src={element} />
+						</ImageListItem>
+					);
+				}
+			}
+		};
+		asyncfetch();
+
+		return (
+			<ImageList
+				style={{
+					margin: 10,
+				}}
+				variant="masonry"
+				cols={3}
+				gap={8}
+			>
+				{listimgs}
+			</ImageList>
+		);
+	};
+
 	const [expanded, setExpanded] = React.useState(false);
 
 	const handleExpandClick = () => {
@@ -101,29 +130,27 @@ export default function PostCard({
 		<Card sx={{ marginLeft: "auto", marginRight: "auto", maxWidth: "70%" }}>
 			<CardHeader
 				avatar={
-					<Avatar
-						src={user.avatar}
-						sx={{ bgcolor: red[500] }}
-						aria-label="recipe"
-					/>
+					<Avatar src={userId} sx={{ bgcolor: red[500] }} aria-label="recipe" />
 				}
 				action={
 					<IconButton aria-label="settings">
 						<MoreVertIcon />
 					</IconButton>
 				}
-				title={user.username}
-				subheader={date}
+				title={userId}
+				subheader={createdAt}
 			/>
-			<CardMedia component="img" height="60%" image={img} alt="Paella dish" />
+
+			<ListOfImages />
+
 			<CardContent>
 				<Typography variant="body2" color="text.secondary">
-					{message}
+					{body}
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
 				<IconButton aria-label="add to favorites">
-					<Badge color="mySecondary" badgeContent={reactions}>
+					<Badge color="mySecondary" badgeContent={2}>
 						<FavoriteIcon />
 					</Badge>
 				</IconButton>
