@@ -26,12 +26,19 @@ export const getRandomId = () => {
 	return cryptoRandomString({ length: 10, type: "numeric" });
 };
 
-export const uploadImage = async (imgId: string, inputImage: File) => {
-	const imgRef = ref(storage, `postImages/${imgId}`);
-	const compressedImage = await compressFile(inputImage);
+export const uploadImage = async (inputImages: File[]) => {
+	var photoIds: string[] = [];
 
-	// const compressedImage = inputImage;
-	uploadBytes(imgRef, compressedImage).then((snapshot) => {
-		console.log("Uploaded a blob or file!");
-	});
+	for (const file of inputImages) {
+		const id = getRandomId();
+		photoIds.push(id);
+		// await uploadImage(id, file);
+		const imgRef = ref(storage, `postImages/${id}`);
+		const compressedImage = await compressFile(file);
+		// const compressedImage = inputImage;
+		await uploadBytes(imgRef, compressedImage);
+	}
+	console.log(`uploaded ${inputImages.length} images`);
+
+	return photoIds;
 };

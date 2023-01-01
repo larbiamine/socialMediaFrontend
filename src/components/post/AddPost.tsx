@@ -20,6 +20,8 @@ import { TextField } from "@mui/material";
 import { Button, MenuItem } from "@mui/material";
 
 import { uploadImage, getRandomId } from "../../utilities/image";
+import { userRequest } from "../../utilities/requestMethodes";
+import { LoadingButton } from "@mui/lab";
 
 interface User {
 	username: string;
@@ -38,29 +40,45 @@ export default function AddPost() {
 	const [postBody, setPostBody] = useState("");
 	const [photos, setPhotos] = useState<File[]>([]);
 	const [privacy, setPrivacy] = useState("friends");
+	const [isPosting, setIsPosting] = useState(false);
 
 	const onSubmit = async () => {
 		var photoIds: string[] = [];
-
+		setIsPosting(true);
+		console.log("here 1");
 		if (photos.length > 0) {
-			for (const file of photos) {
-				const id = getRandomId();
-				photoIds.push(id);
-				await uploadImage(id, file);
-			}
+			photoIds = await uploadImage(photos);
+		}
+		console.log("here 2");
+
+		const post = {
+			body: postBody,
+			photos: photoIds,
+			privacy: privacy,
+		};
+		try {
+			userRequest.post("post/create", post).then((res) => {
+				console.log(res.data);
+				setIsPosting(false);
+				setPhotos([]);
+				setPostBody("");
+			});
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
 	const PostButton = () => {
 		return (
-			<Button
-				onClick={onSubmit}
+			<LoadingButton
+				loading={isPosting}
 				style={{ margin: 10 }}
+				variant="contained"
 				color="mySecondary"
-				variant="outlined"
+				onClick={onSubmit}
 			>
-				{"Post"}
-			</Button>
+				Post
+			</LoadingButton>
 		);
 	};
 
@@ -178,6 +196,7 @@ export default function AddPost() {
 					fullWidth
 					id="post-body"
 					placeholder="What's on your mind"
+					value={postBody}
 					maxRows={6}
 					onChange={(e) => {
 						setPostBody(e.target.value);
