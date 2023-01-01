@@ -17,11 +17,15 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 
 import { TextField } from "@mui/material";
-import { Button, MenuItem } from "@mui/material";
+import { MenuItem } from "@mui/material";
 
-import { uploadImage, getRandomId } from "../../utilities/image";
-import { userRequest } from "../../utilities/requestMethodes";
+import { uploadImage } from "../../utilities/image";
+
 import { LoadingButton } from "@mui/lab";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { createPost } from "../../utilities/fetchApi";
 
 interface User {
 	username: string;
@@ -34,7 +38,19 @@ const currentUser = {
 };
 
 export default function AddPost() {
-	// ["public", "friends", "private"]
+	const queryClient = useQueryClient();
+
+	const mutation = useMutation({
+		mutationFn: createPost,
+		mutationKey: "posts",
+		onSuccess: (newPost) => {
+			queryClient.setQueryData(["posts"], (oldData) => [
+				...(oldData ?? []),
+				newPost,
+			]);
+			queryClient.invalidateQueries(["posts"]);
+		},
+	});
 
 	const imgFileRef = useRef(null);
 	const [postBody, setPostBody] = useState("");
@@ -57,12 +73,10 @@ export default function AddPost() {
 			privacy: privacy,
 		};
 		try {
-			userRequest.post("post/create", post).then((res) => {
-				console.log(res.data);
-				setIsPosting(false);
-				setPhotos([]);
-				setPostBody("");
-			});
+			mutation.mutate(post);
+			setIsPosting(false);
+			setPhotos([]);
+			setPostBody("");
 		} catch (error) {
 			console.log(error);
 		}
