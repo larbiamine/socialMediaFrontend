@@ -4,6 +4,8 @@ import CardHeader from "@mui/material/CardHeader";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import CardContent from "@mui/material/CardContent";
+import { IRootState } from "./redux/store";
+import { useSelector } from "react-redux";
 
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
@@ -32,13 +34,14 @@ interface User {
 	avatar: string;
 }
 
-const currentUser = {
+const currentUsera = {
 	username: "user name 1",
 	avatar: "https://www.w3schools.com/howto/img_avatar.png",
 };
 
 export default function AddPost() {
 	const queryClient = useQueryClient();
+	const { currentUser } = useSelector((state: IRootState) => state);
 
 	const mutation = useMutation({
 		mutationFn: createPost,
@@ -108,6 +111,7 @@ export default function AddPost() {
 						accept="image/*"
 						ref={imgFileRef}
 						hidden
+						disabled={isPosting}
 						multiple
 						onChange={(e: FormEvent<HTMLInputElement>) => {
 							const filesList = e.target.files;
@@ -208,6 +212,7 @@ export default function AddPost() {
 				<TextField
 					multiline
 					fullWidth
+					disabled={isPosting}
 					id="post-body"
 					placeholder="What's on your mind"
 					value={postBody}

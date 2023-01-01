@@ -1,5 +1,7 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { IRootState } from "./redux/store";
+import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -20,6 +22,13 @@ import AddComment from "./AddComment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Badge } from "@mui/material";
+import { publicRequest } from "../../utilities/requestMethodes";
+
+interface User {
+	userId: string;
+	username: string;
+	avatar: string;
+}
 
 interface Post {
 	userId: string;
@@ -33,7 +42,7 @@ interface Post {
 interface ExpandMoreProps extends IconButtonProps {
 	expand: boolean;
 }
-const currentUser = {
+const currentUsera = {
 	username: "user name 1",
 	avatar: "https://www.w3schools.com/howto/img_avatar.png",
 };
@@ -121,6 +130,33 @@ export default function PostCard({
 	};
 
 	const [expanded, setExpanded] = React.useState(false);
+	const { currentUser } = useSelector((state: IRootState) => state);
+	const [user, setUser] = useState<User>();
+
+	useEffect(() => {
+		const getUser = async () => {
+			try {
+				const res = await publicRequest.get(`user/find/${userId}`);
+				const { avatar, username } = res.data;
+				setUser({
+					userId: userId,
+					username: username,
+					avatar: avatar,
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		if (userId === currentUser._id) {
+			setUser({
+				userId: currentUser._id,
+				username: currentUser.username,
+				avatar: currentUser.avatar,
+			});
+		} else {
+			getUser();
+		}
+	}, []);
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -130,14 +166,18 @@ export default function PostCard({
 		<Card sx={{ marginLeft: "auto", marginRight: "auto", maxWidth: "70%" }}>
 			<CardHeader
 				avatar={
-					<Avatar src={userId} sx={{ bgcolor: red[500] }} aria-label="recipe" />
+					<Avatar
+						src={user?.avatar}
+						sx={{ bgcolor: red[500] }}
+						aria-label="recipe"
+					/>
 				}
 				action={
 					<IconButton aria-label="settings">
 						<MoreVertIcon />
 					</IconButton>
 				}
-				title={userId}
+				title={user?.username}
 				subheader={createdAt}
 			/>
 

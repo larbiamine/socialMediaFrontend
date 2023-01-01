@@ -24,6 +24,8 @@ import ForumIcon from "@mui/icons-material/Forum";
 import Badge from "@mui/material/Badge";
 import { logout } from "../redux/userRedux";
 import { useDispatch } from "react-redux";
+import { IRootState } from "./redux/store";
+import { useSelector } from "react-redux";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -105,6 +107,8 @@ function Notification({ message }: NotificationProps) {
 }
 
 function Navbar() {
+	const { currentUser } = useSelector((state: IRootState) => state);
+
 	const dispatch = useDispatch();
 	const notifications = [
 		"Notification 1",
@@ -269,7 +273,7 @@ function Navbar() {
 								</Tooltip>
 								<Tooltip title="Open settings">
 									<IconButton onClick={handleOpenUserMenu} sx={{ ml: 0, p: 0 }}>
-										<Avatar src="https://www.w3schools.com/howto/img_avatar.png" />
+										<Avatar src={currentUser.avatar} />
 									</IconButton>
 								</Tooltip>
 
