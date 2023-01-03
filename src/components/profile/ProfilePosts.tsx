@@ -2,8 +2,9 @@ import { Grid } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import PostCard from "../post/PostCard";
 import { getPosts } from "../../utilities/fetchApi";
+import { useState } from "react";
 
-function FeedPosts(id: string) {
+function ProfilePosts(id: string) {
 	const request = {
 		userId: id,
 		userFollowing: [],
@@ -11,8 +12,6 @@ function FeedPosts(id: string) {
 	const config = {
 		params: request,
 	};
-
-	console.log(config);
 
 	const { data, status } = useQuery(["posts"], () => getPosts(config));
 	status === "success" && console.log(data);
@@ -30,4 +29,4 @@ function FeedPosts(id: string) {
 	);
 }
 
-export default FeedPosts;
+export default ProfilePosts;

@@ -11,18 +11,20 @@ export async function createPost(variables: Post) {
 	return res.data;
 }
 
-interface Query {
+interface Data {
 	userId: string;
-}
-
-interface Request {
-	query: Query;
 	userFollowing: Array<string>;
 }
 
-export async function getPosts(request: Request) {
-	if (typeof request !== "undefined") {
-		const res = await userRequest.get("post/getposts/", request);
+interface Config {
+	params: Data;
+}
+
+export async function getPosts(data: Config) {
+	console.log(data);
+
+	if (typeof data !== "undefined") {
+		const res = await userRequest.get("post/getposts/", data);
 		return res.data;
 	}
 

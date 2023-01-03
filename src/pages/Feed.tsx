@@ -3,8 +3,12 @@ import Grid from "@mui/material/Grid/Grid";
 import Suggestions from "../components/feed/Suggestions";
 import FeedPosts from "../components/feed/FeedPosts";
 import AddPost from "../components/post/AddPost";
+import { useSelector } from "react-redux";
+import { IRootState } from "../redux/store";
 
 function Feed() {
+	const { currentUser } = useSelector((state: IRootState) => state);
+
 	return (
 		<>
 			<Grid container columns={5}>
@@ -13,7 +17,7 @@ function Feed() {
 				</Grid>
 				<Grid sx={{ marginTop: "80px" }} item xs={3}>
 					<AddPost />
-					<FeedPosts />
+					<FeedPosts id={currentUser._id} />
 				</Grid>
 				<Grid item xs={1}>
 					<Suggestions />

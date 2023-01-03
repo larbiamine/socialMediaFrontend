@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import PostCard from "../components/post/PostCard";
 import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
+import ProfilePosts from "../components/profile/ProfilePosts";
 
 const profile = {
 	username: "John.doe",
@@ -79,19 +80,19 @@ const avatar = {
 };
 function Profile() {
 	const { currentUser } = useSelector((state: IRootState) => state);
-	const myProfile = currentUser ? true : false;
+
 	return (
 		<Box sx={profileBox}>
 			<Grid container spacing={2}>
 				<Grid item xs={4}>
-					<Avatar sx={avatar} src={profile.avatar} />
+					<Avatar sx={avatar} src={currentUser.avatar} />
 				</Grid>
 				<Grid sx={{ marginTop: 5 }} item xs={8}>
 					<Grid style={{ display: "flex", gap: "1rem" }}>
 						<Typography fontWeight={"bold"} variant="h5" color="initial">
-							{profile.username}
+							{currentUser.username}
 						</Typography>
-						{myProfile ? (
+						{currentUser ? (
 							<>
 								<Button size="small" color="mySecondary" variant="contained">
 									{"Edit Profile "}
@@ -114,43 +115,32 @@ function Profile() {
 						<Grid item xs={4}>
 							<Typography fontSize={16} color="initial">
 								Posts
-								<br /> {profile.posts}
+								<br /> {currentUser.posts.length}
 							</Typography>
 						</Grid>
 						<Grid item xs={4}>
 							<Typography fontSize={16} color="initial">
 								Followers
-								<br /> {profile.followers}
+								<br /> {currentUser.followers.length}
 							</Typography>
 						</Grid>
 						<Grid item xs={4}>
 							<Typography fontSize={16} color="initial">
 								Following
-								<br /> {profile.following}
+								<br /> {currentUser.following.length}
 							</Typography>
 						</Grid>
 					</Grid>
 					<Typography fontSize={18} fontWeight={"bold"} color="initial">
-						{profile.firstname + " " + profile.lastname}
+						{currentUser.firstname + " " + currentUser.lastname}
 					</Typography>
 					<Typography fontSize={16} color="initial">
-						{profile.bio}
+						{currentUser.bio}
 					</Typography>
 				</Grid>
 			</Grid>
 			<Grid sx={{ marginTop: 5 }} container rowSpacing={3}>
-				{posts.map((post) => (
-					<Grid key={post.message} item xs={12}>
-						<Box
-							display="flex"
-							justifyContent="center"
-							alignItems="center"
-							minHeight="100vh"
-						>
-							<PostCard {...post} />
-						</Box>
-					</Grid>
-				))}
+				<ProfilePosts id={currentUser?._id.toString()} />
 			</Grid>
 		</Box>
 	);
