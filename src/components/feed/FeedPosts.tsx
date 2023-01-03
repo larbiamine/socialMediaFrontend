@@ -12,16 +12,13 @@ function FeedPosts(id: string) {
 		params: request,
 	};
 
-	console.log(config);
-
 	const { data, status } = useQuery(["posts"], () => getPosts(config));
-	status === "success" && console.log(data);
 
 	return (
 		status === "success" && (
 			<Grid container rowSpacing={3}>
 				{data.map((post) => (
-					<Grid key={post.message} item xs={12}>
+					<Grid key={post._id} item xs={12}>
 						<PostCard {...post} />
 					</Grid>
 				))}

@@ -47,6 +47,10 @@ const userSlice = createSlice({
 			state.isRegisterError = true;
 			state.isFetching = false;
 		},
+
+		addPost: (state, action) => {
+			state.currentUser?.posts.push(action.payload);
+		},
 	},
 });
 
@@ -58,6 +62,7 @@ export const {
 	logout,
 	loginSuccess,
 	loginStart,
+	addPost,
 } = userSlice.actions;
 
 export default userSlice.reducer;
