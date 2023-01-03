@@ -2,7 +2,6 @@ import { Grid } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import PostCard from "../post/PostCard";
 import { getPosts } from "../../utilities/fetchApi";
-import { useState } from "react";
 
 function ProfilePosts(id: string) {
 	const request = {
@@ -14,16 +13,17 @@ function ProfilePosts(id: string) {
 	};
 
 	const { data, status } = useQuery(["posts"], () => getPosts(config));
-	status === "success" && console.log(data);
 
 	return (
 		status === "success" && (
-			<Grid container rowSpacing={3}>
-				{data.map((post) => (
-					<Grid key={post.message} item xs={12}>
-						<PostCard {...post} />
-					</Grid>
-				))}
+			<Grid sx={{ marginTop: 5 }} container rowSpacing={3}>
+				<Grid container rowSpacing={3}>
+					{data.map((post) => (
+						<Grid key={post._id} item xs={12}>
+							<PostCard {...post} />
+						</Grid>
+					))}
+				</Grid>
 			</Grid>
 		)
 	);

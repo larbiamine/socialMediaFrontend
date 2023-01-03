@@ -21,8 +21,6 @@ interface Config {
 }
 
 export async function getPosts(data: Config) {
-	console.log(data);
-
 	if (typeof data !== "undefined") {
 		const res = await userRequest.get("post/getposts/", data);
 		return res.data;

@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 
 function App() {
 	const { currentUser } = useSelector((state: IRootState) => state);
+
 	const loggedIn = currentUser ? true : false;
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -40,7 +41,9 @@ function App() {
 				/>
 				<Route
 					path="/profile"
-					element={loggedIn ? <Profile /> : <Navigate to="/login" />}
+					element={
+						loggedIn ? <Profile {...currentUser} /> : <Navigate to="/login" />
+					}
 				/>
 			</>
 		)
