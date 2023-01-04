@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 var TOKEN = "";
 
-if (localStorage.getItem("persist:root")) {
+if (JSON.parse(JSON.parse(localStorage.getItem("persist:root")).currentUser)) {
 	TOKEN = JSON.parse(
 		JSON.parse(localStorage.getItem("persist:root")).currentUser
 	).accessToken;

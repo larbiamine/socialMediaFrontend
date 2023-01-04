@@ -26,5 +26,4 @@ function FeedPosts(id: string) {
 		)
 	);
 }
-
 export default FeedPosts;
