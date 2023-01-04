@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { login, loginUserFn } from "../authApi";
-import { initialState } from "../redux/userRedux";
+import { initState, initialState } from "../redux/userRedux";
 import { loginUser, LoginResponse } from "../authTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
@@ -20,6 +20,8 @@ function Login() {
 	const [usernameError, setUsernameError] = useState(false);
 
 	const dispatch = useDispatch();
+
+	dispatch(initState());
 
 	const { isFetching, isLoginError } = useSelector(
 		(state: IRootState) => state

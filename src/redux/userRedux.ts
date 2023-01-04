@@ -18,6 +18,12 @@ const userSlice = createSlice({
 		registerError: "",
 	},
 	reducers: {
+		initState: (state) => {
+			state.isFetching = false;
+			state.registerError = "";
+			state.isLoginError = false;
+			state.isRegisterError = false;
+		},
 		loginStart: (state) => {
 			state.isFetching = true;
 		},
@@ -62,6 +68,7 @@ export const {
 	logout,
 	loginSuccess,
 	loginStart,
+	initState,
 	addPost,
 } = userSlice.actions;
 
