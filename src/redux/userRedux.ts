@@ -35,6 +35,11 @@ const userSlice = createSlice({
 		logout: (state) => {
 			state.currentUser = null;
 			state.isLoginError = false;
+
+			state.isFetching = false;
+			state.registerError = "";
+			state.isLoginError = false;
+			state.isRegisterError = false;
 		},
 		loginFailed: (state) => {
 			state.isLoginError = true;

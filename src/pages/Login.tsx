@@ -8,10 +8,9 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { login, loginUserFn } from "../authApi";
-import { initState, initialState } from "../redux/userRedux";
-import { loginUser, LoginResponse } from "../authTypes";
+
+import { login } from "../authApi";
+
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 
@@ -20,8 +19,6 @@ function Login() {
 	const [usernameError, setUsernameError] = useState(false);
 
 	const dispatch = useDispatch();
-
-	dispatch(initState());
 
 	const { isFetching, isLoginError } = useSelector(
 		(state: IRootState) => state

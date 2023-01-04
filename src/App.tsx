@@ -27,7 +27,7 @@ import { initState } from "./redux/userRedux";
 function App() {
 	const { currentUser } = useSelector((state: IRootState) => state);
 	const dispatch = useDispatch();
-	dispatch(initState());
+
 	const loggedIn = currentUser ? true : false;
 	const router = createBrowserRouter(
 		createRoutesFromElements(

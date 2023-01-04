@@ -3,6 +3,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 import { loginUser, LoginResponse, registerUser } from "./authTypes";
 import axios from "axios";
 import {
+	initState,
 	loginFailed,
 	loginStart,
 	loginSuccess,
