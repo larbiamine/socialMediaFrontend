@@ -21,11 +21,13 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { IRootState } from "./redux/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { initState } from "./redux/userRedux";
 
 function App() {
 	const { currentUser } = useSelector((state: IRootState) => state);
-
+	const dispatch = useDispatch();
+	dispatch(initState());
 	const loggedIn = currentUser ? true : false;
 	const router = createBrowserRouter(
 		createRoutesFromElements(
