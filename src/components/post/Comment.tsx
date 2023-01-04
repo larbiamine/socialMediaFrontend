@@ -9,8 +9,11 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { FC } from "react";
+
 import styled from "@emotion/styled";
+
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
+import { timeAgo } from "../../utilities/time";
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 	"& .MuiBadge-badge": {
 		fontSize: 10,
@@ -32,6 +35,8 @@ interface Comment {
 	postId: string;
 }
 const Comment: FC<Comment> = (props): ReactJSXElement => {
+	const agoDate = timeAgo.format(new Date(props.createdAt));
+
 	return (
 		<div>
 			<Paper
@@ -67,7 +72,7 @@ const Comment: FC<Comment> = (props): ReactJSXElement => {
 							</Grid>
 							<Grid item xs={10}>
 								<Typography style={{ textAlign: "right", color: "gray" }}>
-									{props.createdAt}
+									{agoDate}
 								</Typography>
 							</Grid>
 						</Grid>

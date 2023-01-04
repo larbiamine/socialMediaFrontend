@@ -25,6 +25,7 @@ import { Badge } from "@mui/material";
 import { publicRequest } from "../../utilities/requestMethodes";
 import { useQuery } from "@tanstack/react-query";
 import { getComments } from "../../utilities/fetchApi";
+import { timeAgo } from "../../utilities/time";
 
 interface User {
 	userId: string;
@@ -146,6 +147,7 @@ export default function PostCard({
 		},
 		postId: _id,
 	};
+	const agoDate = timeAgo.format(new Date(createdAt));
 
 	return (
 		<Card sx={{ marginLeft: "auto", marginRight: "auto", maxWidth: "70%" }}>
@@ -163,7 +165,7 @@ export default function PostCard({
 					</IconButton>
 				}
 				title={user?.username}
-				subheader={createdAt}
+				subheader={agoDate}
 			/>
 
 			<ListOfImages />
