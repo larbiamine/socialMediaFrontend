@@ -20,16 +20,24 @@ export async function createComment(variables: Comment) {
 	return res.data;
 }
 
-interface Data {
+interface postData {
 	userId: string;
 	userFollowing: Array<string>;
 }
 
-interface Config {
-	params: Data;
+interface postConfig {
+	params: postData;
 }
 
-export async function getPosts(data: Config) {
+interface commentData {
+	postId: String;
+}
+
+interface commentConfig {
+	params: commentData;
+}
+
+export async function getPosts(data: postConfig) {
 	if (typeof data !== "undefined") {
 		const res = await userRequest.get("post/getposts/", data);
 		return res.data;
@@ -37,5 +45,10 @@ export async function getPosts(data: Config) {
 
 	const res = await userRequest.get("post/getposts/");
 
+	return res.data;
+}
+
+export async function getComments(data: commentConfig) {
+	const res = await userRequest.get("comment/getcomments/", data);
 	return res.data;
 }

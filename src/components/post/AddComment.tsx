@@ -6,6 +6,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createComment } from "../../utilities/fetchApi";
+
 interface User {
 	username: string;
 	avatar: string;
@@ -15,15 +16,11 @@ interface Comment {
 	postId: string;
 }
 
-// function AddComment(user: User) {
 const AddComment: FC<Comment> = (props): ReactJSXElement => {
 	const [commentBody, setCommentBody] = useState("");
 	const [isPosting, setIsPosting] = useState(false);
 	const queryClient = useQueryClient();
-
-	const mutationKey = `
-	 postcomments ${props.postId}
-	`;
+	const mutationKey = `postcomments ${props.postId}`;
 
 	const mutation = useMutation({
 		mutationFn: createComment,
@@ -46,7 +43,7 @@ const AddComment: FC<Comment> = (props): ReactJSXElement => {
 				body: commentBody,
 				postId: props.postId,
 			};
-			console.log(comment);
+
 			try {
 				mutation.mutate(comment);
 				setCommentBody("");
@@ -74,6 +71,7 @@ const AddComment: FC<Comment> = (props): ReactJSXElement => {
 							type="text"
 							size="small"
 							fullWidth
+							value={commentBody}
 							onChange={(e) => {
 								setCommentBody(e.target.value);
 							}}

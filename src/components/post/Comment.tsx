@@ -8,9 +8,9 @@ import {
 	Typography,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import React from "react";
+import { FC } from "react";
 import styled from "@emotion/styled";
-
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 	"& .MuiBadge-badge": {
 		fontSize: 10,
@@ -26,12 +26,12 @@ interface User {
 
 interface Comment {
 	user: User;
-	comment: string;
-	date: string;
-	reactions: number;
+	body: string;
+	createdAt: string;
+	likes: Array<string>;
+	postId: string;
 }
-
-function Comment(comment: Comment) {
+const Comment: FC<Comment> = (props): ReactJSXElement => {
 	return (
 		<div>
 			<Paper
@@ -40,13 +40,13 @@ function Comment(comment: Comment) {
 			>
 				<Grid container wrap="nowrap" spacing={2}>
 					<Grid item>
-						<Avatar src={comment.user.avatar} />
+						<Avatar src={props.user?.avatar} />
 					</Grid>
 					<Grid justifyContent={"left"} item xs zeroMinWidth>
 						<Typography style={{ textAlign: "left" }}>
-							{comment.user.username}
+							{props.user?.username}
 						</Typography>
-						<Typography>{comment.comment}</Typography>
+						<Typography>{props.body}</Typography>
 						<Grid container spacing={2}>
 							<Grid item xs={2}>
 								<IconButton
@@ -58,7 +58,7 @@ function Comment(comment: Comment) {
 											vertical: "bottom",
 											horizontal: "right",
 										}}
-										badgeContent={comment.reactions}
+										badgeContent={props.likes.length}
 										color="mySecondary"
 									>
 										<FavoriteIcon fontSize="small" />
@@ -67,7 +67,7 @@ function Comment(comment: Comment) {
 							</Grid>
 							<Grid item xs={10}>
 								<Typography style={{ textAlign: "right", color: "gray" }}>
-									{comment.date}
+									{props.createdAt}
 								</Typography>
 							</Grid>
 						</Grid>
@@ -76,6 +76,6 @@ function Comment(comment: Comment) {
 			</Paper>
 		</div>
 	);
-}
+};
 
 export default Comment;

@@ -23,6 +23,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Badge } from "@mui/material";
 import { publicRequest } from "../../utilities/requestMethodes";
+import { useQuery } from "@tanstack/react-query";
+import { getComments } from "../../utilities/fetchApi";
 
 interface User {
 	userId: string;
@@ -53,39 +55,6 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 		duration: theme.transitions.duration.shortest,
 	}),
 }));
-
-const comments = [
-	{
-		user: {
-			username: "user name 1",
-			avatar:
-				"https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png",
-		},
-		date: "September 14, 2016",
-		comment: "Loum dolor sitng le pelpeshellendus 1 💥💢",
-		reactions: 4,
-	},
-	{
-		user: {
-			username: "user name 4",
-			avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
-		},
-		date: "September 24, 2016",
-		comment: "Lorem ipng argwelit. Crem impedi 💥💢",
-		avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
-		reactions: 3,
-	},
-	{
-		user: {
-			username: "user name 4",
-			avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
-		},
-		date: "September 24, 2016",
-		comment: "whats up ☢ ⬛",
-		avatar: "https://cdn-icons-png.flaticon.com/512/168/168882.png",
-		reactions: 47,
-	},
-];
 
 export default function PostCard({
 	photos,
@@ -155,6 +124,17 @@ export default function PostCard({
 		}
 	}, []);
 
+	// getting post comments
+	const queryKey = `postcomments ${_id}`;
+	const request = {
+		postId: _id,
+	};
+	const config = {
+		params: request,
+	};
+	const { data, status } = useQuery([queryKey], () => getComments(config));
+	// status === "success" && console.log(data);
+
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
 	};
@@ -215,9 +195,11 @@ export default function PostCard({
 				<CardContent>
 					{/* <AddComment {...currentUser} /> */}
 					<AddComment {...comment} />
-					{comments.map((comment) => (
-						<Comment key={comment.comment} {...comment} />
-					))}
+					{status === "loading" ? (
+						<p>LOADING</p>
+					) : (
+						data.map((comment) => <Comment key={comment._id} {...comment} />)
+					)}
 				</CardContent>
 			</Collapse>
 		</Card>
