@@ -26,14 +26,14 @@ export const getRandomId = () => {
 	return cryptoRandomString({ length: 10, type: "numeric" });
 };
 
-export const uploadImage = async (inputImages: File[]) => {
+export const uploadImage = async (type: string, inputImages: File[]) => {
 	var photoIds: string[] = [];
 
 	for (const file of inputImages) {
 		const id = getRandomId();
 		// photoIds.push(id);
 		// await uploadImage(id, file);
-		const imgRef = ref(storage, `postImages/${id}`);
+		const imgRef = ref(storage, `${type}/${id}`);
 		const compressedImage = await compressFile(file);
 		// const compressedImage = inputImage;
 		// await uploadBytes(imgRef, compressedImage);

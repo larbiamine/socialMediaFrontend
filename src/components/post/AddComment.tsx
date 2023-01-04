@@ -1,15 +1,63 @@
 import { Avatar, Grid, IconButton, Paper } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import { useState, FC } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
-
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createComment } from "../../utilities/fetchApi";
 interface User {
 	username: string;
 	avatar: string;
 }
+interface Comment {
+	user: User;
+	postId: string;
+}
 
-function AddComment(user: User) {
-	const handleSubmitComment = () => {};
+// function AddComment(user: User) {
+const AddComment: FC<Comment> = (props): ReactJSXElement => {
+	const [commentBody, setCommentBody] = useState("");
+	const [isPosting, setIsPosting] = useState(false);
+	const queryClient = useQueryClient();
+
+	const mutationKey = `
+	 postcomments ${props.postId}
+	`;
+
+	const mutation = useMutation({
+		mutationFn: createComment,
+		mutationKey: mutationKey,
+		onSuccess: (newComment) => {
+			queryClient.setQueryData([mutationKey], (oldData) => [
+				...(oldData ?? []),
+				newComment,
+			]);
+			queryClient.invalidateQueries([mutationKey]);
+		},
+	});
+
+	const handleSubmitComment = () => {
+		setIsPosting(true);
+		console.log("posting Coment");
+
+		if (commentBody != "") {
+			const comment = {
+				body: commentBody,
+				postId: props.postId,
+			};
+			console.log(comment);
+			try {
+				mutation.mutate(comment);
+				setCommentBody("");
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		setIsPosting(false);
+		console.log("done posting Coment");
+	};
+
 	return (
 		<div>
 			<Paper
@@ -18,7 +66,7 @@ function AddComment(user: User) {
 			>
 				<Grid style={{}} container wrap="nowrap" spacing={2}>
 					<Grid item>
-						<Avatar src={user.avatar} />
+						<Avatar src={props.user.avatar} />
 					</Grid>
 					<Grid justifyContent={"left"} item xs zeroMinWidth>
 						<OutlinedInput
@@ -26,9 +74,16 @@ function AddComment(user: User) {
 							type="text"
 							size="small"
 							fullWidth
+							onChange={(e) => {
+								setCommentBody(e.target.value);
+							}}
 							endAdornment={
 								<InputAdornment position="end">
-									<IconButton onClick={handleSubmitComment} edge="end">
+									<IconButton
+										disabled={isPosting}
+										onClick={handleSubmitComment}
+										edge="end"
+									>
 										<SendIcon />
 									</IconButton>
 								</InputAdornment>
@@ -39,6 +94,6 @@ function AddComment(user: User) {
 			</Paper>
 		</div>
 	);
-}
+};
 
 export default AddComment;

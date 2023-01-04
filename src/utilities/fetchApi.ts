@@ -11,6 +11,15 @@ export async function createPost(variables: Post) {
 	return res.data;
 }
 
+interface Comment {
+	body: string;
+	postId: string;
+}
+export async function createComment(variables: Comment) {
+	const res = await userRequest.post("comment/create", variables);
+	return res.data;
+}
+
 interface Data {
 	userId: string;
 	userFollowing: Array<string>;

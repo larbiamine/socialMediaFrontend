@@ -34,6 +34,7 @@ export default function AddPost() {
 	const queryClient = useQueryClient();
 	const { currentUser } = useSelector((state: IRootState) => state);
 	const dispatch = useDispatch();
+
 	const mutation = useMutation({
 		mutationFn: createPost,
 		mutationKey: "posts",
@@ -56,25 +57,26 @@ export default function AddPost() {
 	const onSubmit = async () => {
 		var photoIds: string[] = [];
 		setIsPosting(true);
-		console.log("here 1");
-		if (photos.length > 0) {
-			photoIds = await uploadImage(photos);
-		}
-		console.log("here 2");
+		if (photos.length > 0 || postBody != "") {
+			if (photos.length > 0) {
+				photoIds = await uploadImage("postImages", photos);
+			}
 
-		const post = {
-			body: postBody,
-			photos: photoIds,
-			privacy: privacy,
-		};
-		try {
-			mutation.mutate(post);
-			setIsPosting(false);
-			setPhotos([]);
-			setPostBody("");
-		} catch (error) {
-			console.log(error);
+			const post = {
+				body: postBody,
+				photos: photoIds,
+				privacy: privacy,
+			};
+			try {
+				mutation.mutate(post);
+
+				setPhotos([]);
+				setPostBody("");
+			} catch (error) {
+				console.log(error);
+			}
 		}
+		setIsPosting(false);
 	};
 
 	const PostButton = () => {

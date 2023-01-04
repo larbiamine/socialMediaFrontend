@@ -42,10 +42,6 @@ interface Post {
 interface ExpandMoreProps extends IconButtonProps {
 	expand: boolean;
 }
-const currentUsera = {
-	username: "user name 1",
-	avatar: "https://www.w3schools.com/howto/img_avatar.png",
-};
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
 	const { expand, ...other } = props;
@@ -95,6 +91,7 @@ export default function PostCard({
 	photos,
 	userId,
 	body,
+	_id,
 	createdAt,
 	likes,
 }: Post) {
@@ -162,6 +159,14 @@ export default function PostCard({
 		setExpanded(!expanded);
 	};
 
+	const comment = {
+		user: {
+			avatar: currentUser.avatar,
+			username: currentUser.username,
+		},
+		postId: _id,
+	};
+
 	return (
 		<Card sx={{ marginLeft: "auto", marginRight: "auto", maxWidth: "70%" }}>
 			<CardHeader
@@ -208,7 +213,8 @@ export default function PostCard({
 			</CardActions>
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent>
-					<AddComment {...currentUser} />
+					{/* <AddComment {...currentUser} /> */}
+					<AddComment {...comment} />
 					{comments.map((comment) => (
 						<Comment key={comment.comment} {...comment} />
 					))}
