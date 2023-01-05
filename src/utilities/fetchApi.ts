@@ -52,3 +52,37 @@ export async function getComments(data: commentConfig) {
 	const res = await userRequest.get("comment/getcomments/", data);
 	return res.data;
 }
+
+export async function likePost(postId: string) {
+	try {
+		const res = await userRequest.put(`post/like/${postId}`);
+		return "success";
+	} catch (error) {
+		return "error";
+	}
+}
+export async function unlikePost(postId: string) {
+	try {
+		const res = await userRequest.put(`post/unlike/${postId}`);
+		return "success";
+	} catch (error) {
+		return "error";
+	}
+}
+
+export async function likeComment(commentId: string) {
+	try {
+		const res = await userRequest.put(`comment/like/${commentId}`);
+		return "success";
+	} catch (error) {
+		return "error";
+	}
+}
+export async function unlikeComment(commentId: string) {
+	try {
+		const res = await userRequest.put(`comment/unlike/${commentId}`);
+		return "success";
+	} catch (error) {
+		return "error";
+	}
+}

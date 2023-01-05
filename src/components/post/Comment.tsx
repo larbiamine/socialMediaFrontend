@@ -8,12 +8,13 @@ import {
 	Typography,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import styled from "@emotion/styled";
 
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { timeAgo } from "../../utilities/time";
+import { likeComment, unlikeComment } from "../../utilities/fetchApi";
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 	"& .MuiBadge-badge": {
 		fontSize: 10,
@@ -25,6 +26,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 interface User {
 	username: string;
 	avatar: string;
+	id: string;
 }
 
 interface Comment {
@@ -33,9 +35,51 @@ interface Comment {
 	createdAt: string;
 	likes: Array<string>;
 	postId: string;
+	_id: string;
 }
-const Comment: FC<Comment> = (props): ReactJSXElement => {
-	const agoDate = timeAgo.format(new Date(props.createdAt));
+const Comment: FC<Comment> = ({
+	user,
+	body,
+	createdAt,
+	likes,
+	postId,
+	_id,
+}): ReactJSXElement => {
+	const agoDate = timeAgo.format(new Date(createdAt));
+
+	const [nbLikes, setNbLikes] = useState(likes.length);
+	const [liked, setLiked] = useState(likes.includes(user?.id));
+
+	const handleLikeComment = () => {
+		if (liked) {
+			setLiked(false);
+			setNbLikes((old) => old - 1);
+			unlikeComment(_id)
+				.then(() => {
+					console.log("unliked");
+					// queryClient.invalidateQueries(["posts"]);
+				})
+				.catch((err) => {
+					console.log("ERRRROR");
+
+					setLiked(true);
+					setNbLikes((old) => old + 1);
+				});
+		} else {
+			setLiked(true);
+			setNbLikes((old) => old + 1);
+			likeComment(_id)
+				.then(() => {
+					console.log("liked");
+					// queryClient.invalidateQueries(["posts"]);
+				})
+				.catch((errr) => {
+					console.log("ERRRROR");
+					setLiked(false);
+					setNbLikes((old) => old - 1);
+				});
+		}
+	};
 
 	return (
 		<div>
@@ -45,28 +89,34 @@ const Comment: FC<Comment> = (props): ReactJSXElement => {
 			>
 				<Grid container wrap="nowrap" spacing={2}>
 					<Grid item>
-						<Avatar src={props.user?.avatar} />
+						<Avatar src={user?.avatar} />
 					</Grid>
 					<Grid justifyContent={"left"} item xs zeroMinWidth>
 						<Typography style={{ textAlign: "left" }}>
-							{props.user?.username}
+							{user?.username}
 						</Typography>
-						<Typography>{props.body}</Typography>
+						<Typography>{body}</Typography>
 						<Grid container spacing={2}>
 							<Grid item xs={2}>
 								<IconButton
 									style={{ marginRight: 0 }}
 									aria-label="add to favorites"
+									onClick={() => {
+										handleLikeComment();
+									}}
 								>
 									<StyledBadge
 										anchorOrigin={{
 											vertical: "bottom",
 											horizontal: "right",
 										}}
-										badgeContent={props.likes.length}
+										badgeContent={nbLikes}
 										color="mySecondary"
 									>
-										<FavoriteIcon fontSize="small" />
+										<FavoriteIcon
+											color={liked ? "mySecondary" : ""}
+											fontSize="small"
+										/>
 									</StyledBadge>
 								</IconButton>
 							</Grid>

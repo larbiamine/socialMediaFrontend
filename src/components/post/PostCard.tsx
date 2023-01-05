@@ -23,8 +23,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Badge } from "@mui/material";
 import { publicRequest } from "../../utilities/requestMethodes";
-import { useQuery } from "@tanstack/react-query";
-import { getComments } from "../../utilities/fetchApi";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getComments, likePost, unlikePost } from "../../utilities/fetchApi";
 import { timeAgo } from "../../utilities/time";
 
 interface User {
@@ -50,7 +50,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 	const { expand, ...other } = props;
 	return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-	transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+	transform: !expand ? "rotate(0deg)" : "rotate(360deg)",
 	marginLeft: "auto",
 	transition: theme.transitions.create("transform", {
 		duration: theme.transitions.duration.shortest,
@@ -64,6 +64,7 @@ export default function PostCard({
 	_id,
 	createdAt,
 	likes,
+	comments,
 }: Post) {
 	const ListOfImages = () => {
 		var listimgs: any[] = [];
@@ -99,6 +100,11 @@ export default function PostCard({
 	const [expanded, setExpanded] = React.useState(false);
 	const { currentUser } = useSelector((state: IRootState) => state);
 	const [user, setUser] = useState<User>();
+
+	const [liked, setliked] = useState(likes.includes(userId));
+	const [nbLikes, setNbLikes] = useState(likes.length);
+	const [nbComments, setNbComments] = useState(comments.length);
+	// var liked = likes.includes(userId);
 
 	useEffect(() => {
 		const getUser = async () => {
@@ -144,10 +150,43 @@ export default function PostCard({
 		user: {
 			avatar: currentUser.avatar,
 			username: currentUser.username,
+			id: currentUser._id,
 		},
 		postId: _id,
+		setNbComments: setNbComments,
 	};
 	const agoDate = timeAgo.format(new Date(createdAt));
+
+	const handlelikePost = () => {
+		if (liked) {
+			setliked(false);
+			setNbLikes((old) => old - 1);
+			unlikePost(_id)
+				.then(() => {
+					console.log("unliked");
+					// queryClient.invalidateQueries(["posts"]);
+				})
+				.catch((err) => {
+					console.log("ERRRROR");
+
+					setliked(true);
+					setNbLikes((old) => old + 1);
+				});
+		} else {
+			setliked(true);
+			setNbLikes((old) => old + 1);
+			likePost(_id)
+				.then(() => {
+					console.log("liked");
+					// queryClient.invalidateQueries(["posts"]);
+				})
+				.catch((errr) => {
+					console.log("ERRRROR");
+					setliked(false);
+					setNbLikes((old) => old - 1);
+				});
+		}
+	};
 
 	return (
 		<Card sx={{ marginLeft: "auto", marginRight: "auto", maxWidth: "70%" }}>
@@ -176,9 +215,12 @@ export default function PostCard({
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
-				<IconButton aria-label="add to favorites">
-					<Badge color="mySecondary" badgeContent={2}>
-						<FavoriteIcon />
+				<IconButton
+					onClick={() => handlelikePost()}
+					aria-label="add to favorites"
+				>
+					<Badge color="mySecondary" badgeContent={nbLikes}>
+						<FavoriteIcon color={liked ? "mySecondary" : ""} />
 					</Badge>
 				</IconButton>
 				<IconButton aria-label="share">
@@ -190,7 +232,9 @@ export default function PostCard({
 					aria-expanded={expanded}
 					aria-label="show comments"
 				>
-					<CommentIcon />
+					<Badge color="mySecondary" badgeContent={nbComments}>
+						<CommentIcon />
+					</Badge>
 				</ExpandMore>
 			</CardActions>
 			<Collapse in={expanded} timeout="auto" unmountOnExit>

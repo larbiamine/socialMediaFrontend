@@ -14,13 +14,18 @@ interface User {
 interface Comment {
 	user: User;
 	postId: string;
+	setNbComments: Function;
 }
 
-const AddComment: FC<Comment> = (props): ReactJSXElement => {
+const AddComment: FC<Comment> = ({
+	user,
+	postId,
+	setNbComments,
+}): ReactJSXElement => {
 	const [commentBody, setCommentBody] = useState("");
 	const [isPosting, setIsPosting] = useState(false);
 	const queryClient = useQueryClient();
-	const mutationKey = `postcomments ${props.postId}`;
+	const mutationKey = `postcomments ${postId}`;
 
 	const mutation = useMutation({
 		mutationFn: createComment,
@@ -31,6 +36,7 @@ const AddComment: FC<Comment> = (props): ReactJSXElement => {
 				newComment,
 			]);
 			queryClient.invalidateQueries([mutationKey]);
+			setNbComments((old) => old + 1);
 		},
 	});
 
@@ -41,7 +47,7 @@ const AddComment: FC<Comment> = (props): ReactJSXElement => {
 		if (commentBody != "") {
 			const comment = {
 				body: commentBody,
-				postId: props.postId,
+				postId: postId,
 			};
 
 			try {
@@ -63,7 +69,7 @@ const AddComment: FC<Comment> = (props): ReactJSXElement => {
 			>
 				<Grid style={{}} container wrap="nowrap" spacing={2}>
 					<Grid item>
-						<Avatar src={props.user.avatar} />
+						<Avatar src={user?.avatar} />
 					</Grid>
 					<Grid justifyContent={"left"} item xs zeroMinWidth>
 						<OutlinedInput
