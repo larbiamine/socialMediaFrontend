@@ -86,3 +86,12 @@ export async function unlikeComment(commentId: string) {
 		return "error";
 	}
 }
+
+export async function getUser(userId: string) {
+	try {
+		const res = await userRequest.get(`user/find/${userId}`);
+		return res.data;
+	} catch (error) {
+		return "error";
+	}
+}

@@ -300,7 +300,7 @@ function Navbar() {
 												textDecoration: "none",
 												color: "black",
 											}}
-											href="/profile"
+											href={`/profile/${currentUser._id}`}
 										>
 											profile
 										</Link>

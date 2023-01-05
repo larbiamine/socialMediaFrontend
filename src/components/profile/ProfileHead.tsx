@@ -1,12 +1,22 @@
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import { User } from "../../types";
+import { FC } from "react";
 
-function ProfileHead(user: User) {
+interface HeadProps {
+	user: User;
+	currentUser: User;
+}
+
+const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 	const avatar = {
 		marginTop: 4,
 		width: 200,
 		height: 200,
 	};
+
+	const myProfile = user._id === currentUser._id;
+	console.log(user._id);
+	console.log(currentUser._id);
 
 	return (
 		<Grid container spacing={2}>
@@ -18,7 +28,7 @@ function ProfileHead(user: User) {
 					<Typography fontWeight={"bold"} variant="h5" color="initial">
 						{user.username}
 					</Typography>
-					{user ? (
+					{myProfile ? (
 						<>
 							<Button size="small" color="mySecondary" variant="contained">
 								{"Edit Profile "}
@@ -66,6 +76,6 @@ function ProfileHead(user: User) {
 			</Grid>
 		</Grid>
 	);
-}
+};
 
 export default ProfileHead;

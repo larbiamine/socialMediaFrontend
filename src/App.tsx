@@ -40,10 +40,8 @@ function App() {
 					element={loggedIn ? <Navigate to="/profile" /> : <Register />}
 				/>
 				<Route
-					path="/profile"
-					element={
-						loggedIn ? <Profile {...currentUser} /> : <Navigate to="/login" />
-					}
+					path="/profile/:id"
+					element={loggedIn ? <Profile /> : <Navigate to="/login" />}
 				/>
 			</>
 		)
