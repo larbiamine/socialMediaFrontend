@@ -1,8 +1,3 @@
-/**
- *
- * @author Onur Zorluer
- *
- */
 class Resizer {
 	static changeHeightWidth(
 		height,
