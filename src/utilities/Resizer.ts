@@ -243,7 +243,7 @@ const resizeFile = (file) =>
 const imageResize = async (file) => {
 	try {
 		const resFile = await resizeFile(file);
-		console.info("todo bien", resFile);
+
 		return resFile;
 	} catch (err) {
 		console.error("esto es un error", err);

@@ -42,11 +42,9 @@ export const uploadImage = async (type: string, inputImages: File[]) => {
 				return getDownloadURL(snapshot.ref);
 			})
 			.then((downloadURL) => {
-				console.log("Download URL", downloadURL);
 				photoIds.push(downloadURL);
 			});
 	}
-	console.log(`uploaded ${inputImages.length} images`);
 
 	return photoIds;
 };
