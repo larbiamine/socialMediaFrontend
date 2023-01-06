@@ -4,25 +4,23 @@ import cryptoRandomString from "crypto-random-string";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { app, storage } from "./firebaseSetup";
 
-import imageResize from "./Resizer";
+import { imageResize } from "./Resizer";
 
-const compressFile = (file: File) =>
-	new Promise((resolve) => {
-		imageResize(
-			file,
-			500,
-			300,
-			"JPEG",
-			100,
-			0,
-			(uri) => {
-				resolve(uri);
-			},
-			"file",
-			300,
-			100
-		);
-	});
+// const compressFile = (file: File) =>
+// 	new Promise((resolve) => {
+// 		imageResize(
+// 			file,
+// 			500,
+// 			300,
+// 			"JPEG",
+// 			100,
+// 			0,
+// 			(uri) => {
+// 				resolve(uri);
+// 			},
+// 			"file"
+// 		);
+// 	});
 
 export const getRandomId = () => {
 	return cryptoRandomString({ length: 10, type: "numeric" });
@@ -36,7 +34,7 @@ export const uploadImage = async (type: string, inputImages: File[]) => {
 		// photoIds.push(id);
 		// await uploadImage(id, file);
 		const imgRef = ref(storage, `${type}/${id}`);
-		const compressedImage = await compressFile(file);
+		const compressedImage = await imageResize(file);
 		// const compressedImage = inputImage;
 		// await uploadBytes(imgRef, compressedImage);
 		await uploadBytes(imgRef, compressedImage)

@@ -228,9 +228,9 @@ const resizeFile = (file) =>
 	new Promise((resolve) => {
 		Resizer.imageFileResizer(
 			file,
-			125,
-			125,
-			"png",
+			500,
+			300,
+			"JPEG",
 			100,
 			0,
 			(uri) => {
