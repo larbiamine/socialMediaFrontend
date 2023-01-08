@@ -106,7 +106,7 @@ function Login() {
 						loading={isFetching}
 						fullWidth
 						sx={{ mt: 0.5, mb: 1 }}
-						loadingPosition="start"
+						// loadingPosition="start"
 						variant="contained"
 						type="submit"
 						color="mySecondary"

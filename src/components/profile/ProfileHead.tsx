@@ -1,6 +1,9 @@
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import { User } from "../../types";
 import { FC, useState } from "react";
+import { followUser } from "../../utilities/fetchApi";
+import { useDispatch } from "react-redux";
+import { follow, unfollow } from "../../redux/userRedux";
 
 interface HeadProps {
 	user: User;
@@ -24,8 +27,35 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 		setIsFolowing(true);
 		setLoaded(false);
 	}
-	console.log(user._id);
-	console.log(currentUser._id);
+
+	const dispatch = useDispatch();
+
+	const followButton = async (option: string) => {
+		option === "follow"
+			? dispatch(follow(user._id))
+			: dispatch(unfollow(user._id));
+		try {
+			console.info(`started ${option}ing`);
+			const res = await followUser(option, user._id);
+			if (res === "success") {
+				console.info(`ended ${option}ing`);
+			} else {
+				if (option === "follow") {
+					dispatch(unfollow(user._id));
+				} else {
+					dispatch(follow(user._id));
+				}
+				console.log("error following/unfollowing");
+			}
+		} catch (error) {
+			if (option === "follow") {
+				dispatch(unfollow(user._id));
+			} else {
+				dispatch(follow(user._id));
+			}
+			console.log(error);
+		}
+	};
 
 	const FollowButton = () => {
 		if (myProfile) {
@@ -42,13 +72,27 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 		} else {
 			if (!isFollowing) {
 				return (
-					<Button size="small" color="mySecondary" variant="contained">
+					<Button
+						onClick={() => {
+							followButton("follow");
+						}}
+						size="small"
+						color="mySecondary"
+						variant="contained"
+					>
 						{"Follow "}
 					</Button>
 				);
 			} else {
 				return (
-					<Button size="small" color="mySecondary" variant="outlined">
+					<Button
+						onClick={() => {
+							followButton("unfollow");
+						}}
+						size="small"
+						color="mySecondary"
+						variant="outlined"
+					>
 						{"UnFollow "}
 					</Button>
 				);

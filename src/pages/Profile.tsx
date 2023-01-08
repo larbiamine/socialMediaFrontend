@@ -33,6 +33,7 @@ function Profile() {
 				// const resUser = await userRequest.get(`user/find/${id}`);
 				setLoading(false);
 				setUser(resUser);
+				document.title = resUser.username;
 			} catch (error) {
 				console.log(error);
 				setError("user Not Found");
@@ -41,8 +42,6 @@ function Profile() {
 
 		findUser(id);
 	}, []);
-
-	console.log(location);
 
 	return (
 		!loading &&

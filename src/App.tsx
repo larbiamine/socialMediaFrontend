@@ -33,11 +33,23 @@ function App() {
 				<Route path="/" element={loggedIn ? <Feed /> : <Login />} />
 				<Route
 					path="/login"
-					element={loggedIn ? <Navigate to="/profile" /> : <Login />}
+					element={
+						loggedIn ? (
+							<Navigate to={`/profile/${currentUser._id}`} />
+						) : (
+							<Login />
+						)
+					}
 				/>
 				<Route
 					path="/register"
-					element={loggedIn ? <Navigate to="/profile" /> : <Register />}
+					element={
+						loggedIn ? (
+							<Navigate to={`/profile/${currentUser._id}`} />
+						) : (
+							<Register />
+						)
+					}
 				/>
 				<Route
 					path="/profile/:id"

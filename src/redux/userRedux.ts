@@ -62,6 +62,28 @@ const userSlice = createSlice({
 		addPost: (state, action) => {
 			state.currentUser?.posts.push(action.payload);
 		},
+
+		follow: (state, action) => {
+			state.currentUser?.following.push(action.payload);
+		},
+		unfollow: (state, action) => {
+			// state.currentUser?.following.splice(
+			// 	state.currentUser?.following.indexOf(action.payload),
+			// 	1
+			// );
+			const index = state.currentUser?.following.indexOf(action.payload);
+			if (index > -1) {
+				// only splice array when item is found
+				state.currentUser?.following.splice(index, 1); // 2nd parameter means remove one item only
+			}
+			// state.currentUser?.following.filter((value, index, arr) => {
+			// 	if (value === action.payload) {
+			// 		arr.splice(index, 1);
+			// 		return false;
+			// 	}
+			// 	return true;
+			// });
+		},
 	},
 });
 
@@ -74,6 +96,8 @@ export const {
 	loginSuccess,
 	loginStart,
 	initState,
+	follow,
+	unfollow,
 	addPost,
 } = userSlice.actions;
 

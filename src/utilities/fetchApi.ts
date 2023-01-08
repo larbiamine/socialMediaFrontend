@@ -87,6 +87,15 @@ export async function unlikeComment(commentId: string) {
 	}
 }
 
+export async function followUser(option: string, id: string) {
+	try {
+		await userRequest.post(`user/${option}/${id}`);
+		return "success";
+	} catch (error) {
+		return "error";
+	}
+}
+
 export async function getUser(userId: string) {
 	try {
 		const res = await userRequest.get(`user/find/${userId}`);
