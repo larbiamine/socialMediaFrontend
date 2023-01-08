@@ -2,7 +2,7 @@ import Resizer from "react-image-file-resizer";
 import cryptoRandomString from "crypto-random-string";
 
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { app, storage } from "./firebaseSetup";
+import { storage } from "./firebaseSetup";
 
 import { imageResize } from "./Resizer";
 
