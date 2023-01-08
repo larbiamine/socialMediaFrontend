@@ -1,10 +1,11 @@
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import { User } from "../../types";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 interface HeadProps {
 	user: User;
 	currentUser: User;
+	isFollowing: boolean;
 }
 
 const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
@@ -13,10 +14,47 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 		width: 200,
 		height: 200,
 	};
+	const [isFollowing, setIsFolowing] = useState(false);
+
+	const [loaded, setLoaded] = useState(true);
 
 	const myProfile = user._id === currentUser._id;
+
+	if (loaded && currentUser?.following.includes(user._id)) {
+		setIsFolowing(true);
+		setLoaded(false);
+	}
 	console.log(user._id);
 	console.log(currentUser._id);
+
+	const FollowButton = () => {
+		if (myProfile) {
+			return (
+				<>
+					<Button size="small" color="mySecondary" variant="contained">
+						{"Edit Profile "}
+					</Button>
+					<Button size="small" color="mySecondary" variant="outlined">
+						{"Account Settings"}
+					</Button>
+				</>
+			);
+		} else {
+			if (!isFollowing) {
+				return (
+					<Button size="small" color="mySecondary" variant="contained">
+						{"Follow "}
+					</Button>
+				);
+			} else {
+				return (
+					<Button size="small" color="mySecondary" variant="outlined">
+						{"UnFollow "}
+					</Button>
+				);
+			}
+		}
+	};
 
 	return (
 		<Grid container spacing={2}>
@@ -28,20 +66,7 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 					<Typography fontWeight={"bold"} variant="h5" color="initial">
 						{user.username}
 					</Typography>
-					{myProfile ? (
-						<>
-							<Button size="small" color="mySecondary" variant="contained">
-								{"Edit Profile "}
-							</Button>
-							<Button size="small" color="mySecondary" variant="outlined">
-								{"Account Settings"}
-							</Button>
-						</>
-					) : (
-						<Button size="small" color="mySecondary" variant="contained">
-							{"Follow "}
-						</Button>
-					)}
+					<FollowButton />
 				</Grid>
 				<Grid
 					style={{ marginTop: 10, marginBottom: 10 }}

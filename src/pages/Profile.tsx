@@ -22,9 +22,7 @@ function Profile() {
 	const { currentUser } = useSelector((state: IRootState) => state);
 
 	const [error, setError] = useState("");
-
 	const [user, setUser] = useState<null | User>(null);
-
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -34,7 +32,6 @@ function Profile() {
 
 				// const resUser = await userRequest.get(`user/find/${id}`);
 				setLoading(false);
-
 				setUser(resUser);
 			} catch (error) {
 				console.log(error);
