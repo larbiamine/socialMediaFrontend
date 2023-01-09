@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -22,11 +22,19 @@ import GroupIcon from "@mui/icons-material/Group";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ForumIcon from "@mui/icons-material/Forum";
 import Badge from "@mui/material/Badge";
-import { logout } from "../redux/userRedux";
+import userRedux, { logout } from "../redux/userRedux";
 import { useDispatch } from "react-redux";
 import { IRootState } from "./redux/store";
 import { useSelector } from "react-redux";
+import { searchUser } from "../utilities/fetchApi";
 
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import List from "@mui/material/List";
+
+import { User } from "../types";
+import { userRequest } from "../utilities/requestMethodes";
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
 	borderRadius: "15px",
@@ -106,6 +114,36 @@ function Notification({ message }: NotificationProps) {
 	);
 }
 
+const SearchResults = (results: Array<User>) => {
+	console.log(results);
+	return (
+		<List>
+			{results &&
+				results.results.map((item) => (
+					<ListItem key={item._id}>
+						<Link href={`/profile/${item._id}`}>
+							<ListItemIcon>
+								<Avatar src={item.avatar} />
+							</ListItemIcon>
+							<ListItemText primary={item.username} />
+						</Link>
+					</ListItem>
+				))}
+		</List>
+		// 	<MenuItem key={"profile"} onClick={handleCloseSearch}>
+		// 	<Link
+		// 		sx={{
+		// 			textDecoration: "none",
+		// 			color: "black",
+		// 		}}
+		// 		href={`/profile/${currentUser._id}`}
+		// 	>
+		// 		SEARCH
+		// 	</Link>
+		// </MenuItem>
+	);
+};
+
 function Navbar() {
 	const { currentUser } = useSelector((state: IRootState) => state);
 
@@ -139,6 +177,9 @@ function Navbar() {
 	];
 
 	const [search, setSearch] = useState("");
+	const [results, setResults] = useState<Array<User>>([]);
+	const [fetchedSearch, setFetchedSearch] = useState(false);
+	const searchRef = useRef(null);
 
 	const handleChange = () => {};
 	const handleOpenNavMenu = () => {};
@@ -164,28 +205,37 @@ function Navbar() {
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
 		null
 	);
+	const [anchorSearch, setAnchorSearch] = React.useState<null | HTMLElement>(
+		null
+	);
+	const [anchorSearchTemp, setAnchorSearchTemp] =
+		React.useState<null | HTMLElement>(null);
 	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElUser(event.currentTarget);
+	};
+	const handleOpenSearchTemp = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorSearchTemp(event.currentTarget);
+	};
+	const handleOpenSearch = () => {
+		setAnchorSearch(anchorSearchTemp);
 	};
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
-	const handleSubmit = () => {
-		console.log(search);
+	const handleCloseSearch = () => {
+		setAnchorSearch(null);
 	};
-
-	useEffect(() => {
-		const keyDownHandler = (e: any) => {
-			if (e.key === "Enter") {
-				e.preventDefault();
-				handleSubmit();
-			}
-		};
-		document.addEventListener("keydown", keyDownHandler);
-		return () => {
-			document.removeEventListener("keydown", keyDownHandler);
-		};
-	}, []);
+	const handleSubmit = async () => {
+		try {
+			const result = await userRequest.get(`user/search/${search}`);
+			setResults(result.data);
+			setFetchedSearch(true);
+			console.log(result.data);
+			handleOpenSearch();
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<AppBar sx={{ width: "100%" }} position="fixed" color="myPrimary">
@@ -223,14 +273,23 @@ function Navbar() {
 									LOGO☢
 								</Typography>
 								<Search>
-									<SearchIconWrapper>
+									{/* <SearchIconWrapper>
 										<SearchIcon />
-									</SearchIconWrapper>
+									</SearchIconWrapper> */}
 									<StyledInputBase
+										onClick={handleOpenSearchTemp}
 										placeholder="Search…"
 										inputProps={{ "aria-label": "search" }}
-										value={search}
-										onChange={(event) => setSearch(event.target.value)}
+										// value={search}
+										ref={searchRef}
+										endAdornment={
+											<IconButton onClick={handleSubmit}>
+												<SearchIcon />
+											</IconButton>
+										}
+										onChange={(event) => {
+											setSearch(event.target.value);
+										}}
 									/>
 									<button style={{ display: "none" }} type="submit">
 										😀
@@ -327,6 +386,25 @@ function Navbar() {
 											Logout
 										</Link>
 									</MenuItem>
+								</Menu>
+								<Menu
+									//search DropDown Menu
+									sx={{ mt: "45px" }}
+									id="menu-appbar"
+									anchorEl={anchorSearch}
+									anchorOrigin={{
+										vertical: "top",
+										horizontal: "right",
+									}}
+									keepMounted
+									transformOrigin={{
+										vertical: "top",
+										horizontal: "right",
+									}}
+									open={Boolean(anchorSearch)}
+									onClose={handleCloseSearch}
+								>
+									{fetchedSearch && <SearchResults results={results} />}
 								</Menu>
 								<Menu
 									//Notifications DropDown Menu

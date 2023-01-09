@@ -104,3 +104,13 @@ export async function getUser(userId: string) {
 		return "error";
 	}
 }
+
+export async function searchUser(query: string) {
+	try {
+		console.log(query);
+		const res = await userRequest.get(`user/search/${query}`);
+		return res.data;
+	} catch (error) {
+		return "error";
+	}
+}
