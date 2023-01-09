@@ -117,19 +117,27 @@ function Notification({ message }: NotificationProps) {
 const SearchResults = (results: Array<User>) => {
 	console.log(results);
 	return (
-		<List>
-			{results &&
-				results.results.map((item) => (
-					<ListItem key={item._id}>
-						<Link href={`/profile/${item._id}`}>
-							<ListItemIcon>
-								<Avatar src={item.avatar} />
-							</ListItemIcon>
-							<ListItemText primary={item.username} />
-						</Link>
-					</ListItem>
-				))}
-		</List>
+		<Box style={{ minWidth: 200 }} component="div">
+			<List>
+				{results &&
+					results.results.map((item) => (
+						<ListItem key={item._id}>
+							<Link
+								style={{
+									textDecoration: "none",
+									color: "black",
+								}}
+								href={`/profile/${item._id}`}
+							>
+								<ListItemIcon>
+									<Avatar style={{ marginRight: "13px" }} src={item.avatar} />
+									<ListItemText primary={item.username} />
+								</ListItemIcon>
+							</Link>
+						</ListItem>
+					))}
+			</List>
+		</Box>
 		// 	<MenuItem key={"profile"} onClick={handleCloseSearch}>
 		// 	<Link
 		// 		sx={{
