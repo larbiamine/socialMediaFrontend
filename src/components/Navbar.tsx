@@ -114,13 +114,12 @@ function Notification({ message }: NotificationProps) {
 	);
 }
 
-const SearchResults = (results: Array<User>) => {
-	console.log(results);
+const SearchResults = ({ results }: Array<User>) => {
 	return (
 		<Box style={{ minWidth: 200 }} component="div">
 			<List>
 				{results &&
-					results.results.map((item) => (
+					results.map((item) => (
 						<ListItem key={item._id}>
 							<Link
 								style={{

@@ -14,7 +14,7 @@ function Feed() {
 		<>
 			<Grid container columns={5}>
 				<Grid item xs={1}>
-					<Sidebar />
+					<Sidebar currentUser={currentUser} />
 				</Grid>
 				<Grid sx={{ marginTop: "80px" }} item xs={3}>
 					<AddPost />

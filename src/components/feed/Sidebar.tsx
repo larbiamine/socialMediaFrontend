@@ -14,47 +14,47 @@ import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar/Avatar";
 import { useNavigate } from "react-router-dom";
+import { User } from "../../types";
 
-const listItems = [
-	{
-		listIcon: <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />,
-		listText: "User Name",
-		link: "/profile",
-	},
-	{
-		listIcon: <HomeIcon color="mySecondary" />,
-		listText: "Home",
-		link: "",
-	},
-	{
-		listIcon: <ForumIcon color="mySecondary" />,
-		listText: "Messages",
-		link: "",
-	},
-	{
-		listIcon: <ExploreIcon color="mySecondary" />,
-		listText: "Explore",
-		link: "",
-	},
-	{
-		listIcon: <GroupIcon color="mySecondary" />,
-		listText: "Friends",
-		link: "",
-	},
-	{
-		listIcon: <Diversity1Icon color="mySecondary" />,
-		listText: "Groups",
-		link: "",
-	},
-	{
-		listIcon: <BookmarksIcon color="mySecondary" />,
-		listText: "Saved",
-		link: "",
-	},
-];
-
-function Sidebar() {
+function Sidebar({ currentUser }: User) {
 	const navigate = useNavigate();
+	const listItems = [
+		{
+			listIcon: <Avatar src={currentUser.avatar} />,
+			listText: currentUser.username,
+			link: `/profile/${currentUser._id}`,
+		},
+		{
+			listIcon: <HomeIcon color="mySecondary" />,
+			listText: "Home",
+			link: "",
+		},
+		{
+			listIcon: <ForumIcon color="mySecondary" />,
+			listText: "Messages",
+			link: "",
+		},
+		{
+			listIcon: <ExploreIcon color="mySecondary" />,
+			listText: "Explore",
+			link: "",
+		},
+		{
+			listIcon: <GroupIcon color="mySecondary" />,
+			listText: "Friends",
+			link: "",
+		},
+		{
+			listIcon: <Diversity1Icon color="mySecondary" />,
+			listText: "Groups",
+			link: "",
+		},
+		{
+			listIcon: <BookmarksIcon color="mySecondary" />,
+			listText: "Saved",
+			link: "",
+		},
+	];
 	const theme = useTheme();
 	const styles = {
 		menuSliderContainer: {
