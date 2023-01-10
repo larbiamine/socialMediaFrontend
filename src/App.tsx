@@ -51,6 +51,7 @@ function App() {
 						)
 					}
 				/>
+
 				<Route
 					path="/profile/:id"
 					element={loggedIn ? <Profile /> : <Navigate to="/login" />}

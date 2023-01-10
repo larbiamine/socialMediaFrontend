@@ -137,7 +137,7 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 					</Grid>
 				</Grid>
 				<Typography fontSize={18} fontWeight={"bold"} color="initial">
-					{user.firstname + " " + user.lastname}
+					{user.firstname ? user.firstname + " " + user.lastname : ""}
 				</Typography>
 				<Typography fontSize={16} color="initial">
 					{user.bio}

@@ -7,6 +7,7 @@ export interface registerUser {
 	username: any;
 	password: any;
 	email: any;
+	imgFile: any;
 	// username: string;
 	// password: string;
 	// email: string;

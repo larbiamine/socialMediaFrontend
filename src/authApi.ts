@@ -11,6 +11,7 @@ import {
 	registerStart,
 	registerSuccess,
 } from "./redux/userRedux";
+import { uploadImage } from "./utilities/image";
 
 export const authApi = axios.create({
 	baseURL: BASE_URL,
@@ -29,6 +30,7 @@ export const loginUserFn = async (user: loginUser) => {
 
 export const login = async (dispatch: Function, user: loginUser) => {
 	dispatch(loginStart());
+
 	try {
 		const res = await authApi.post("/auth/login", user);
 		dispatch(loginSuccess(res.data));
@@ -39,10 +41,30 @@ export const login = async (dispatch: Function, user: loginUser) => {
 
 export const register = async (dispatch: Function, user: registerUser) => {
 	dispatch(registerStart());
+	var imgId: string[] = [];
+	console.log(user.imgFile);
+
 	try {
-		const res = await authApi.post("/auth/register", user);
-		dispatch(registerSuccess(res.data));
+		if (user.imgFile) {
+			var imgArr: File[] = [];
+			imgArr.push(user.imgFile);
+			console.log(imgArr);
+			imgId = await uploadImage("userAvatars", imgArr);
+			const newUser = {
+				avatar: imgId[0],
+				username: user.username,
+				email: user.email,
+				password: user.password,
+			};
+			const res = await authApi.post("/auth/register", newUser);
+			dispatch(registerSuccess(res.data));
+		} else {
+			const res = await authApi.post("/auth/register", user);
+			dispatch(registerSuccess(res.data));
+		}
 	} catch (error) {
+		console.log("EERRRROR LOG =====================");
+
 		console.log(error.response.data);
 
 		dispatch(registerFailed(error.response.data));

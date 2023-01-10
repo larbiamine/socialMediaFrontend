@@ -6,22 +6,6 @@ import { storage } from "./firebaseSetup";
 
 import { imageResize } from "./Resizer";
 
-// const compressFile = (file: File) =>
-// 	new Promise((resolve) => {
-// 		imageResize(
-// 			file,
-// 			500,
-// 			300,
-// 			"JPEG",
-// 			100,
-// 			0,
-// 			(uri) => {
-// 				resolve(uri);
-// 			},
-// 			"file"
-// 		);
-// 	});
-
 export const getRandomId = () => {
 	return cryptoRandomString({ length: 10, type: "numeric" });
 };

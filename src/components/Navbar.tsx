@@ -137,17 +137,6 @@ const SearchResults = ({ results }: Array<User>) => {
 					))}
 			</List>
 		</Box>
-		// 	<MenuItem key={"profile"} onClick={handleCloseSearch}>
-		// 	<Link
-		// 		sx={{
-		// 			textDecoration: "none",
-		// 			color: "black",
-		// 		}}
-		// 		href={`/profile/${currentUser._id}`}
-		// 	>
-		// 		SEARCH
-		// 	</Link>
-		// </MenuItem>
 	);
 };
 

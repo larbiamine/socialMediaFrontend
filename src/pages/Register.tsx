@@ -1,4 +1,4 @@
-import { Box, Button, FormHelperText } from "@mui/material";
+import { Avatar, Box, Button, FormHelperText } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -6,7 +6,7 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-import SendIcon from "@mui/icons-material/Send";
+
 import { register } from "../authApi";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
@@ -18,10 +18,10 @@ function Register() {
 	const { isRegisterError, registerError, isFetching } = useSelector(
 		(state: IRootState) => state
 	);
+	const [imgSrc, setImgSrc] = useState("");
 	const [password, setPassword] = useState("");
 	const [cpassword, setCpassword] = useState("");
-
-	const [loading, setLoading] = useState(false);
+	const [imgFile, setImgFile] = useState<File>();
 
 	const dispatch = useDispatch();
 
@@ -45,7 +45,6 @@ function Register() {
 		const password = data.get("password");
 		const cpassword = data.get("cpassword");
 		const email = data.get("email");
-
 		password === "" && setPasswordError(true);
 		username === "" && setUsernameError(true);
 		cpassword === "" && setCpasswordError(true);
@@ -57,7 +56,7 @@ function Register() {
 			password != "" && username != "" && cpassword != "" && email != "";
 
 		if (validation) {
-			register(dispatch, { username, password, email });
+			register(dispatch, { username, password, email, imgFile });
 		} else {
 			console.log("not good");
 		}
@@ -81,6 +80,29 @@ function Register() {
 					noValidate
 					sx={{ mt: 1 }}
 				>
+					<div>
+						<label htmlFor="file-input">
+							<Avatar
+								style={{
+									marginTop: 4,
+									width: 100,
+									height: 100,
+								}}
+								src={imgSrc}
+							/>
+						</label>
+						<input
+							type="file"
+							id="file-input"
+							style={{ display: "none" }}
+							accept="image/*"
+							// ref={imgFileRef}
+							onChange={(e) => {
+								setImgFile(e.target.files[0]);
+								setImgSrc(URL.createObjectURL(e.target.files[0]));
+							}}
+						/>
+					</div>
 					<TextField
 						error={usernameError}
 						margin="normal"
@@ -141,7 +163,7 @@ function Register() {
 						loading={isFetching}
 						fullWidth
 						sx={{ mt: 3, mb: 1 }}
-						loadingPosition="start"
+						// loadingPosition="start"
 						variant="outlined"
 						type="submit"
 						size="large"
