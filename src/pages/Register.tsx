@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { register } from "../authApi";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
+import { Navigate, useNavigate } from "react-router-dom";
 function Register() {
 	const [passwordError, setPasswordError] = useState(false);
 	const [cpasswordError, setCpasswordError] = useState(false);
@@ -37,6 +38,8 @@ function Register() {
 		setEmailError(false);
 	};
 
+	const navigate = useNavigate();
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		clearErrors();
@@ -57,6 +60,7 @@ function Register() {
 
 		if (validation) {
 			register(dispatch, { username, password, email, imgFile });
+			navigate("/login");
 		} else {
 			console.log("not good");
 		}
@@ -80,13 +84,13 @@ function Register() {
 					noValidate
 					sx={{ mt: 1 }}
 				>
-					<div>
+					<div style={{ paddingLeft: "140px", paddingRight: "140px" }}>
 						<label htmlFor="file-input">
 							<Avatar
 								style={{
 									marginTop: 4,
-									width: 100,
-									height: 100,
+									width: 120,
+									height: 120,
 								}}
 								src={imgSrc}
 							/>
