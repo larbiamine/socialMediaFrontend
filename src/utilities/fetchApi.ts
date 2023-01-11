@@ -128,7 +128,8 @@ export const editProfile = async (
 	var imgId: string[] = [];
 	try {
 		if (imgFile) {
-			if (oldImgId) await deleteImage("userAvatars", oldImgId);
+			if (oldImgId && oldImgId != "")
+				await deleteImage("userAvatars", oldImgId);
 			var imgArr: File[] = [];
 			imgArr.push(imgFile);
 			imgId = await uploadImage("userAvatars", imgArr);
@@ -143,7 +144,15 @@ export const editProfile = async (
 			const res = await userRequest.put("/user/editprofile", newProfile);
 			dispatch(editSuccess(res.data));
 		} else {
-			const res = await userRequest.put("/user/editprofile", profile);
+			const newProfile = {
+				avatar: oldImgId,
+				lastname: profile.lastname,
+				firstname: profile.firstname,
+				bio: profile.bio,
+				gender: profile.gender,
+				privacy: profile.privacy,
+			};
+			const res = await userRequest.put("/user/editprofile", newProfile);
 			dispatch(editSuccess(res.data));
 		}
 	} catch (error) {

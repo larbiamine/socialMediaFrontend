@@ -4,6 +4,7 @@ import { Box, Container } from "@mui/system";
 import {
 	Avatar,
 	FormControl,
+	FormHelperText,
 	Grid,
 	InputLabel,
 	MenuItem,
@@ -194,6 +195,11 @@ function EditProfile() {
 								Save
 							</LoadingButton>
 						</Grid>
+						{isLoginError && (
+							<FormHelperText style={{ fontSize: 16, color: "red" }}>
+								An Error has occured
+							</FormHelperText>
+						)}
 					</Grid>
 				</Grid>
 			</Box>
