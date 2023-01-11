@@ -19,6 +19,7 @@ const avatar = {
 	width: 200,
 	height: 200,
 };
+
 function EditProfile() {
 	const { currentUser } = useSelector((state: IRootState) => state);
 	const { isFetching } = useSelector((state: IRootState) => state);
@@ -47,19 +48,19 @@ function EditProfile() {
 	};
 
 	const handleSubmit = async () => {
-		console.log(lastname);
-		console.log(gender);
-		console.log(firstname);
-		console.log(privacy);
-		console.log(bio);
 		try {
-			await editProfile(dispatch, {
-				lastname,
-				firstname,
-				bio,
-				gender,
-				privacy,
-			});
+			await editProfile(
+				dispatch,
+				imgFile,
+				{
+					lastname,
+					firstname,
+					bio,
+					gender,
+					privacy,
+				},
+				currentUser.avatar
+			);
 		} catch (error) {
 			console.log(error);
 		}
@@ -99,7 +100,7 @@ function EditProfile() {
 					<Grid sx={{ marginTop: 5 }} item xs={8}>
 						<Grid style={{ display: "flex", gap: "1rem" }}>
 							<TextField
-								// error={usernameError}
+								// error={isLoginError}
 								margin="normal"
 								sx={{ mb: 2 }}
 								label="First Name"

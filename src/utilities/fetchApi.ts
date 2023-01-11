@@ -1,5 +1,6 @@
 import { editSuccess, loginFailed, loginStart } from "../redux/userRedux";
 import { Profile } from "../types";
+import { deleteImage, uploadImage } from "./image";
 import { userRequest } from "./requestMethodes";
 
 interface Post {
@@ -117,12 +118,34 @@ export async function searchUser(query: string) {
 	}
 }
 
-export const editProfile = async (dispatch: Function, profile: Profile) => {
+export const editProfile = async (
+	dispatch: Function,
+	imgFile: File,
+	profile: Profile,
+	oldImgId: String
+) => {
 	dispatch(loginStart());
-
+	var imgId: string[] = [];
 	try {
-		const res = await userRequest.put("/user/editprofile", profile);
-		dispatch(editSuccess(res.data));
+		if (imgFile) {
+			if (oldImgId) await deleteImage("userAvatars", oldImgId);
+			var imgArr: File[] = [];
+			imgArr.push(imgFile);
+			imgId = await uploadImage("userAvatars", imgArr);
+			const newProfile = {
+				avatar: imgId[0],
+				lastname: profile.lastname,
+				firstname: profile.firstname,
+				bio: profile.bio,
+				gender: profile.gender,
+				privacy: profile.privacy,
+			};
+			const res = await userRequest.put("/user/editprofile", newProfile);
+			dispatch(editSuccess(res.data));
+		} else {
+			const res = await userRequest.put("/user/editprofile", profile);
+			dispatch(editSuccess(res.data));
+		}
 	} catch (error) {
 		dispatch(loginFailed());
 	}

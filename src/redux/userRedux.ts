@@ -40,6 +40,7 @@ const userSlice = createSlice({
 			state.currentUser.firstname = action.payload.firstname;
 			state.currentUser.lastname = action.payload.lastname;
 			state.currentUser.privacy = action.payload.privacy;
+			state.currentUser.avatar = action.payload.avatar;
 		},
 		logout: (state) => {
 			state.currentUser = null;

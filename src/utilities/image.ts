@@ -1,7 +1,12 @@
 import Resizer from "react-image-file-resizer";
 import cryptoRandomString from "crypto-random-string";
 
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+	deleteObject,
+	getDownloadURL,
+	ref,
+	uploadBytes,
+} from "firebase/storage";
 import { storage } from "./firebaseSetup";
 
 import { imageResize } from "./Resizer";
@@ -31,6 +36,22 @@ export const uploadImage = async (type: string, inputImages: File[]) => {
 	}
 
 	return photoIds;
+};
+
+const getIdFromUrl = (url: String) => {
+	return url.slice(90, 100);
+};
+
+export const deleteImage = async (type: string, avatar: String) => {
+	const imgId = getIdFromUrl(avatar);
+	const imgRef = ref(storage, `${type}/${imgId}`);
+	await deleteObject(imgRef)
+		.then(() => {
+			console.log("deleted");
+		})
+		.catch((error) => {
+			console.log(error);
+		});
 };
 
 export const downloadImages = async (inputImgIds: string[]) => {
