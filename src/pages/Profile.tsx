@@ -20,6 +20,7 @@ function Profile() {
 	const location = useLocation();
 	const id = location.pathname.split("/")[2];
 	const { currentUser } = useSelector((state: IRootState) => state);
+	console.log(currentUser);
 
 	const [error, setError] = useState("");
 	const [user, setUser] = useState<null | User>(null);

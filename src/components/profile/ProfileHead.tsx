@@ -4,6 +4,7 @@ import { FC, useState } from "react";
 import { followUser } from "../../utilities/fetchApi";
 import { useDispatch } from "react-redux";
 import { follow, unfollow } from "../../redux/userRedux";
+import { useNavigate } from "react-router-dom";
 
 interface HeadProps {
 	user: User;
@@ -27,6 +28,8 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 		setIsFolowing(true);
 		setLoaded(false);
 	}
+
+	const navigate = useNavigate();
 
 	const dispatch = useDispatch();
 
@@ -61,7 +64,14 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 		if (myProfile) {
 			return (
 				<>
-					<Button size="small" color="mySecondary" variant="contained">
+					<Button
+						onClick={() => {
+							navigate("/editprofile");
+						}}
+						size="small"
+						color="mySecondary"
+						variant="contained"
+					>
 						{"Edit Profile "}
 					</Button>
 					<Button size="small" color="mySecondary" variant="outlined">

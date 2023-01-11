@@ -1,3 +1,5 @@
+import { editSuccess, loginFailed, loginStart } from "../redux/userRedux";
+import { Profile } from "../types";
 import { userRequest } from "./requestMethodes";
 
 interface Post {
@@ -114,3 +116,14 @@ export async function searchUser(query: string) {
 		return "error";
 	}
 }
+
+export const editProfile = async (dispatch: Function, profile: Profile) => {
+	dispatch(loginStart());
+
+	try {
+		const res = await userRequest.put("/user/editprofile", profile);
+		dispatch(editSuccess(res.data));
+	} catch (error) {
+		dispatch(loginFailed());
+	}
+};

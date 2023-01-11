@@ -14,3 +14,11 @@ export interface User {
 	email: string;
 	updatedAt: string;
 }
+
+export interface Profile {
+	firstname: string;
+	lastname: string;
+	bio: string;
+	privacy: string;
+	gender: string;
+}

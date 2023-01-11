@@ -32,6 +32,15 @@ const userSlice = createSlice({
 			state.isLoginError = false;
 			state.currentUser = action.payload;
 		},
+		editSuccess: (state, action) => {
+			state.isFetching = false;
+			state.isLoginError = false;
+			state.currentUser.bio = action.payload.bio;
+			state.currentUser.gender = action.payload.gender;
+			state.currentUser.firstname = action.payload.firstname;
+			state.currentUser.lastname = action.payload.lastname;
+			state.currentUser.privacy = action.payload.privacy;
+		},
 		logout: (state) => {
 			state.currentUser = null;
 			state.isLoginError = false;
@@ -98,6 +107,7 @@ export const {
 	initState,
 	follow,
 	unfollow,
+	editSuccess,
 	addPost,
 } = userSlice.actions;
 

@@ -12,6 +12,7 @@ import {
 	registerSuccess,
 } from "./redux/userRedux";
 import { uploadImage } from "./utilities/image";
+import { Profile } from "./types";
 
 export const authApi = axios.create({
 	baseURL: BASE_URL,
