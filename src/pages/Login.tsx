@@ -13,11 +13,11 @@ import { login } from "../authApi";
 
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
+import { initState } from "../redux/userRedux";
 
 function Login() {
 	const [passwordError, setPasswordError] = useState(false);
 	const [usernameError, setUsernameError] = useState(false);
-
 	const dispatch = useDispatch();
 
 	const { isFetching, isLoginError } = useSelector(

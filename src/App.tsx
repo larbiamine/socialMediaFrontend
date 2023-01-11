@@ -22,6 +22,7 @@ import {
 } from "react-router-dom";
 import { IRootState } from "./redux/store";
 import { useSelector } from "react-redux";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
 	const { currentUser } = useSelector((state: IRootState) => state);
@@ -55,6 +56,10 @@ function App() {
 				<Route
 					path="/profile/:id"
 					element={loggedIn ? <Profile /> : <Navigate to="/login" />}
+				/>
+				<Route
+					path="/editprofile"
+					element={loggedIn ? <EditProfile /> : <Navigate to="/login" />}
 				/>
 			</>
 		)
