@@ -21,7 +21,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import AddComment from "./AddComment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentIcon from "@mui/icons-material/Comment";
-import { Badge } from "@mui/material";
+import { Badge, Box } from "@mui/material";
 import { publicRequest } from "../../utilities/requestMethodes";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getComments, likePost, unlikePost } from "../../utilities/fetchApi";
@@ -66,6 +66,11 @@ export default function PostCard({
 	likes,
 	comments,
 }: Post) {
+	const imgsStyle =
+		photos.length > 1
+			? { height: photos.length > 2 ? 450 : 200, overflowY: "scroll" }
+			: {};
+
 	const ListOfImages = () => {
 		var listimgs: any[] = [];
 		const asyncfetch = async () => {
@@ -84,16 +89,18 @@ export default function PostCard({
 		asyncfetch();
 
 		return (
-			<ImageList
-				style={{
-					margin: 10,
-				}}
-				variant="quilted"
-				cols={listimgs.length % 3}
-				gap={8}
-			>
-				{listimgs}
-			</ImageList>
+			<Box sx={imgsStyle}>
+				<ImageList
+					style={{
+						margin: 10,
+					}}
+					variant="quilted"
+					cols={listimgs.length % 3}
+					gap={8}
+				>
+					{listimgs}
+				</ImageList>
+			</Box>
 		);
 	};
 
