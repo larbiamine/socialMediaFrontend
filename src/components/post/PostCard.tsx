@@ -88,8 +88,8 @@ export default function PostCard({
 				style={{
 					margin: 10,
 				}}
-				variant="masonry"
-				cols={3}
+				variant="quilted"
+				cols={listimgs.length % 3}
 				gap={8}
 			>
 				{listimgs}
