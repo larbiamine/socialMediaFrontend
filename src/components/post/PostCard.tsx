@@ -26,6 +26,7 @@ import { publicRequest } from "../../utilities/requestMethodes";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getComments, likePost, unlikePost } from "../../utilities/fetchApi";
 import { timeAgo } from "../../utilities/time";
+import HeaderMenu from "./HeaderMenu";
 
 interface User {
 	userId: string;
@@ -80,13 +81,6 @@ export default function PostCard({
 
 					listimgs.push(
 						<ImageListItem key={element}>
-							{/* <img
-								style={{
-									objectFit: "inherit",
-								}}
-								src={`${element}?w=161&fit=crop&auto=format`}
-								srcSet={`${element}?w=161&fit=crop&auto=format&dpr=2 2x`}
-							/> */}
 							<Image
 								src={element}
 								easing="ease-in-out"
@@ -117,6 +111,8 @@ export default function PostCard({
 			</Box>
 		);
 	};
+
+	const [anchor, setAnchor] = React.useState<null | HTMLElement>(null);
 
 	const [expanded, setExpanded] = React.useState(false);
 	const { currentUser } = useSelector((state: IRootState) => state);
@@ -220,7 +216,12 @@ export default function PostCard({
 					/>
 				}
 				action={
-					<IconButton aria-label="settings">
+					<IconButton
+						onClick={(event: React.MouseEvent<HTMLElement>) =>
+							setAnchor(event.currentTarget)
+						}
+						aria-label="settings"
+					>
 						<MoreVertIcon />
 					</IconButton>
 				}
@@ -269,6 +270,7 @@ export default function PostCard({
 					)}
 				</CardContent>
 			</Collapse>
+			<HeaderMenu anchor={anchor} setAnchor={setAnchor} />
 		</Card>
 	);
 }
