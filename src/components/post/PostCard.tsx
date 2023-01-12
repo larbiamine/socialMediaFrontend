@@ -27,20 +27,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getComments, likePost, unlikePost } from "../../utilities/fetchApi";
 import { timeAgo } from "../../utilities/time";
 import HeaderMenu from "./HeaderMenu";
+import { Post } from "../../types";
 
 interface User {
 	userId: string;
 	username: string;
 	avatar: string;
-}
-
-interface Post {
-	userId: string;
-	body: string;
-	createdAt: string;
-	photos: Array<string>;
-	comments: Array<string>;
-	likes: Array<string>;
 }
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -270,7 +262,19 @@ export default function PostCard({
 					)}
 				</CardContent>
 			</Collapse>
-			<HeaderMenu anchor={anchor} setAnchor={setAnchor} />
+			<HeaderMenu
+				anchor={anchor}
+				setAnchor={setAnchor}
+				post={{
+					photos,
+					userId,
+					body,
+					_id,
+					createdAt,
+					likes,
+					comments,
+				}}
+			/>
 		</Card>
 	);
 }

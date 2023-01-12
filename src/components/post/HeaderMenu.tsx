@@ -1,13 +1,18 @@
 import { Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import ConfirmationModal from "./ConfirmationModal";
+import { Post } from "../../types";
 
 interface HeaderMenu {
 	anchor: null | HTMLElement;
 	setAnchor: Function;
+	post: Post;
 }
 
-function HeaderMenu({ anchor, setAnchor }: HeaderMenu) {
+function HeaderMenu({ anchor, setAnchor, post }: HeaderMenu) {
+	const [openModal, setOpenModal] = React.useState(false);
+
 	return (
 		<Menu
 			//Settings DropDown Menu
@@ -26,20 +31,25 @@ function HeaderMenu({ anchor, setAnchor }: HeaderMenu) {
 			open={Boolean(anchor)}
 			onClose={() => setAnchor(null)}
 		>
+			<ConfirmationModal open={openModal} setOpen={setOpenModal} post={post} />
 			<MenuItem key={"profile"} onClick={() => setAnchor(null)}>
 				<Link
-					sx={{
+					style={{
 						textDecoration: "none",
 						color: "black",
 					}}
 					href={""}
+					onClick={() => {
+						console.log("ondelete");
+						setOpenModal(true);
+					}}
 				>
 					Delete
 				</Link>
 			</MenuItem>
 			<MenuItem key={"Account"} onClick={() => setAnchor(null)}>
 				<Link
-					sx={{
+					style={{
 						textDecoration: "none",
 						color: "black",
 					}}

@@ -22,3 +22,12 @@ export interface Profile {
 	privacy: string;
 	gender: string;
 }
+
+export interface Post {
+	userId: string;
+	body: string;
+	createdAt: string;
+	photos: Array<string>;
+	comments: Array<string>;
+	likes: Array<string>;
+}
