@@ -1,15 +1,15 @@
 import { editSuccess, loginFailed, loginStart } from "../redux/userRedux";
-import { Profile } from "../types";
+import { Post, Profile } from "../types";
 import { deleteImage, uploadImage } from "./image";
 import { userRequest } from "./requestMethodes";
 
-interface Post {
+interface PPost {
 	body: string;
 	photos: Array<string>;
 	privacy: string;
 }
 
-export async function createPost(variables: Post) {
+export async function createPost(variables: PPost) {
 	const res = await userRequest.post("post/create", variables);
 	return res.data;
 }
@@ -157,5 +157,20 @@ export const editProfile = async (
 		}
 	} catch (error) {
 		dispatch(loginFailed());
+	}
+};
+
+export const deletePost = async (post: Post) => {
+	try {
+		const res = await userRequest.delete(`/post/${post._id}`);
+		if (post.photos.length > 0) {
+			for (const image of post.photos) {
+				await deleteImage("postImages", image);
+			}
+		}
+		return res.data;
+	} catch (error) {
+		console.log(error);
+		return "error";
 	}
 };

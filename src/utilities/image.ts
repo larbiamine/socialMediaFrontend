@@ -38,12 +38,16 @@ export const uploadImage = async (type: string, inputImages: File[]) => {
 	return photoIds;
 };
 
-const getIdFromUrl = (url: String) => {
-	return url.slice(90, 100);
+export const getIdFromUrl = (type: string, url: String) => {
+	if (type === "userAvatars") {
+		return url.slice(90, 100);
+	} else {
+		return url.slice(89, 99);
+	}
 };
 
-export const deleteImage = async (type: string, avatar: String) => {
-	const imgId = getIdFromUrl(avatar);
+export const deleteImage = async (type: string, image: String) => {
+	const imgId = getIdFromUrl(type, image);
 	const imgRef = ref(storage, `${type}/${imgId}`);
 	await deleteObject(imgRef)
 		.then(() => {
