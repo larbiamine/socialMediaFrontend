@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { Box, Container } from "@mui/system";
 import {
+	Alert,
 	Avatar,
 	FormControl,
 	FormHelperText,
@@ -15,6 +16,7 @@ import {
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import { editProfile } from "../utilities/fetchApi";
+import AlertToast from "../components/AlertToast";
 const avatar = {
 	marginTop: 4,
 	width: 200,
@@ -39,6 +41,8 @@ function EditProfile() {
 		currentUser.lastname ? currentUser.lastname : ""
 	);
 
+	const [openToastAlert, setOpenToastAlert] = useState(false);
+
 	const [privacy, setPrivacy] = useState(currentUser.privacy);
 
 	const handleGenderChange = (event: SelectChangeEvent) => {
@@ -62,6 +66,7 @@ function EditProfile() {
 				},
 				currentUser.avatar
 			);
+			setOpenToastAlert(true);
 		} catch (error) {
 			console.log(error);
 		}
@@ -203,6 +208,12 @@ function EditProfile() {
 					</Grid>
 				</Grid>
 			</Box>
+			<AlertToast
+				type={"success"}
+				message={"profile saved"}
+				setOpen={setOpenToastAlert}
+				open={openToastAlert}
+			/>
 		</Container>
 	);
 }

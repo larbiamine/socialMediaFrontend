@@ -29,6 +29,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { createPost } from "../../utilities/fetchApi";
 import { addPost } from "../../redux/userRedux";
+import AlertToast from "../AlertToast";
 
 export default function AddPost() {
 	const queryClient = useQueryClient();
@@ -54,6 +55,8 @@ export default function AddPost() {
 	const [privacy, setPrivacy] = useState("friends");
 	const [isPosting, setIsPosting] = useState(false);
 
+	const [openToastAlert, setOpenToastAlert] = useState(false);
+
 	const onSubmit = async () => {
 		var photoIds: string[] = [];
 		setIsPosting(true);
@@ -77,6 +80,7 @@ export default function AddPost() {
 			}
 		}
 		setIsPosting(false);
+		setOpenToastAlert(true);
 	};
 
 	const PostButton = () => {
@@ -164,6 +168,12 @@ export default function AddPost() {
 						<MenuItem value={"private"}>Private</MenuItem>
 					</Select>
 					<FormHelperText>Privacy</FormHelperText>
+					<AlertToast
+						open={openToastAlert}
+						setOpen={setOpenToastAlert}
+						message="Post Added"
+						type="success"
+					/>
 				</FormControl>
 			</>
 		);
