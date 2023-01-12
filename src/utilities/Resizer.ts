@@ -231,14 +231,14 @@ const resizeFile = (file) =>
 			700,
 			500,
 			"JPEG",
-			100,
+			90,
 			0,
 			(uri) => {
 				resolve(uri);
 			},
 			"file",
-			700,
-			500
+			500,
+			300
 		);
 	});
 

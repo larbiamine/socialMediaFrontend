@@ -8,7 +8,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import Comment from "./Comment";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
+import Image from "mui-image";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
@@ -80,7 +80,21 @@ export default function PostCard({
 
 					listimgs.push(
 						<ImageListItem key={element}>
-							<img src={element} />
+							{/* <img
+								style={{
+									objectFit: "inherit",
+								}}
+								src={`${element}?w=161&fit=crop&auto=format`}
+								srcSet={`${element}?w=161&fit=crop&auto=format&dpr=2 2x`}
+							/> */}
+							<Image
+								src={element}
+								easing="ease-in-out"
+								duration={1000}
+								height={photos.length === 1 ? "300px" : "100%"}
+								showLoading={true}
+								fit={"cover"}
+							/>
 						</ImageListItem>
 					);
 				}
