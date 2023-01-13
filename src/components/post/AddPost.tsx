@@ -38,13 +38,13 @@ export default function AddPost() {
 
 	const mutation = useMutation({
 		mutationFn: createPost,
-		mutationKey: "posts",
+		mutationKey: "feedposts",
 		onSuccess: (newPost) => {
-			queryClient.setQueryData(["posts"], (oldData) => [
+			queryClient.setQueryData(["feedposts"], (oldData) => [
 				...(oldData ?? []),
 				newPost,
 			]);
-			queryClient.invalidateQueries(["posts"]);
+			queryClient.invalidateQueries(["feedposts"]);
 			dispatch(addPost(newPost._id));
 		},
 	});

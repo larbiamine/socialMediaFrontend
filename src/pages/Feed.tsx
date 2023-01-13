@@ -9,6 +9,8 @@ import { IRootState } from "../redux/store";
 function Feed() {
 	const { currentUser } = useSelector((state: IRootState) => state);
 
+	console.log(currentUser.following);
+
 	document.title = "Home";
 	return (
 		<>
@@ -18,7 +20,7 @@ function Feed() {
 				</Grid>
 				<Grid sx={{ marginTop: "80px" }} item xs={3}>
 					<AddPost />
-					<FeedPosts id={currentUser._id} />
+					<FeedPosts userFollowing={currentUser.following} />
 				</Grid>
 				<Grid item xs={1}>
 					<Suggestions />

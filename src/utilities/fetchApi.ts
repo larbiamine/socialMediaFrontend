@@ -24,7 +24,6 @@ export async function createComment(variables: Comment) {
 }
 
 interface postData {
-	userId: string;
 	userFollowing: Array<string>;
 }
 
@@ -41,13 +40,18 @@ interface commentConfig {
 }
 
 export async function getPosts(data: postConfig) {
-	if (typeof data !== "undefined") {
-		const res = await userRequest.get("post/getposts/", data);
-		return res.data;
-	}
+	const res = await userRequest.get("post/getposts/", data);
 
-	const res = await userRequest.get("post/getposts/");
+	return res.data;
+}
+export async function getFeedPosts(data: postConfig) {
+	const res = await userRequest.get("post/getfeedposts/", data);
 
+	return res.data;
+}
+
+export async function getUserPosts(id: string) {
+	const res = await userRequest.get(`post//getposts/${id}`);
 	return res.data;
 }
 

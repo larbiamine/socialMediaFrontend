@@ -12,7 +12,9 @@ function ProfilePosts(id: string) {
 		params: request,
 	};
 
-	const { data, status } = useQuery(["posts"], () => getPosts(config));
+	const { data, status } = useQuery([`user_${id.id}_posts`], () =>
+		getPosts(config)
+	);
 
 	return (
 		status === "success" && (
