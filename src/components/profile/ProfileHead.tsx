@@ -1,16 +1,12 @@
 import { Avatar, Button, Grid, Typography } from "@mui/material";
-import { User } from "../../types";
+import { HeadProps } from "../../types";
 import { FC, useState } from "react";
-import { followUser } from "../../utilities/fetchApi";
 import { useDispatch } from "react-redux";
-import { follow, unfollow } from "../../redux/userRedux";
 import { useNavigate } from "react-router-dom";
-
-interface HeadProps {
-	user: User;
-	currentUser: User;
-	isFollowing: boolean;
-}
+import FollowersList from "./FollowersList";
+import Link from "@mui/material/Link";
+import { followButton } from "../../utilities/buttonsOnclick";
+import FollowingList from "./FollowingList";
 
 const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 	const avatar = {
@@ -19,6 +15,9 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 		height: 200,
 	};
 	const [isFollowing, setIsFolowing] = useState(false);
+
+	const [followersOpen, setFollowersOpen] = useState(false);
+	const [followingOpen, setFollowingOpen] = useState(false);
 
 	const [loaded, setLoaded] = useState(true);
 
@@ -32,33 +31,6 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 	const navigate = useNavigate();
 
 	const dispatch = useDispatch();
-
-	const followButton = async (option: string) => {
-		option === "follow"
-			? dispatch(follow(user._id))
-			: dispatch(unfollow(user._id));
-		try {
-			console.info(`started ${option}ing`);
-			const res = await followUser(option, user._id);
-			if (res === "success") {
-				console.info(`ended ${option}ing`);
-			} else {
-				if (option === "follow") {
-					dispatch(unfollow(user._id));
-				} else {
-					dispatch(follow(user._id));
-				}
-				console.log("error following/unfollowing");
-			}
-		} catch (error) {
-			if (option === "follow") {
-				dispatch(unfollow(user._id));
-			} else {
-				dispatch(follow(user._id));
-			}
-			console.log(error);
-		}
-	};
 
 	const FollowButton = () => {
 		if (myProfile) {
@@ -84,7 +56,7 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 				return (
 					<Button
 						onClick={() => {
-							followButton("follow");
+							followButton(dispatch, user._id, "follow");
 						}}
 						size="small"
 						color="mySecondary"
@@ -97,7 +69,7 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 				return (
 					<Button
 						onClick={() => {
-							followButton("unfollow");
+							followButton(dispatch, user._id, "unfollow");
 						}}
 						size="small"
 						color="mySecondary"
@@ -120,6 +92,7 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 					<Typography fontWeight={"bold"} variant="h5" color="initial">
 						{user.username}
 					</Typography>
+
 					<FollowButton />
 				</Grid>
 				<Grid
@@ -130,19 +103,44 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 					<Grid item xs={4}>
 						<Typography fontSize={16} color="initial">
 							Posts
-							<br /> {user.posts.length}
+							<br />
+							<Link
+								component="button"
+								variant="body1"
+								onClick={() => setFollowersOpen(true)}
+								style={{ color: "black", textDecoration: "none" }}
+							>
+								{user.posts.length}
+							</Link>
 						</Typography>
 					</Grid>
 					<Grid item xs={4}>
 						<Typography fontSize={16} color="initial">
 							Followers
-							<br /> {user.followers.length}
+							<br />
+							<Link
+								component="button"
+								variant="body1"
+								onClick={() => setFollowersOpen(true)}
+								style={{ color: "black", textDecoration: "none" }}
+							>
+								{user.followers.length}
+							</Link>
 						</Typography>
 					</Grid>
 					<Grid item xs={4}>
 						<Typography fontSize={16} color="initial">
 							Following
-							<br /> {user.following.length}
+							<br />{" "}
+							<Link
+								component="button"
+								variant="body1"
+								onClick={() => setFollowingOpen(true)}
+								style={{ color: "black", textDecoration: "none" }}
+							>
+								{" "}
+								{user.following.length}
+							</Link>
 						</Typography>
 					</Grid>
 				</Grid>
@@ -153,8 +151,19 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 					{user.bio}
 				</Typography>
 			</Grid>
+			<FollowersList
+				currentUser={currentUser}
+				setOpen={setFollowersOpen}
+				open={followersOpen}
+				userFollowers={user.followers}
+			/>
+			<FollowingList
+				currentUser={currentUser}
+				setOpen={setFollowingOpen}
+				open={followingOpen}
+				userFollowing={user.following}
+			/>
 		</Grid>
 	);
 };
-
 export default ProfileHead;

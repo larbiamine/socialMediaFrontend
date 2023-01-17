@@ -32,6 +32,25 @@ export interface Post {
 	likes: Array<string>;
 }
 
+export interface HeadProps {
+	user: User;
+	currentUser: User;
+	isFollowing: boolean;
+}
+
+export interface FollowersListProps {
+	currentUser: User;
+	open: boolean;
+	setOpen: Function;
+	userFollowers: Array<string>;
+}
+export interface FollowingListProps {
+	currentUser: User;
+	open: boolean;
+	setOpen: Function;
+	userFollowing: Array<string>;
+}
+
 export interface RedirectData {
 	redirectURL: string;
 }
