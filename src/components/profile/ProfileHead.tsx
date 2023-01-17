@@ -138,7 +138,6 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 								onClick={() => setFollowingOpen(true)}
 								style={{ color: "black", textDecoration: "none" }}
 							>
-								{" "}
 								{user.following.length}
 							</Link>
 						</Typography>

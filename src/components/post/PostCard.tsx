@@ -208,14 +208,16 @@ export default function PostCard({
 					/>
 				}
 				action={
-					<IconButton
-						onClick={(event: React.MouseEvent<HTMLElement>) =>
-							setAnchor(event.currentTarget)
-						}
-						aria-label="settings"
-					>
-						<MoreVertIcon />
-					</IconButton>
+					currentUser.posts.includes(_id) && (
+						<IconButton
+							onClick={(event: React.MouseEvent<HTMLElement>) =>
+								setAnchor(event.currentTarget)
+							}
+							aria-label="settings"
+						>
+							<MoreVertIcon />
+						</IconButton>
+					)
 				}
 				title={user?.username}
 				subheader={agoDate}
@@ -229,17 +231,12 @@ export default function PostCard({
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
-				<IconButton
-					onClick={() => handlelikePost()}
-					aria-label="add to favorites"
-				>
+				<IconButton onClick={handlelikePost} aria-label="add to favorites">
 					<Badge color="mySecondary" badgeContent={nbLikes}>
 						<FavoriteIcon color={liked ? "mySecondary" : ""} />
 					</Badge>
 				</IconButton>
-				<IconButton aria-label="share">
-					<ShareIcon />
-				</IconButton>
+
 				<ExpandMore
 					expand={expanded}
 					onClick={handleExpandClick}
@@ -262,19 +259,21 @@ export default function PostCard({
 					)}
 				</CardContent>
 			</Collapse>
-			<HeaderMenu
-				anchor={anchor}
-				setAnchor={setAnchor}
-				post={{
-					photos,
-					userId,
-					body,
-					_id,
-					createdAt,
-					likes,
-					comments,
-				}}
-			/>
+			{currentUser.posts.includes(_id) && (
+				<HeaderMenu
+					anchor={anchor}
+					setAnchor={setAnchor}
+					post={{
+						photos,
+						userId,
+						body,
+						_id,
+						createdAt,
+						likes,
+						comments,
+					}}
+				/>
+			)}
 		</Card>
 	);
 }
