@@ -31,3 +31,13 @@ export interface Post {
 	comments: Array<string>;
 	likes: Array<string>;
 }
+
+export interface RedirectData {
+	redirectURL: string;
+}
+
+export function isRedirectData(object: unknown): object is RedirectData {
+	if (object !== null && typeof object === "object") {
+		return "redirectURL" in object;
+	}
+}

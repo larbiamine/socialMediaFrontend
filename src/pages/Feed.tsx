@@ -9,8 +9,6 @@ import { IRootState } from "../redux/store";
 function Feed() {
 	const { currentUser } = useSelector((state: IRootState) => state);
 
-	console.log(currentUser.following);
-
 	document.title = "Home";
 	return (
 		<>

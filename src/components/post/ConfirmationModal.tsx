@@ -52,7 +52,7 @@ function ConfirmationModal({
 			} else {
 				setMessage("Post Deleted");
 				setType("info");
-				queryClient.invalidateQueries(["posts"]);
+				queryClient.invalidateQueries(["feedposts"]);
 			}
 			setOpenToast(true);
 			setOpen(false);
