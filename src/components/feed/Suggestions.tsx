@@ -7,11 +7,15 @@ import { useTheme } from "@mui/material/styles";
 
 import Avatar from "@mui/material/Avatar/Avatar";
 import Typography from "@mui/material/Typography";
-import { Paper, Grid, IconButton } from "@mui/material";
+import { Paper, Grid, IconButton, Link } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircleOutline";
 
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getSuggestions } from "../../utilities/fetchApi";
+import { followButton } from "../../utilities/buttonsOnclick";
+import { useDispatch } from "react-redux";
 
 const listItems = [
 	{
@@ -34,8 +38,12 @@ const listItems = [
 
 function Suggestions() {
 	const [checked, setChecked] = useState([false, false, false, false]);
+	const { data, status } = useQuery(["suggestions"], getSuggestions);
 
-	const handleCheck = (index: number) => {
+	const dispatch = useDispatch();
+
+	const handleFollow = (userId: string, index: number) => {
+		followButton(dispatch, userId, "follow");
 		const oldState = checked;
 		oldState[index] = !oldState[index];
 		setChecked(oldState);
@@ -63,71 +71,55 @@ function Suggestions() {
 					</Typography>
 					<Grid style={{ marginTop: 4 }} container wrap="nowrap" spacing={2}>
 						<List>
-							{listItems.map((listItem, index) => (
-								<ListItem key={listItem.listText}>
-									<Grid style={{ margin: 5 }} xs item>
-										{listItem.listIcon}
-									</Grid>
-									<Grid justifyContent={"left"} item xs={8} zeroMinWidth>
-										<Typography style={{ textAlign: "left" }}>
-											{listItem.listText}
-										</Typography>
-										<Typography color={"grey"}>Nice User</Typography>
-									</Grid>
-									<Grid xs={1} item justifyContent={"right"}>
-										<IconButton
-											style={{ marginRight: 0 }}
-											aria-label="add to favorites"
-											onClick={() => handleCheck(index)}
-										>
-											{checked[index] ? (
-												<CheckCircleIcon color="mySecondary" />
-											) : (
-												<AddCircleIcon color="mySecondary" />
-											)}
-										</IconButton>
-									</Grid>
-								</ListItem>
-							))}
+							{status === "success" &&
+								data.map((user, index) => (
+									<ListItem key={user._id}>
+										<Grid style={{ margin: 5 }} xs item>
+											<Link
+												style={{
+													textDecoration: "none",
+													color: "black",
+												}}
+												href={`/profile/${user._id}`}
+											>
+												<Avatar src={user.avatar} />
+											</Link>
+										</Grid>
+										<Grid justifyContent={"left"} item xs={8} zeroMinWidth>
+											<Typography style={{ textAlign: "left" }}>
+												<Link
+													style={{
+														textDecoration: "none",
+														color: "black",
+													}}
+													href={`/profile/${user._id}`}
+												>
+													{user.firstname + " " + user.lastname}
+												</Link>
+											</Typography>
+											<Typography color={"grey"}>{user.username}</Typography>
+										</Grid>
+										<Grid xs={1} item justifyContent={"right"}>
+											<IconButton
+												style={{ marginRight: 0 }}
+												aria-label="add to favorites"
+												onClick={() => handleFollow(user._id, index)}
+											>
+												{checked[index] ? (
+													<CheckCircleIcon color="mySecondary" />
+												) : (
+													<AddCircleIcon color="mySecondary" />
+												)}
+											</IconButton>
+										</Grid>
+									</ListItem>
+								))}
 						</List>
 					</Grid>
 				</Paper>
 			</Box>
 		</div>
 	);
-	// return (
-	// 	<div style={{ marginTop: "60px", position: "fixed" }}>
-	// 		<Box style={styles.menuSliderContainer} component="div">
-	// 			<Paper
-	// 				style={{ marginBottom: "0px", padding: "15px 10px" }}
-	// 				elevation={3}
-	// 			>
-	// 				<Typography variant="h6" color="initial">
-	// 					{"People You May Know"}
-	// 				</Typography>
-	// 				<List>
-	// 					{listItems.map((listItem, index) => (
-	// 						<ListItem style={styles.listItem} key={index}>
-	// 							<Grid container spacing={2}>
-	// 								<Grid item xs={6}>
-	// 									<ListItemIcon sx={styles.listItem}>
-	// 										{listItem.listIcon}
-	// 									</ListItemIcon>
-	// 									<ListItemText primary={listItem.listText} />
-	// 								</Grid>
-	// 								<Grid item xs={6}>
-	// 									<Button size="small" variant="outlined">
-	// 										Follow
-	// 									</Button>
-	// 								</Grid>
-	// 							</Grid>
-	// 						</ListItem>
-	// 					))}
-	// 				</List>
-	// 			</Paper>
-	// 		</Box>
-	// 	</div>
-	// );
 }
 
 export default Suggestions;

@@ -178,3 +178,20 @@ export const deletePost = async (post: Post) => {
 		return "error";
 	}
 };
+
+interface SuggestionUser {
+	_id: string;
+	username: string;
+	lastname: string;
+	firstname: string;
+	avatar: string;
+}
+
+export const getSuggestions = async () => {
+	try {
+		const res = await userRequest.get("user/suggestions");
+		return res.data;
+	} catch (error) {
+		return [];
+	}
+};

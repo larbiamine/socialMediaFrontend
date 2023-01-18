@@ -104,14 +104,7 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 						<Typography fontSize={16} color="initial">
 							Posts
 							<br />
-							<Link
-								component="button"
-								variant="body1"
-								onClick={() => setFollowersOpen(true)}
-								style={{ color: "black", textDecoration: "none" }}
-							>
-								{user.posts.length}
-							</Link>
+							{user.posts.length}
 						</Typography>
 					</Grid>
 					<Grid item xs={4}>

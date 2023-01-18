@@ -216,7 +216,7 @@ function Navbar() {
 			const result = await userRequest.get(`user/search/${search}`);
 			setResults(result.data);
 			setFetchedSearch(true);
-			console.log(result.data);
+
 			handleOpenSearch();
 		} catch (error) {
 			console.log(error);

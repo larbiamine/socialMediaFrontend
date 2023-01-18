@@ -54,7 +54,17 @@ const UserWithAvatar: FC<UserWithAvatarProps> = ({
 					</Link>
 				</Grid>
 				<Grid justifyContent={"center"} item xs={8} zeroMinWidth>
-					<Typography style={{ textAlign: "left" }}>{user.username}</Typography>
+					<Link
+						style={{
+							textDecoration: "none",
+							color: "black",
+						}}
+						href={`/profile/${userId}`}
+					>
+						<Typography style={{ textAlign: "left" }}>
+							{user.username}
+						</Typography>
+					</Link>
 				</Grid>
 				<Grid xs={1} item justifyContent={"right"}>
 					<IconButton
