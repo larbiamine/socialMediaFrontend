@@ -17,13 +17,13 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
+
 import AddComment from "./AddComment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentIcon from "@mui/icons-material/Comment";
-import { Badge, Box } from "@mui/material";
+import { Badge, Box, Link } from "@mui/material";
 import { publicRequest } from "../../utilities/requestMethodes";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getComments, likePost, unlikePost } from "../../utilities/fetchApi";
 import { timeAgo } from "../../utilities/time";
 import HeaderMenu from "./HeaderMenu";
@@ -201,11 +201,19 @@ export default function PostCard({
 		<Card sx={{ marginLeft: "auto", marginRight: "auto", maxWidth: "70%" }}>
 			<CardHeader
 				avatar={
-					<Avatar
-						src={user?.avatar}
-						sx={{ bgcolor: red[500] }}
-						aria-label="recipe"
-					/>
+					<Link
+						style={{
+							textDecoration: "none",
+							color: "black",
+						}}
+						href={`/profile/${userId}`}
+					>
+						<Avatar
+							src={user?.avatar}
+							sx={{ bgcolor: red[500] }}
+							aria-label="recipe"
+						/>
+					</Link>
 				}
 				action={
 					currentUser.posts.includes(_id) && (
@@ -219,7 +227,17 @@ export default function PostCard({
 						</IconButton>
 					)
 				}
-				title={user?.username}
+				title={
+					<Link
+						style={{
+							textDecoration: "none",
+							color: "black",
+						}}
+						href={`/profile/${userId}`}
+					>
+						{user?.username}
+					</Link>
+				}
 				subheader={agoDate}
 			/>
 
