@@ -2,11 +2,28 @@ import { Avatar, Button, Grid, Typography } from "@mui/material";
 import { HeadProps } from "../../types";
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+import { follow, unfollow } from "../../redux/userRedux";
+
+interface HeadProps {
+	user: User;
+	currentUser: User;
+	isFollowing: boolean;
+}
+=======
+>>>>>>> Stashed changes
 import { useNavigate } from "react-router-dom";
 import FollowersList from "./FollowersList";
 import Link from "@mui/material/Link";
 import { followButton } from "../../utilities/buttonsOnclick";
 import FollowingList from "./FollowingList";
+<<<<<<< Updated upstream
+=======
+import { useQueryClient } from "@tanstack/react-query";
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 	const avatar = {
@@ -27,6 +44,11 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 		setIsFolowing(true);
 		setLoaded(false);
 	}
+<<<<<<< Updated upstream
+=======
+	const queryClient = useQueryClient();
+	const navigate = useNavigate();
+>>>>>>> Stashed changes
 
 	const navigate = useNavigate();
 
@@ -56,7 +78,22 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 				return (
 					<Button
 						onClick={() => {
+<<<<<<< Updated upstream
 							followButton(dispatch, user._id, "follow");
+=======
+<<<<<<< Updated upstream
+							followButton("follow");
+=======
+							followButton(dispatch, user._id, "follow").then(() => {
+								// queryClient.setQueryData([mutationKey], (oldData) => [
+								// 	...(oldData ?? []),
+								// 	newComment,
+								// ]);
+								setIsFolowing(true);
+								queryClient.invalidateQueries([`user ${user._id}`]);
+							});
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 						}}
 						size="small"
 						color="mySecondary"
@@ -69,7 +106,22 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 				return (
 					<Button
 						onClick={() => {
+<<<<<<< Updated upstream
 							followButton(dispatch, user._id, "unfollow");
+=======
+<<<<<<< Updated upstream
+							followButton("unfollow");
+=======
+							followButton(dispatch, user._id, "unfollow").then(() => {
+								// queryClient.setQueryData([mutationKey], (oldData) => [
+								// 	...(oldData ?? []),
+								// 	newComment,
+								// ]);
+								setIsFolowing(false);
+								queryClient.invalidateQueries([`user ${user._id}`]);
+							});
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 						}}
 						size="small"
 						color="mySecondary"

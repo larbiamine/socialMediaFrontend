@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { useEffect, useState } from "react";
 import { getUser } from "../utilities/fetchApi";
+import { useQuery } from "@tanstack/react-query";
 
 const profileBox = {
 	marginTop: "70px",
@@ -22,35 +23,35 @@ function Profile() {
 	const { currentUser } = useSelector((state: IRootState) => state);
 	// console.log(currentUser);
 
-	const [error, setError] = useState("");
-	const [user, setUser] = useState<null | User>(null);
-	const [loading, setLoading] = useState(true);
+	const { data, status } = useQuery([`user ${id}`], () => getUser(id));
 
-	useEffect(() => {
-		const findUser = async (id: string) => {
-			try {
-				const resUser = await getUser(id);
+	if (status === "success") {
+		document.title = data.username;
+	}
+	// useEffect(() => {
+	// 	const findUser = async (id: string) => {
+	// 		try {
+	// 			const resUser = await getUser(id);
 
-				// const resUser = await userRequest.get(`user/find/${id}`);
-				setLoading(false);
-				setUser(resUser);
-				document.title = resUser.username;
-			} catch (error) {
-				console.log(error);
-				setError("user Not Found");
-			}
-		};
+	// 			// const resUser = await userRequest.get(`user/find/${id}`);
+	// 			setLoading(false);
+	// 			setUser(resUser);
+	// 			document.title = resUser.username;
+	// 		} catch (error) {
+	// 			console.log(error);
+	// 			setError("user Not Found");
+	// 		}
+	// 	};
 
-		findUser(id);
-	}, []);
+	// 	findUser(id);
+	// }, []);
 
 	return (
-		!loading &&
-		!error && (
+		status === "success" && (
 			<Box sx={profileBox}>
-				<ProfileHead user={user} currentUser={currentUser} />
+				<ProfileHead user={data} currentUser={currentUser} />
 
-				<ProfilePosts id={user._id.toString()} />
+				<ProfilePosts id={data._id.toString()} />
 			</Box>
 		)
 	);
