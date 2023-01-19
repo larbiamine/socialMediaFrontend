@@ -38,7 +38,11 @@ const listItems = [
 
 function Suggestions() {
 	const [checked, setChecked] = useState([false, false, false, false]);
-	const { data, status } = useQuery(["suggestions"], getSuggestions);
+	const { data, status } = useQuery({
+		queryKey: ["suggestions"],
+		queryFn: getSuggestions,
+		refetchOnWindowFocus: false,
+	});
 
 	const dispatch = useDispatch();
 

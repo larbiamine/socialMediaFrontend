@@ -39,13 +39,26 @@ interface commentConfig {
 	params: commentData;
 }
 
-export async function getPosts(data: postConfig) {
-	const res = await userRequest.get("post/getposts/", data);
+// export async function getPosts(data: postConfig) {
+// 	const res = await userRequest.get("post/getposts/", data);
+
+// 	return res.data;
+// }
+export async function getPosts(data: postConfig, page: number) {
+	const res = await userRequest.get(`post/getposts?page=${page}`, data);
 
 	return res.data;
 }
-export async function getFeedPosts(data: postConfig) {
-	const res = await userRequest.get("post/getfeedposts/", data);
+// export async function getFeedPosts(data: postConfig) {
+// 	const res = await userRequest.get("post/getfeedposts/", data);
+
+// 	return res.data;
+// }
+export async function getFeedPosts(data: postConfig, pageParam: number) {
+	const res = await userRequest.get(
+		`post/getfeedposts?page=${pageParam}`,
+		data
+	);
 
 	return res.data;
 }
