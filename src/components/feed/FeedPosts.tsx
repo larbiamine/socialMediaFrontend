@@ -3,16 +3,20 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import PostCard from "../post/PostCard";
 import { getFeedPosts } from "../../utilities/fetchApi";
 
-import { isRedirectData } from "../../types";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/userRedux";
-import { useEffect } from "react";
 
-function FeedPosts({ userFollowing }: Array) {
+import { useEffect, useState } from "react";
+import { checkRedirect } from "../../utilities/security";
+
+interface FeedPosts {
+	userFollowing: Array<string>;
+}
+
+function FeedPosts({ userFollowing }: FeedPosts) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
+	const [myError, setMyError] = useState(false);
 	const queryKey = ["feedposts"];
 	const req = {
 		userFollowing: userFollowing,
@@ -22,7 +26,7 @@ function FeedPosts({ userFollowing }: Array) {
 		params: req,
 	};
 
-	const { isLoading, data, fetchNextPage } = useInfiniteQuery(
+	const { isLoading, data, fetchNextPage, isError } = useInfiniteQuery(
 		queryKey,
 		({ pageParam = 0 }) => getFeedPosts(config, pageParam),
 		{
@@ -35,13 +39,13 @@ function FeedPosts({ userFollowing }: Array) {
 				}
 				return currentPage + 1;
 			},
+			onSuccess: (data) => {
+				if (checkRedirect(dispatch, navigate, data?.pages[0])) {
+					setMyError(true);
+				}
+			},
 		}
 	);
-
-	if (isRedirectData(data)) {
-		dispatch(logout());
-		navigate(data.redirectURL);
-	}
 
 	const handleScroll = () => {
 		let fetching = false;
@@ -83,6 +87,8 @@ function FeedPosts({ userFollowing }: Array) {
 	return (
 		<Grid container rowSpacing={3}>
 			{!isLoading &&
+				!isError &&
+				!myError &&
 				data?.pages.map((page) =>
 					page.posts.map((post) => (
 						<Grid key={post._id} item xs={12}>
@@ -93,4 +99,5 @@ function FeedPosts({ userFollowing }: Array) {
 		</Grid>
 	);
 }
+
 export default FeedPosts;

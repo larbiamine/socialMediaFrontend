@@ -1,10 +1,16 @@
 import { Grid } from "@mui/material";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import PostCard from "../post/PostCard";
 import { getPosts } from "../../utilities/fetchApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { checkRedirect } from "../../utilities/security";
 
 function ProfilePosts(id: string) {
+	const [myError, setMyError] = useState(false);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const request = {
 		userId: id,
 		userFollowing: [],
@@ -31,6 +37,11 @@ function ProfilePosts(id: string) {
 					return undefined;
 				}
 				return currentPage + 1;
+			},
+			onSuccess: (data) => {
+				if (checkRedirect(dispatch, navigate, data?.pages[0])) {
+					setMyError(true);
+				}
 			},
 		}
 	);
@@ -61,7 +72,8 @@ function ProfilePosts(id: string) {
 	}, []);
 
 	return (
-		!isLoading && (
+		!isLoading &&
+		!myError && (
 			<Grid sx={{ marginTop: 5 }} container rowSpacing={3}>
 				<Grid container rowSpacing={3}>
 					{data?.pages.map((page) =>

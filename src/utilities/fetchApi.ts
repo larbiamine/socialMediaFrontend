@@ -2,6 +2,7 @@ import { editSuccess, loginFailed, loginStart } from "../redux/userRedux";
 import { Post, Profile } from "../types";
 import { deleteImage, uploadImage } from "./image";
 import { userRequest } from "./requestMethodes";
+import { checkRedirect } from "./security";
 
 interface PPost {
 	body: string;
