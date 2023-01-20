@@ -22,16 +22,6 @@ function FeedPosts({ userFollowing }: Array) {
 		params: req,
 	};
 
-	// const { data, status, isLoading } = useQuery(queryKey, () =>
-	// 	getFeedPosts(config)
-	// );
-
-	// const { data, status, isLoading } = useQuery(
-	// 	queryKey,
-	// 	() => getFeedPosts2(config, page),
-	// 	{ keepPreviousData: true }
-	// );
-
 	const { isLoading, data, fetchNextPage } = useInfiniteQuery(
 		queryKey,
 		({ pageParam = 0 }) => getFeedPosts(config, pageParam),
@@ -48,10 +38,10 @@ function FeedPosts({ userFollowing }: Array) {
 		}
 	);
 
-	// if (isRedirectData(data)) {
-	// 	dispatch(logout());
-	// 	navigate(data.redirectURL);
-	// }
+	if (isRedirectData(data)) {
+		dispatch(logout());
+		navigate(data.redirectURL);
+	}
 
 	const handleScroll = () => {
 		let fetching = false;
