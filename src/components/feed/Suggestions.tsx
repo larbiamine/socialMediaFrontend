@@ -17,27 +17,9 @@ import { getSuggestions } from "../../utilities/fetchApi";
 import { followButton } from "../../utilities/buttonsOnclick";
 import { useDispatch } from "react-redux";
 
-const listItems = [
-	{
-		listIcon: <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />,
-		listText: "User Name1",
-	},
-	{
-		listIcon: <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />,
-		listText: "User Name2",
-	},
-	{
-		listIcon: <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />,
-		listText: "User Name3",
-	},
-	{
-		listIcon: <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />,
-		listText: "User Name4",
-	},
-];
-
 function Suggestions() {
 	const [checked, setChecked] = useState([false, false, false, false]);
+
 	const { data, status } = useQuery({
 		queryKey: ["suggestions"],
 		queryFn: getSuggestions,
