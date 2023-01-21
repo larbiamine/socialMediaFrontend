@@ -57,11 +57,10 @@ function FeedPosts({ userFollowing }: FeedPosts) {
 		if (bottom) {
 			if (!fetching) {
 				fetching = true;
-				console.log("at the bottom and gon fetch next");
+
 				fetchNextPage();
 				fetching = false;
 			}
-			console.log("at the bottom");
 		}
 	};
 	useEffect(() => {
@@ -74,17 +73,6 @@ function FeedPosts({ userFollowing }: FeedPosts) {
 		};
 	}, []);
 
-	// return (
-	// 	status === "success" && (
-	// 		<Grid container rowSpacing={3}>
-	// 			{data?.map((post) => (
-	// 				<Grid key={post._id} item xs={12}>
-	// 					<PostCard {...post} />
-	// 				</Grid>
-	// 			))}
-	// 		</Grid>
-	// 	)
-	// );
 	return (
 		<Grid
 			container
