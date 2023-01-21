@@ -69,10 +69,6 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 					<Button
 						onClick={() => {
 							followButton(dispatch, user._id, "follow").then(() => {
-								// queryClient.setQueryData([mutationKey], (oldData) => [
-								// 	...(oldData ?? []),
-								// 	newComment,
-								// ]);
 								setIsFolowing(true);
 								queryClient.invalidateQueries([`user ${user._id}`]);
 							});
@@ -89,10 +85,6 @@ const ProfileHead: FC<HeadProps> = ({ user, currentUser }): JSX.Element => {
 					<Button
 						onClick={() => {
 							followButton(dispatch, user._id, "unfollow").then(() => {
-								// queryClient.setQueryData([mutationKey], (oldData) => [
-								// 	...(oldData ?? []),
-								// 	newComment,
-								// ]);
 								setIsFolowing(false);
 								queryClient.invalidateQueries([`user ${user._id}`]);
 							});

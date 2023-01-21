@@ -21,13 +21,15 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddComment from "./AddComment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentIcon from "@mui/icons-material/Comment";
-import { Badge, Box, Link } from "@mui/material";
+import { Badge, Box, Link, Grid } from "@mui/material";
 import { publicRequest } from "../../utilities/requestMethodes";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getComments, likePost, unlikePost } from "../../utilities/fetchApi";
 import { timeAgo } from "../../utilities/time";
 import HeaderMenu from "./HeaderMenu";
 import { Post } from "../../types";
+import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
+import { typography } from "@mui/system";
 
 interface User {
 	userId: string;
@@ -105,7 +107,6 @@ export default function PostCard({
 	};
 
 	const [anchor, setAnchor] = React.useState<null | HTMLElement>(null);
-
 	const [expanded, setExpanded] = React.useState(false);
 	const { currentUser } = useSelector((state: IRootState) => state);
 	const [user, setUser] = useState<User>();
@@ -141,17 +142,34 @@ export default function PostCard({
 	}, []);
 
 	// getting post comments
-	const queryKey = `postcomments ${_id}`;
-	const request = {
-		postId: _id,
-	};
-	const config = {
-		params: request,
-	};
-	const { data, status } = useQuery([queryKey], () => getComments(config));
-	// status === "success" && console.log(data);
+	const queryKey = [`postcomments ${_id}`];
+
+	const {
+		isFetchingNextPage,
+		isLoading,
+		data,
+		fetchNextPage,
+		refetch,
+		hasNextPage,
+	} = useInfiniteQuery(
+		queryKey,
+		({ pageParam = 1 }) => getComments(_id, pageParam),
+		{
+			getNextPageParam: (page) => {
+				const currentPage = parseInt(page.page);
+				const numberOfPages = parseInt(page.numberOfPages);
+
+				if (currentPage + 1 > numberOfPages) {
+					return undefined;
+				}
+				return currentPage + 1;
+			},
+			enabled: false,
+		}
+	);
 
 	const handleExpandClick = () => {
+		refetch();
 		setExpanded(!expanded);
 	};
 
@@ -198,7 +216,14 @@ export default function PostCard({
 	};
 
 	return (
-		<Card sx={{ marginLeft: "auto", marginRight: "auto", maxWidth: "70%" }}>
+		<Card
+			sx={{
+				marginLeft: "auto",
+				marginRight: "auto",
+				marginBottom: "20px",
+				maxWidth: "70%",
+			}}
+		>
 			<CardHeader
 				avatar={
 					<Link
@@ -268,13 +293,48 @@ export default function PostCard({
 			</CardActions>
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent>
-					{/* <AddComment {...currentUser} /> */}
-					<AddComment {...comment} />
-					{status === "loading" ? (
-						<p>LOADING</p>
-					) : (
-						data.map((comment) => <Comment key={comment._id} {...comment} />)
-					)}
+					<Grid
+						container
+						spacing={0}
+						direction="column"
+						alignItems="center"
+						justify="center"
+					>
+						<Grid width={"100%"} item>
+							<AddComment {...comment} />
+						</Grid>
+						{isLoading && <CircularProgress />}
+						<Grid width={"100%"} item>
+							{!isLoading &&
+								data?.pages.map((page) =>
+									page.comments.map((comment) => (
+										<Comment key={comment._id} {...comment} />
+									))
+								)}
+						</Grid>
+
+						{!isFetchingNextPage && hasNextPage && (
+							<Typography
+								style={{
+									marginTop: "10px",
+									textDecoration: "underline",
+									color: "black",
+									cursor: "pointer",
+								}}
+								variant="body1"
+								color="initial"
+							>
+								<a onClick={() => fetchNextPage()}>Load More</a>
+							</Typography>
+						)}
+						{isFetchingNextPage && (
+							<CircularProgress
+								style={{
+									marginTop: "10px",
+								}}
+							/>
+						)}
+					</Grid>
 				</CardContent>
 			</Collapse>
 			{currentUser.posts.includes(_id) && (

@@ -30,11 +30,7 @@ const AddComment: FC<Comment> = ({
 	const mutation = useMutation({
 		mutationFn: createComment,
 		mutationKey: mutationKey,
-		onSuccess: (newComment) => {
-			queryClient.setQueryData([mutationKey], (oldData) => [
-				...(oldData ?? []),
-				newComment,
-			]);
+		onSuccess: () => {
 			queryClient.invalidateQueries([mutationKey]);
 			setNbComments((old) => old + 1);
 		},

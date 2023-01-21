@@ -69,8 +69,15 @@ export async function getUserPosts(id: string) {
 	return res.data;
 }
 
-export async function getComments(data: commentConfig) {
-	const res = await userRequest.get("comment/getcomments/", data);
+export async function getComments(postId: string, pageParam: number) {
+	const res = await userRequest.get("comment/getcomments", {
+		params: {
+			page: pageParam,
+			postId: postId,
+		},
+	});
+	// console.log(res.data);
+
 	return res.data;
 }
 
