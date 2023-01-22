@@ -67,17 +67,6 @@ function FeedPosts({ userFollowing }: FeedPosts) {
 		};
 	}, []);
 
-	// return (
-	// 	status === "success" && (
-	// 		<Grid container rowSpacing={3}>
-	// 			{data?.map((post) => (
-	// 				<Grid key={post._id} item xs={12}>
-	// 					<PostCard {...post} />
-	// 				</Grid>
-	// 			))}
-	// 		</Grid>
-	// 	)
-	// );
 	return (
 		<Grid
 			container
