@@ -28,23 +28,8 @@ function Profile() {
 	if (status === "success") {
 		document.title = data.username;
 	}
-	// useEffect(() => {
-	// 	const findUser = async (id: string) => {
-	// 		try {
-	// 			const resUser = await getUser(id);
 
-	// 			// const resUser = await userRequest.get(`user/find/${id}`);
-	// 			setLoading(false);
-	// 			setUser(resUser);
-	// 			document.title = resUser.username;
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 			setError("user Not Found");
-	// 		}
-	// 	};
-
-	// 	findUser(id);
-	// }, []);
+	console.log(data);
 
 	return (
 		status === "success" && (

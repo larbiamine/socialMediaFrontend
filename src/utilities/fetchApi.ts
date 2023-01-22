@@ -55,11 +55,16 @@ export async function getPosts(data: postConfig, page: number) {
 
 // 	return res.data;
 // }
-export async function getFeedPosts(data: postConfig, pageParam: number) {
-	const res = await userRequest.get(
-		`post/getfeedposts?page=${pageParam}`,
-		data
-	);
+export async function getFeedPosts(
+	userFollowing: Array<string>,
+	pageParam: number
+) {
+	const res = await userRequest.get("post/getfeedposts", {
+		params: {
+			page: pageParam,
+			userFollowing: userFollowing,
+		},
+	});
 
 	return res.data;
 }

@@ -18,18 +18,11 @@ function FeedPosts({ userFollowing }: FeedPosts) {
 	const dispatch = useDispatch();
 	const [myError, setMyError] = useState(false);
 	const queryKey = ["feedposts"];
-	const req = {
-		userFollowing: userFollowing,
-	};
-
-	const config = {
-		params: req,
-	};
 
 	const { isFetchingNextPage, isLoading, data, fetchNextPage, isError } =
 		useInfiniteQuery(
 			queryKey,
-			({ pageParam = 1 }) => getFeedPosts(config, pageParam),
+			({ pageParam = 1 }) => getFeedPosts(userFollowing, pageParam),
 			{
 				getNextPageParam: (page) => {
 					const currentPage = parseInt(page.page);
@@ -93,7 +86,7 @@ function FeedPosts({ userFollowing }: FeedPosts) {
 			justify="center"
 			spacing={3}
 		>
-			<Grid item>
+			<Grid width={"100%"} item>
 				{!isLoading &&
 					!isError &&
 					!myError &&
