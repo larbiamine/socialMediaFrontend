@@ -14,8 +14,6 @@ import { getNotifications } from "../../utilities/fetchApi";
 import { NotificationProps } from "../../types";
 
 function Notification(notification: NotificationProps) {
-	console.log(notification);
-
 	const avatar = notification.user.avatar;
 	const username = notification.user.username;
 	const postbody = notification.postbody;
@@ -53,8 +51,8 @@ function Notifications() {
 		["notifications"],
 		getNotifications
 	);
-	status === "success" &&
-		console.log("🆘 || file: Notifications.tsx:51 || data", data);
+	// status === "success" &&
+	// 	console.log("🆘 || file: Notifications.tsx:51 || data", data);
 
 	return (
 		<div>

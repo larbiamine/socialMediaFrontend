@@ -26,6 +26,27 @@ function Profile() {
 
 	const { data, status } = useQuery([`user ${id}`], () => getUser(id));
 
+	const myProfile = () => {
+		if (status === "success") {
+			return data._id === currentUser?._id;
+		}
+	};
+	const isPublic = () => {
+		if (status === "success") {
+			return data.privacy === "public";
+		}
+	};
+	const isPrivate = () => {
+		if (status === "success") {
+			return data.privacy === "private";
+		}
+	};
+	const isFollowing = () => {
+		if (status === "success") {
+			return currentUser.following.includes(data._id);
+		}
+	};
+
 	if (status === "success") {
 		document.title = data.username;
 		console.log(currentUser.following.includes(data._id));
@@ -36,14 +57,11 @@ function Profile() {
 		status === "success" && (
 			<Box sx={profileBox}>
 				<ProfileHead user={data} currentUser={currentUser} />
-				{data._id === currentUser._id ||
-					data.privacy === "public" ||
-					(data.privacy === "private" &&
-					currentUser.following.includes(data._id) ? (
-						<ProfilePosts id={data._id.toString()} />
-					) : (
-						<PrivateProfile />
-					))}
+				{myProfile() || isPublic() || (isPrivate() && isFollowing()) ? (
+					<ProfilePosts id={data._id.toString()} />
+				) : (
+					<PrivateProfile />
+				)}
 			</Box>
 		)
 	);
