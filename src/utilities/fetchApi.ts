@@ -32,14 +32,6 @@ interface postConfig {
 	params: postData;
 }
 
-interface commentData {
-	postId: String;
-}
-
-interface commentConfig {
-	params: commentData;
-}
-
 // export async function getPosts(data: postConfig) {
 // 	const res = await userRequest.get("post/getposts/", data);
 
