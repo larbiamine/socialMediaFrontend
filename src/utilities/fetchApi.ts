@@ -213,3 +213,10 @@ export const getSuggestions = async () => {
 		return [];
 	}
 };
+
+export async function getNotifications() {
+	const res = await userRequest.get("notification");
+	// console.log(res.data);
+
+	return res.data;
+}
