@@ -1,13 +1,14 @@
 import { Box } from "@mui/system";
 import ProfilePosts from "../components/profile/ProfilePosts";
-import { User } from "../types";
+
 import ProfileHead from "../components/profile/ProfileHead";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
-import { useEffect, useState } from "react";
+
 import { getUser } from "../utilities/fetchApi";
 import { useQuery } from "@tanstack/react-query";
+import PrivateProfile from "../components/profile/PrivateProfile";
 
 const profileBox = {
 	marginTop: "70px",
@@ -25,33 +26,40 @@ function Profile() {
 
 	const { data, status } = useQuery([`user ${id}`], () => getUser(id));
 
+	const myProfile = () => {
+		if (status === "success") {
+			return data._id === currentUser?._id;
+		}
+	};
+	const isPublic = () => {
+		if (status === "success") {
+			return data.privacy === "public";
+		}
+	};
+	const isPrivate = () => {
+		if (status === "success") {
+			return data.privacy === "private";
+		}
+	};
+	const isFollowing = () => {
+		if (status === "success") {
+			return currentUser.following.includes(data._id);
+		}
+	};
+
 	if (status === "success") {
 		document.title = data.username;
 	}
-	// useEffect(() => {
-	// 	const findUser = async (id: string) => {
-	// 		try {
-	// 			const resUser = await getUser(id);
-
-	// 			// const resUser = await userRequest.get(`user/find/${id}`);
-	// 			setLoading(false);
-	// 			setUser(resUser);
-	// 			document.title = resUser.username;
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 			setError("user Not Found");
-	// 		}
-	// 	};
-
-	// 	findUser(id);
-	// }, []);
 
 	return (
 		status === "success" && (
 			<Box sx={profileBox}>
 				<ProfileHead user={data} currentUser={currentUser} />
-
-				<ProfilePosts id={data._id.toString()} />
+				{myProfile() || isPublic() || (isPrivate() && isFollowing()) ? (
+					<ProfilePosts id={data._id.toString()} />
+				) : (
+					<PrivateProfile />
+				)}
 			</Box>
 		)
 	);

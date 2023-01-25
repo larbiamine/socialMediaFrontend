@@ -23,6 +23,25 @@ export interface Profile {
 	gender: string;
 }
 
+export interface NotificationProps {
+	_id: string;
+	content: {
+		content: string;
+		type: string;
+		id: string;
+	};
+	userId: string;
+	liker: string;
+	postbody: string;
+	seen: boolean;
+	createdAt: string;
+	user: {
+		_id: string;
+		username: string;
+		avatar: string;
+	};
+}
+
 export interface Post {
 	userId: string;
 	body: string;

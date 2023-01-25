@@ -32,14 +32,6 @@ interface postConfig {
 	params: postData;
 }
 
-interface commentData {
-	postId: String;
-}
-
-interface commentConfig {
-	params: commentData;
-}
-
 // export async function getPosts(data: postConfig) {
 // 	const res = await userRequest.get("post/getposts/", data);
 
@@ -55,11 +47,16 @@ export async function getPosts(data: postConfig, page: number) {
 
 // 	return res.data;
 // }
-export async function getFeedPosts(data: postConfig, pageParam: number) {
-	const res = await userRequest.get(
-		`post/getfeedposts?page=${pageParam}`,
-		data
-	);
+export async function getFeedPosts(
+	userFollowing: Array<string>,
+	pageParam: number
+) {
+	const res = await userRequest.get("post/getfeedposts", {
+		params: {
+			page: pageParam,
+			userFollowing: userFollowing,
+		},
+	});
 
 	return res.data;
 }
@@ -216,3 +213,10 @@ export const getSuggestions = async () => {
 		return [];
 	}
 };
+
+export async function getNotifications() {
+	const res = await userRequest.get("notification");
+	// console.log(res.data);
+
+	return res.data;
+}

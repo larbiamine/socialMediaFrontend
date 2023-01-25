@@ -2,12 +2,12 @@ import Box from "@mui/material/Box";
 import { FC } from "react";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { Grid } from "@mui/material";
+
 import { FollowersListProps } from "../../types";
 import UserWithAvatar from "./UserWithAvatar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { Link } from "react-router-dom";
+
 const style = {
 	position: "absolute" as "absolute",
 	top: "50%",
@@ -15,7 +15,7 @@ const style = {
 	transform: "translate(-50%, -50%)",
 	width: 400,
 	bgcolor: "background.paper",
-	border: "2px solid #000",
+	// border: "2px solid #000",
 	boxShadow: 24,
 	p: 4,
 	borderRadius: "10px",

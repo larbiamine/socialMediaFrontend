@@ -37,7 +37,7 @@ interface Comment {
 	postId: string;
 	_id: string;
 }
-
+ 
 const Comment: FC<Comment> = ({
 	user,
 	body,
