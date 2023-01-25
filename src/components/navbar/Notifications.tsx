@@ -88,6 +88,7 @@ function Notifications() {
 				onClose={handleCloseNotifications}
 			>
 				{status === "success" &&
+					data != "undefined" &&
 					data.map((notification) => (
 						<MenuItem key={notification._id} onClick={handleCloseNotifications}>
 							{/* <Link

@@ -49,8 +49,6 @@ function Profile() {
 
 	if (status === "success") {
 		document.title = data.username;
-		console.log(currentUser.following.includes(data._id));
-		console.log(!data.privacy === "private");
 	}
 
 	return (
