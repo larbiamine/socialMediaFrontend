@@ -18,6 +18,7 @@ function Notification(notification: NotificationProps) {
 	const username = notification.user.username;
 	const postbody = notification.postbody;
 	const type = notification.content.type;
+	const content = notification.content.content;
 	return (
 		<>
 			<Avatar sx={{ mr: 2 }} src={avatar} />
@@ -30,7 +31,7 @@ function Notification(notification: NotificationProps) {
 					textOverflow: "ellipsis",
 				}}
 			>
-				{`${username} liked your ${type} : ${postbody}`}
+				{`${username} ${type} your ${content} : ${postbody}`}
 			</span>
 		</>
 	);
