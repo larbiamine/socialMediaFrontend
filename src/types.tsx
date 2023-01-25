@@ -26,6 +26,7 @@ export interface Profile {
 export interface NotificationProps {
 	_id: string;
 	content: {
+		content: string;
 		type: string;
 		id: string;
 	};
