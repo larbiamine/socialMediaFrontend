@@ -30,7 +30,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "../../utilities/fetchApi";
 import { addPost } from "../../redux/userRedux";
 import AlertToast from "../AlertToast";
-
+//w
 export default function AddPost() {
 	const queryClient = useQueryClient();
 	const { currentUser } = useSelector((state: IRootState) => state);
