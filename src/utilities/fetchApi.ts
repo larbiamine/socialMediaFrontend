@@ -220,3 +220,9 @@ export async function getNotifications() {
 
 	return res.data;
 }
+export async function seeNotifications(id: string) {
+	const res = await userRequest.put(`notification/see/${id}`);
+	// console.log(res.data);
+
+	return res.data;
+}

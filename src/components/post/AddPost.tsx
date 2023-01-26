@@ -40,10 +40,6 @@ export default function AddPost() {
 		mutationFn: createPost,
 		mutationKey: "feedposts",
 		onSuccess: (newPost) => {
-			queryClient.setQueryData(["feedposts"], (oldData) => [
-				...(oldData ?? []),
-				newPost,
-			]);
 			queryClient.invalidateQueries(["feedposts"]);
 			dispatch(addPost(newPost._id));
 		},
