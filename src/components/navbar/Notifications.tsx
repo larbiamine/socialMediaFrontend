@@ -18,7 +18,26 @@ function Notification(notification: NotificationProps) {
 	const username = notification.user.username;
 	const postbody = notification.postbody;
 	const type = notification.content.type;
+
 	const content = notification.content.content;
+	if (type === "Followed You") {
+		return (
+			<>
+				<Avatar sx={{ mr: 2 }} src={avatar} />
+				<span
+					style={{
+						display: "block",
+						width: "250px",
+						overflow: "hidden",
+						whiteSpace: "nowrap",
+						textOverflow: "ellipsis",
+					}}
+				>
+					{`${username} Followed You`}
+				</span>
+			</>
+		);
+	}
 	return (
 		<>
 			<Avatar sx={{ mr: 2 }} src={avatar} />
@@ -38,20 +57,22 @@ function Notification(notification: NotificationProps) {
 }
 
 function Notifications() {
+	const { data, isLoading, status } = useQuery(
+		["notifications"],
+		getNotifications
+	);
 	const [anchorNotifications, setAnchorNotifications] =
 		React.useState<null | HTMLElement>(null);
 
 	const handleOpenNotifications = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorNotifications(event.currentTarget);
+		if (data.length > 0) {
+			setAnchorNotifications(event.currentTarget);
+		}
 	};
 	const handleCloseNotifications = () => {
 		setAnchorNotifications(null);
 	};
 
-	const { data, isLoading, status } = useQuery(
-		["notifications"],
-		getNotifications
-	);
 	// status === "success" &&
 	// 	console.log("🆘 || file: Notifications.tsx:51 || data", data);
 
@@ -73,7 +94,7 @@ function Notifications() {
 
 			<Menu
 				//Notifications DropDown Menu
-				sx={{ mt: "45px" }}
+				sx={{ mt: "45px", width: "600px" }}
 				id="menu-appbar"
 				anchorEl={anchorNotifications}
 				anchorOrigin={{
