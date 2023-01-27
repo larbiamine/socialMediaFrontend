@@ -1,5 +1,7 @@
+import { UseMutationResult } from "@tanstack/react-query";
 import { follow, unfollow } from "../redux/userRedux";
 import { followUser } from "./fetchApi";
+import { NotificationProps } from "../types";
 
 export async function followButton(
 	dispatch: Function,
@@ -29,3 +31,12 @@ export async function followButton(
 		console.log(error);
 	}
 }
+
+export const notificationClick = (
+	mutation: UseMutationResult,
+	notification: NotificationProps,
+	setAnchorNotifications: Function
+) => {
+	mutation.mutate(notification._id);
+	setAnchorNotifications(null);
+};

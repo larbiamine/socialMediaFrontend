@@ -9,15 +9,24 @@ import {
 	Tooltip,
 } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { useQuery } from "@tanstack/react-query";
-import { getNotifications } from "../../utilities/fetchApi";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import {
+	UseMutationResult,
+	notifyManager,
+	useMutation,
+	useQuery,
+	useQueryClient,
+} from "@tanstack/react-query";
+import { getNotifications, seeNotifications } from "../../utilities/fetchApi";
 import { NotificationProps } from "../../types";
+import { notificationClick } from "../../utilities/buttonsOnclick";
 
 function Notification(notification: NotificationProps) {
 	const avatar = notification.user.avatar;
 	const username = notification.user.username;
 	const postbody = notification.postbody;
 	const type = notification.content.type;
+<<<<<<< HEAD
 
 	const content = notification.content.content;
 	if (type === "Followed You") {
@@ -38,9 +47,21 @@ function Notification(notification: NotificationProps) {
 			</>
 		);
 	}
+=======
+	const content = notification.content.content;
+	const seen = notification.seen;
+
+>>>>>>> issue45
 	return (
 		<>
-			<Avatar sx={{ mr: 2 }} src={avatar} />
+			<Avatar sx={{ mr: 0.5 }} src={avatar} />
+			{!seen && (
+				<FiberManualRecordIcon
+					sx={{ mr: 0.5 }}
+					color="mySecondary"
+					fontSize="small"
+				/>
+			)}
 			<span
 				style={{
 					display: "block",
@@ -50,7 +71,11 @@ function Notification(notification: NotificationProps) {
 					textOverflow: "ellipsis",
 				}}
 			>
+<<<<<<< HEAD
 				{`${username} ${type} your ${content} : ${postbody}`}
+=======
+				{`${username} liked your ${content} : ${postbody}`}
+>>>>>>> issue45
 			</span>
 		</>
 	);
@@ -73,8 +98,34 @@ function Notifications() {
 		setAnchorNotifications(null);
 	};
 
+<<<<<<< HEAD
 	// status === "success" &&
 	// 	console.log("🆘 || file: Notifications.tsx:51 || data", data);
+=======
+	const { data, isLoading, status } = useQuery({
+		queryKey: ["notifications"],
+		queryFn: getNotifications,
+	});
+
+	const mutationKey = ["notifications"];
+	const queryClient = useQueryClient();
+	const mutation = useMutation({
+		mutationFn: seeNotifications,
+		mutationKey: mutationKey,
+		onSuccess: (variables) => {
+			queryClient.setQueryData(mutationKey, (oldData) =>
+				oldData.map((n: NotificationProps) => {
+					if (n._id === variables._id) {
+						return { ...n, seen: true };
+					} else {
+						return n;
+					}
+				})
+			);
+			queryClient.invalidateQueries([mutationKey]);
+		},
+	});
+>>>>>>> issue45
 
 	return (
 		<div>
@@ -85,9 +136,20 @@ function Notifications() {
 					color="inherit"
 				>
 					{status === "success" && (
-						<Badge badgeContent={data.length} color="myDanger">
+						<Badge
+							badgeContent={data.reduce((acc: number, n: NotificationProps) => {
+								if (!n.seen) {
+									acc++;
+								}
+								return acc;
+							}, 0)}
+							color="myDanger"
+						>
 							<NotificationsIcon color="mySecondary" fontSize="large" />
 						</Badge>
+						// <Badge badgeContent={data.length} color="myDanger">
+						// 	<NotificationsIcon color="mySecondary" fontSize="large" />
+						// </Badge>
 					)}
 				</IconButton>
 			</Tooltip>
@@ -112,15 +174,17 @@ function Notifications() {
 				{status === "success" &&
 					data != "undefined" &&
 					data.map((notification) => (
-						<MenuItem key={notification._id} onClick={handleCloseNotifications}>
-							{/* <Link
-							sx={{
-								textDecoration: "none",
-								color: "black",
-							}}
-						> */}
+						<MenuItem
+							key={notification._id}
+							onClick={() =>
+								notificationClick(
+									mutation,
+									notification,
+									setAnchorNotifications
+								)
+							}
+						>
 							{status === "success" && <Notification {...notification} />}{" "}
-							{/* </Link> */}
 						</MenuItem>
 					))}
 			</Menu>
