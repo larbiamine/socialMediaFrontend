@@ -26,32 +26,9 @@ function Notification(notification: NotificationProps) {
 	const username = notification.user.username;
 	const postbody = notification.postbody;
 	const type = notification.content.type;
-<<<<<<< HEAD
-
-	const content = notification.content.content;
-	if (type === "Followed You") {
-		return (
-			<>
-				<Avatar sx={{ mr: 2 }} src={avatar} />
-				<span
-					style={{
-						display: "block",
-						width: "250px",
-						overflow: "hidden",
-						whiteSpace: "nowrap",
-						textOverflow: "ellipsis",
-					}}
-				>
-					{`${username} Followed You`}
-				</span>
-			</>
-		);
-	}
-=======
 	const content = notification.content.content;
 	const seen = notification.seen;
 
->>>>>>> issue45
 	return (
 		<>
 			<Avatar sx={{ mr: 0.5 }} src={avatar} />
@@ -71,11 +48,7 @@ function Notification(notification: NotificationProps) {
 					textOverflow: "ellipsis",
 				}}
 			>
-<<<<<<< HEAD
-				{`${username} ${type} your ${content} : ${postbody}`}
-=======
 				{`${username} liked your ${content} : ${postbody}`}
->>>>>>> issue45
 			</span>
 		</>
 	);
@@ -98,14 +71,10 @@ function Notifications() {
 		setAnchorNotifications(null);
 	};
 
-<<<<<<< HEAD
-	// status === "success" &&
-	// 	console.log("🆘 || file: Notifications.tsx:51 || data", data);
-=======
-	const { data, isLoading, status } = useQuery({
-		queryKey: ["notifications"],
-		queryFn: getNotifications,
-	});
+	// const { data, isLoading, status } = useQuery({
+	// 	queryKey: ["notifications"],
+	// 	queryFn: getNotifications,
+	// });
 
 	const mutationKey = ["notifications"];
 	const queryClient = useQueryClient();
@@ -125,7 +94,6 @@ function Notifications() {
 			queryClient.invalidateQueries([mutationKey]);
 		},
 	});
->>>>>>> issue45
 
 	return (
 		<div>
