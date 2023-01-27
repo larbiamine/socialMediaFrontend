@@ -23,6 +23,7 @@ import {
 import { IRootState } from "./redux/store";
 import { useSelector } from "react-redux";
 import EditProfile from "./pages/EditProfile";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
 	const { currentUser } = useSelector((state: IRootState) => state);
@@ -32,6 +33,20 @@ function App() {
 		createRoutesFromElements(
 			<>
 				<Route path="/" element={loggedIn ? <Feed /> : <Login />} />
+				<Route
+					path="/VerifyEmail"
+					element={
+						loggedIn ? (
+							currentUser.active ? (
+								<Navigate to={`/profile/${currentUser._id}`} />
+							) : (
+								<VerifyEmail />
+							)
+						) : (
+							<Login />
+						)
+					}
+				/>
 				<Route
 					path="/login"
 					element={

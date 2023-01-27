@@ -226,3 +226,16 @@ export async function seeNotifications(id: string) {
 
 	return res.data;
 }
+
+export async function sendCode() {
+	const res = await userRequest.get("user/sendemailverification");
+	// console.log(res.data);
+
+	return res.data;
+}
+export async function confirmEmail(code: string) {
+	const res = await userRequest.post("user/confirmEmail", { code: code });
+	// console.log(res.data);
+
+	return res.data;
+}

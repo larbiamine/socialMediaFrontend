@@ -48,7 +48,7 @@ function Notification(notification: NotificationProps) {
 					textOverflow: "ellipsis",
 				}}
 			>
-				{`${username} liked your ${content} : ${postbody}`}
+				{`${username} ${type} your ${content} : ${postbody}`}
 			</span>
 		</>
 	);

@@ -54,6 +54,19 @@ function Settings() {
 				open={Boolean(anchorElUser)}
 				onClose={handleCloseUserMenu}
 			>
+				{!currentUser.active && (
+					<MenuItem key={"profile"} onClick={handleCloseUserMenu}>
+						<Link
+							sx={{
+								textDecoration: "none",
+								color: "black",
+							}}
+							href={`/VerifyEmail`}
+						>
+							Confirm Your Email
+						</Link>
+					</MenuItem>
+				)}
 				<MenuItem key={"profile"} onClick={handleCloseUserMenu}>
 					<Link
 						sx={{

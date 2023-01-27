@@ -16,6 +16,7 @@ const userSlice = createSlice({
 		isRegisterError: false,
 		isLoginError: false,
 		registerError: "",
+		emailSent: false,
 	},
 	reducers: {
 		initState: (state) => {
@@ -26,6 +27,15 @@ const userSlice = createSlice({
 		},
 		loginStart: (state) => {
 			state.isFetching = true;
+		},
+		sendEmail: (state) => {
+			state.emailSent = true;
+		},
+		unSendEmail: (state) => {
+			state.emailSent = false;
+		},
+		confirmActive: (state) => {
+			state.currentUser.active = true;
 		},
 		loginSuccess: (state, action) => {
 			state.isFetching = false;
@@ -106,6 +116,9 @@ export const {
 	loginSuccess,
 	loginStart,
 	initState,
+	sendEmail,
+	confirmActive,
+	unSendEmail,
 	follow,
 	unfollow,
 	editSuccess,
