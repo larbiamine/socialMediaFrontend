@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { myTheme } from "./theme";
 import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
+import Welcome from "./components/login/Welcome";
 import Register from "./pages/Register";
 //react Query
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";

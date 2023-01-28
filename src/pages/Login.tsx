@@ -13,6 +13,7 @@ import { login } from "../authApi";
 
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
+import Welcome from "../components/login/Welcome";
 
 function Login() {
 	const [passwordError, setPasswordError] = useState(false);
@@ -43,96 +44,113 @@ function Login() {
 		}
 	};
 	return (
-		<Container maxWidth="xs">
-			<Box
-				sx={{
+		//
+		<Grid container spacing={-4}>
+			<Grid
+				style={{
 					display: "flex",
-					flexDirection: "column",
 					alignItems: "center",
-					mt: 8,
 				}}
+				item
+				xs={6}
 			>
-				<Typography sx={{ mb: 5 }} component="h1" variant="h4">
-					Sign in
-				</Typography>
-				<Box
-					component={"form"}
-					onSubmit={handleSubmit}
-					noValidate
-					sx={{ mt: 1 }}
-				>
-					<TextField
-						error={usernameError}
-						margin="normal"
-						sx={{ mb: 2 }}
-						label="Username"
-						id="username"
-						name="username"
-						type="text"
-						variant="outlined"
-						helperText={usernameError ? "Username is required" : ""}
-						fullWidth
-					/>
-					<TextField
-						error={passwordError}
-						margin="normal"
-						name="password"
-						label="Password"
-						id="password"
-						type="password"
-						variant="outlined"
-						helperText={passwordError ? "Password is required" : ""}
-						fullWidth
-						required
-					/>
-
-					<FormControlLabel
-						sx={{ mb: 1, mt: 0.5 }}
-						control={
-							<Checkbox
-								checked={checked}
-								name="stayloggedin"
-								id="stayloggedin"
-								onChange={(e) => {
-									setChecked(e.target.checked);
-								}}
-							/>
-						}
-						label="Stay Logged in"
-					/>
-
-					<LoadingButton
-						loading={isFetching}
-						fullWidth
-						sx={{ mt: 0.5, mb: 1 }}
-						// loadingPosition="start"
-						variant="contained"
-						type="submit"
-						color="mySecondary"
+				<Container maxWidth="xs">
+					<Welcome />
+				</Container>
+			</Grid>
+			<Grid item xs={6}>
+				<Container maxWidth="xs">
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+							mt: 16,
+						}}
 					>
-						Login
-					</LoadingButton>
-					{isLoginError && (
-						<FormHelperText style={{ color: "red" }}>
-							Wrong Credendials !
-						</FormHelperText>
-					)}
+						<Typography sx={{ mb: 5 }} component="h1" variant="h4">
+							Sign in
+						</Typography>
+						<Box
+							component={"form"}
+							onSubmit={handleSubmit}
+							noValidate
+							sx={{ mt: 1 }}
+						>
+							<TextField
+								error={usernameError}
+								margin="normal"
+								sx={{ mb: 2 }}
+								label="Username"
+								id="username"
+								name="username"
+								type="text"
+								variant="outlined"
+								helperText={usernameError ? "Username is required" : ""}
+								fullWidth
+							/>
+							<TextField
+								error={passwordError}
+								margin="normal"
+								name="password"
+								label="Password"
+								id="password"
+								type="password"
+								variant="outlined"
+								helperText={passwordError ? "Password is required" : ""}
+								fullWidth
+								required
+							/>
 
-					<Grid sx={{ mt: 1 }} container>
-						<Grid item xs>
-							<Link sx={{ m: 1 }} href="#" variant="body2">
-								Forgot password?
-							</Link>
-						</Grid>
-						<Grid item>
-							<Link sx={{ m: 1 }} href="/register" variant="body2">
-								{"Don't have an account? Sign Up"}
-							</Link>
-						</Grid>
-					</Grid>
-				</Box>
-			</Box>
-		</Container>
+							<FormControlLabel
+								sx={{ mb: 1, mt: 0.5 }}
+								control={
+									<Checkbox
+										checked={checked}
+										name="stayloggedin"
+										id="stayloggedin"
+										onChange={(e) => {
+											setChecked(e.target.checked);
+										}}
+									/>
+								}
+								label="Stay Logged in"
+							/>
+
+							<LoadingButton
+								loading={isFetching}
+								fullWidth
+								sx={{ mt: 0.5, mb: 1 }}
+								// loadingPosition="start"
+								variant="contained"
+								type="submit"
+								color="mySecondary"
+							>
+								Login
+							</LoadingButton>
+							{isLoginError && (
+								<FormHelperText style={{ color: "red" }}>
+									Wrong Credendials !
+								</FormHelperText>
+							)}
+
+							<Grid sx={{ mt: 1 }} container>
+								<Grid item xs>
+									<Link sx={{ m: 1 }} href="#" variant="body2">
+										Forgot password?
+									</Link>
+								</Grid>
+								<Grid item>
+									<Link sx={{ m: 1 }} href="/register" variant="body2">
+										{"Don't have an account? Sign Up"}
+									</Link>
+								</Grid>
+							</Grid>
+						</Box>
+					</Box>
+				</Container>
+			</Grid>
+		</Grid>
 	);
 }
 
