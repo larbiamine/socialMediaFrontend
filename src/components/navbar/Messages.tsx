@@ -9,10 +9,10 @@ import {
 	Tooltip,
 } from "@mui/material";
 import ForumIcon from "@mui/icons-material/Forum";
-type MessageProps = {
+interface MessageProps {
 	message: string;
 	avatar: string;
-};
+}
 function Message({ message, avatar }: MessageProps) {
 	return (
 		<>

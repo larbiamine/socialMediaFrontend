@@ -1,23 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { LoginResponse } from "../authTypes";
+import { initialState } from "../authTypes";
 
-export interface initialState {
-	currentUser: LoginResponse;
-	isFetching: boolean;
-	isError: boolean;
-	error: string;
-}
+const iState: initialState = {
+	currentUser: null,
+	isFetching: false,
+	isRegisterError: false,
+	isLoginError: false,
+	registerError: "",
+	emailSent: false,
+};
 
 const userSlice = createSlice({
 	name: "user",
-	initialState: {
-		currentUser: null,
-		isFetching: false,
-		isRegisterError: false,
-		isLoginError: false,
-		registerError: "",
-		emailSent: false,
-	},
+	initialState: iState,
 	reducers: {
 		initState: (state) => {
 			state.isFetching = false;
@@ -35,7 +30,7 @@ const userSlice = createSlice({
 			state.emailSent = false;
 		},
 		confirmActive: (state) => {
-			state.currentUser.active = true;
+			state.currentUser!.active = true;
 		},
 		loginSuccess: (state, action) => {
 			state.isFetching = false;
@@ -45,12 +40,12 @@ const userSlice = createSlice({
 		editSuccess: (state, action) => {
 			state.isFetching = false;
 			state.isLoginError = false;
-			state.currentUser.bio = action.payload.bio;
-			state.currentUser.gender = action.payload.gender;
-			state.currentUser.firstname = action.payload.firstname;
-			state.currentUser.lastname = action.payload.lastname;
-			state.currentUser.privacy = action.payload.privacy;
-			state.currentUser.avatar = action.payload.avatar;
+			state.currentUser!.bio = action.payload.bio;
+			state.currentUser!.gender = action.payload.gender;
+			state.currentUser!.firstname = action.payload.firstname;
+			state.currentUser!.lastname = action.payload.lastname;
+			state.currentUser!.privacy = action.payload.privacy;
+			state.currentUser!.avatar = action.payload.avatar;
 		},
 		logout: (state) => {
 			state.currentUser = null;
@@ -87,22 +82,11 @@ const userSlice = createSlice({
 			state.currentUser?.following.push(action.payload);
 		},
 		unfollow: (state, action) => {
-			// state.currentUser?.following.splice(
-			// 	state.currentUser?.following.indexOf(action.payload),
-			// 	1
-			// );
 			const index = state.currentUser?.following.indexOf(action.payload);
-			if (index > -1) {
+			if (index! > -1) {
 				// only splice array when item is found
-				state.currentUser?.following.splice(index, 1); // 2nd parameter means remove one item only
+				state.currentUser?.following.splice(index!, 1); // 2nd parameter means remove one item only
 			}
-			// state.currentUser?.following.filter((value, index, arr) => {
-			// 	if (value === action.payload) {
-			// 		arr.splice(index, 1);
-			// 		return false;
-			// 	}
-			// 	return true;
-			// });
 		},
 	},
 });
