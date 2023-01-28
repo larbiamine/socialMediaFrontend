@@ -1,48 +1,11 @@
 import React from "react";
-import {
-	Avatar,
-	IconButton,
-	Menu,
-	MenuItem,
-	Badge,
-	Tooltip,
-} from "@mui/material";
+import { IconButton, Menu, MenuItem, Badge, Tooltip } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getNotifications, seeNotifications } from "../../utilities/fetchApi";
-import { NotificationProps } from "../../types";
 import { notificationClick } from "../../utilities/buttonsOnclick";
-
-function Notification(notification: NotificationProps) {
-	const { type, content } = notification.content;
-	const { seen, postbody } = notification;
-	const { username, avatar } = notification.user;
-
-	return (
-		<>
-			<Avatar sx={{ mr: 0.5 }} src={avatar} />
-			{!seen && (
-				<FiberManualRecordIcon
-					sx={{ mr: 0.5 }}
-					color="mySecondary"
-					fontSize="small"
-				/>
-			)}
-			<span
-				style={{
-					display: "block",
-					width: "250px",
-					overflow: "hidden",
-					whiteSpace: "nowrap",
-					textOverflow: "ellipsis",
-				}}
-			>
-				{`${username} ${type} your ${content} : ${postbody}`}
-			</span>
-		</>
-	);
-}
+import { NotificationProps } from "../../types";
+import { Notification } from "./Notification";
 
 function Notifications() {
 	const { data, isLoading, status } = useQuery(
@@ -60,11 +23,6 @@ function Notifications() {
 	const handleCloseNotifications = () => {
 		setAnchorNotifications(null);
 	};
-
-	// const { data, isLoading, status } = useQuery({
-	// 	queryKey: ["notifications"],
-	// 	queryFn: getNotifications,
-	// });
 
 	const mutationKey = ["notifications"];
 	const queryClient = useQueryClient();
@@ -131,7 +89,7 @@ function Notifications() {
 			>
 				{status === "success" &&
 					data != "undefined" &&
-					data.map((notification) => (
+					data.map((notification: NotificationProps) => (
 						<MenuItem
 							key={notification._id}
 							onClick={() =>
