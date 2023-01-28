@@ -5,7 +5,6 @@ import {
 	Link,
 	Menu,
 	MenuItem,
-	Badge,
 	Tooltip,
 } from "@mui/material";
 import { logout } from "../../redux/userRedux";
@@ -34,7 +33,7 @@ function Settings() {
 			{" "}
 			<Tooltip title="Open settings">
 				<IconButton onClick={handleOpenUserMenu} sx={{ ml: 0, p: 0 }}>
-					<Avatar src={currentUser.avatar} />
+					<Avatar src={currentUser?.avatar} />
 				</IconButton>
 			</Tooltip>{" "}
 			<Menu
@@ -54,7 +53,7 @@ function Settings() {
 				open={Boolean(anchorElUser)}
 				onClose={handleCloseUserMenu}
 			>
-				{!currentUser.active && (
+				{!currentUser?.active && (
 					<MenuItem key={"profile"} onClick={handleCloseUserMenu}>
 						<Link
 							sx={{
@@ -73,7 +72,7 @@ function Settings() {
 							textDecoration: "none",
 							color: "black",
 						}}
-						href={`/profile/${currentUser._id}`}
+						href={`/profile/${currentUser?._id}`}
 					>
 						profile
 					</Link>

@@ -16,8 +16,8 @@ export async function createPost(variables: PPost) {
 }
 
 interface Comment {
-	body: string;
-	postId: string;
+	body: String;
+	postId: String;
 }
 export async function createComment(variables: Comment) {
 	const res = await userRequest.post("comment/create", variables);

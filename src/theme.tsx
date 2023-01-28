@@ -32,7 +32,7 @@ declare module "@mui/material/styles" {
 	}
 }
 
-export const myTheme = createTheme({
+const myThemeOptions = {
 	status: {
 		danger: "#e53e3e",
 	},
@@ -62,12 +62,24 @@ export const myTheme = createTheme({
 			contrastText: "#fff",
 		},
 	},
-});
+};
 
-// export const msyTheme = createTheme({
-// 	error: "#E63946",
-// 	danger: "#FBD1A2",
-// 	primary: "#1D4E89",
-// 	success: "#7DCFB6",
-// 	secondary: "#00B2CA",
-// });
+export const themeOptions = {
+	status: {
+		danger: "#e53e3e",
+	},
+	palette: {
+		type: "dark",
+		primary: {
+			main: "#5893df",
+		},
+		secondary: {
+			main: "#2ec5d3",
+		},
+		background: {
+			default: "#192231",
+			paper: "#24344d",
+		},
+	},
+};
+export const myTheme = createTheme(myThemeOptions);

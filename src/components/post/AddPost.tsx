@@ -30,6 +30,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "../../utilities/fetchApi";
 import { addPost } from "../../redux/userRedux";
 import AlertToast from "../AlertToast";
+import { Post } from "../../types";
 //w
 export default function AddPost() {
 	const queryClient = useQueryClient();
@@ -39,9 +40,9 @@ export default function AddPost() {
 	const mutation = useMutation({
 		mutationFn: createPost,
 		mutationKey: "feedposts",
-		onSuccess: (newPost) => {
+		onSuccess: ({ _id }: Post) => {
 			queryClient.invalidateQueries(["feedposts"]);
-			dispatch(addPost(newPost._id));
+			dispatch(addPost(_id));
 		},
 	});
 

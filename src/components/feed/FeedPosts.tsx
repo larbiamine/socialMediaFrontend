@@ -9,11 +9,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { checkRedirect } from "../../utilities/security";
 
-interface FeedPosts {
-	userFollowing: Array<string>;
-}
-
-function FeedPosts(userFollowing: Array<string>) {
+function FeedPosts(userFollowing: Array<String>) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [myError, setMyError] = useState(false);

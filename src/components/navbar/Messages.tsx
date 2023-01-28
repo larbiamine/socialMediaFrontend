@@ -93,9 +93,9 @@ function Notifications() {
 				open={Boolean(anchorMessages)}
 				onClose={handleCloseMessages}
 			>
-				{messages.map((message) => (
-					<MenuItem key={message.message} onClick={handleCloseMessages}>
-						<Message message={message.message} avatar={message.avatar} />
+				{messages.map(({ message, avatar }) => (
+					<MenuItem key={message} onClick={handleCloseMessages}>
+						<Message message={message} avatar={avatar} />
 					</MenuItem>
 				))}
 				<MenuItem key="close" onClick={handleCloseMessages}>

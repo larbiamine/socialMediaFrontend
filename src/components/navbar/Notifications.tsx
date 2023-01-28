@@ -2,7 +2,6 @@ import React from "react";
 import {
 	Avatar,
 	IconButton,
-	Link,
 	Menu,
 	MenuItem,
 	Badge,
@@ -10,24 +9,15 @@ import {
 } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import {
-	UseMutationResult,
-	notifyManager,
-	useMutation,
-	useQuery,
-	useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getNotifications, seeNotifications } from "../../utilities/fetchApi";
 import { NotificationProps } from "../../types";
 import { notificationClick } from "../../utilities/buttonsOnclick";
 
 function Notification(notification: NotificationProps) {
-	const avatar = notification.user.avatar;
-	const username = notification.user.username;
-	const postbody = notification.postbody;
-	const type = notification.content.type;
-	const content = notification.content.content;
-	const seen = notification.seen;
+	const { type, content } = notification.content;
+	const { seen, postbody } = notification;
+	const { username, avatar } = notification.user;
 
 	return (
 		<>

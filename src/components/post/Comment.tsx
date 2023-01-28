@@ -8,11 +8,10 @@ import {
 	Typography,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { FC, useState } from "react";
+import { useState } from "react";
 
 import styled from "@emotion/styled";
 
-import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { timeAgo } from "../../utilities/time";
 import { likeComment, unlikeComment } from "../../utilities/fetchApi";
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
@@ -37,15 +36,8 @@ interface Comment {
 	postId: string;
 	_id: string;
 }
- 
-const Comment: FC<Comment> = ({
-	user,
-	body,
-	createdAt,
-	likes,
-	postId,
-	_id,
-}): ReactJSXElement => {
+
+function Comment({ user, body, createdAt, likes, _id }: Comment) {
 	const agoDate = timeAgo.format(new Date(createdAt));
 
 	const [nbLikes, setNbLikes] = useState(likes.length);
@@ -132,6 +124,6 @@ const Comment: FC<Comment> = ({
 			</Paper>
 		</div>
 	);
-};
+}
 
 export default Comment;

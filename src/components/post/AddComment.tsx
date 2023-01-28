@@ -6,23 +6,10 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createComment } from "../../utilities/fetchApi";
+import { Comment } from "../../types";
 
-interface User {
-	username: string;
-	avatar: string;
-}
-interface Comment {
-	user: User;
-	postId: string;
-	setNbComments: Function;
-}
-
-const AddComment: FC<Comment> = ({
-	user,
-	postId,
-	setNbComments,
-}): ReactJSXElement => {
-	const [commentBody, setCommentBody] = useState("");
+function AddComment({ user, postId, setNbComments }: Comment) {
+	const [commentBody, setCommentBody] = useState<String>("");
 	const [isPosting, setIsPosting] = useState(false);
 	const queryClient = useQueryClient();
 	const mutationKey = `postcomments ${postId}`;
@@ -94,6 +81,6 @@ const AddComment: FC<Comment> = ({
 			</Paper>
 		</div>
 	);
-};
+}
 
 export default AddComment;

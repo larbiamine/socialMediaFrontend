@@ -3,14 +3,7 @@ import { User } from "../../types";
 import { userRequest } from "../../utilities/requestMethodes";
 import { styled, alpha } from "@mui/material/styles";
 import { Box } from "@mui/system";
-import {
-	Avatar,
-	IconButton,
-	Link,
-	Menu,
-	MenuItem,
-	Tooltip,
-} from "@mui/material";
+import { Avatar, IconButton, Link, Menu } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -34,7 +27,7 @@ const Searchh = styled("div")(({ theme }) => ({
 	},
 }));
 
-const SearchResults = ({ results }: Array<User>) => {
+const SearchResults = (results: Array<User>) => {
 	return (
 		<Box style={{ minWidth: 200 }} component="div">
 			<List>
@@ -147,7 +140,7 @@ function Search() {
 				open={Boolean(anchorSearch)}
 				onClose={handleCloseSearch}
 			>
-				{fetchedSearch && <SearchResults results={results} />}
+				{fetchedSearch && <SearchResults {...results} />}
 			</Menu>
 		</div>
 	);

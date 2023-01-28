@@ -18,7 +18,7 @@ function Feed() {
 				</Grid>
 				<Grid sx={{ marginTop: "80px" }} item xs={3}>
 					<AddPost />
-					<FeedPosts {...currentUser?.userFollowing} />
+					<FeedPosts {...currentUser?.following} />
 				</Grid>
 				<Grid item xs={1}>
 					<Suggestions />

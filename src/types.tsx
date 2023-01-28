@@ -47,12 +47,13 @@ export interface NotificationProps {
 }
 
 export interface Post {
-	userId: string;
-	body: string;
-	createdAt: string;
-	photos: Array<string>;
-	comments: Array<string>;
-	likes: Array<string>;
+	_id: String;
+	userId: String;
+	body: String;
+	createdAt: String;
+	photos: Array<String>;
+	comments: Array<String>;
+	likes: Array<String>;
 }
 
 export interface HeadProps {
@@ -82,4 +83,12 @@ export function isRedirectData(object: unknown): object is RedirectData {
 	if (object !== null && typeof object === "object") {
 		return "redirectURL" in object;
 	}
+}
+
+export type partialUser = Pick<User, "username" | "avatar">;
+
+export interface Comment {
+	user: partialUser;
+	postId: String;
+	setNbComments: Function;
 }
