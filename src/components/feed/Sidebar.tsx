@@ -16,13 +16,13 @@ import Avatar from "@mui/material/Avatar/Avatar";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../types";
 
-function Sidebar({ currentUser }: User) {
+function Sidebar({ avatar, _id, username }: User) {
 	const navigate = useNavigate();
 	const listItems = [
 		{
-			listIcon: <Avatar src={currentUser.avatar} />,
-			listText: currentUser.username,
-			link: `/profile/${currentUser._id}`,
+			listIcon: <Avatar src={avatar} />,
+			listText: username,
+			link: `/profile/${_id}`,
 		},
 		{
 			listIcon: <HomeIcon color="mySecondary" />,

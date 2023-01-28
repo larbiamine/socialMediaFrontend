@@ -14,11 +14,11 @@ function Feed() {
 		<>
 			<Grid container columns={5}>
 				<Grid item xs={1}>
-					<Sidebar currentUser={currentUser} />
+					<Sidebar {...currentUser} />
 				</Grid>
 				<Grid sx={{ marginTop: "80px" }} item xs={3}>
 					<AddPost />
-					<FeedPosts userFollowing={currentUser.following} />
+					<FeedPosts {...currentUser?.userFollowing} />
 				</Grid>
 				<Grid item xs={1}>
 					<Suggestions />

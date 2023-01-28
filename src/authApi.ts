@@ -1,6 +1,6 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-import { loginUser, LoginResponse, registerUser } from "./authTypes";
+import { loginUser, registerUser } from "./authTypes";
 import axios from "axios";
 import {
 	initState,
@@ -12,6 +12,7 @@ import {
 	registerSuccess,
 } from "./redux/userRedux";
 import { uploadImage } from "./utilities/image";
+import { User } from "./types";
 
 export const authApi = axios.create({
 	baseURL: BASE_URL,
@@ -20,7 +21,7 @@ export const authApi = axios.create({
 authApi.defaults.headers.common["Content-Type"] = "application/json";
 
 export const loginUserFn = async (user: loginUser) => {
-	const response = await authApi.post<LoginResponse>("auth/login", user);
+	const response = await authApi.post<User>("auth/login", user);
 	return response.data;
 };
 // export const loginUserFn = async (user: loginUser) => {

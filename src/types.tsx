@@ -4,15 +4,19 @@ export interface User {
 	username: string;
 	bio: string;
 	lastname: string;
+	gender: string;
 	firstname: string;
 	posts: Array<string>;
 	followers: Array<string>;
+	emailverification: string;
 	following: Array<string>;
+	notifications: Array<string>;
 	active: boolean;
 	accessToken: string;
 	createdAt: string;
 	email: string;
 	updatedAt: string;
+	privacy: string;
 }
 
 export interface Profile {

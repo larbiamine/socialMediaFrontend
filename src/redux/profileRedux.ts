@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { LoginResponse } from "../authTypes";
+import { User } from "../types";
 
 export interface initialState {
-	User: LoginResponse;
+	User: User;
 }
 
 const profileSlice = createSlice({

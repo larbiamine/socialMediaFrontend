@@ -13,7 +13,7 @@ interface FeedPosts {
 	userFollowing: Array<string>;
 }
 
-function FeedPosts({ userFollowing }: FeedPosts) {
+function FeedPosts(userFollowing: Array<string>) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [myError, setMyError] = useState(false);
