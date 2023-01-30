@@ -33,7 +33,16 @@ function Settings() {
 			{" "}
 			<Tooltip title="Open settings">
 				<IconButton onClick={handleOpenUserMenu} sx={{ ml: 0, p: 0 }}>
-					<Avatar src={currentUser?.avatar} />
+					<Avatar
+						style={{
+							// marginTop: "10px",
+							// marginBottom: "10px",
+							margin: "10px",
+							width: "35px",
+							height: "35px",
+						}}
+						src={currentUser?.avatar}
+					/>
 				</IconButton>
 			</Tooltip>{" "}
 			<Menu

@@ -8,7 +8,7 @@ import {
 	Badge,
 	Tooltip,
 } from "@mui/material";
-import ForumIcon from "@mui/icons-material/Forum";
+import MailIcon from "@mui/icons-material/Mail";
 interface MessageProps {
 	message: string;
 	avatar: string;
@@ -32,7 +32,7 @@ function Message({ message, avatar }: MessageProps) {
 	);
 }
 
-function Notifications() {
+function Messages({ color }) {
 	const messages = [
 		{
 			message: "message 1 💥💢 Tempore ullam magni labor ",
@@ -69,9 +69,14 @@ function Notifications() {
 	return (
 		<div>
 			<Tooltip sx={{}} title="Open Messages">
-				<IconButton color="inherit" onClick={handleOpenMessages} sx={{ mt: 0 }}>
+				<IconButton
+					style={{ margin: "10px" }}
+					color="inherit"
+					onClick={handleOpenMessages}
+					sx={{ mt: 0 }}
+				>
 					<Badge badgeContent={messages.length} color="myDanger">
-						<ForumIcon color="mySecondary" fontSize="large" />
+						<MailIcon color={color} />
 					</Badge>
 				</IconButton>
 			</Tooltip>
@@ -113,4 +118,4 @@ function Notifications() {
 	);
 }
 
-export default Notifications;
+export default Messages;

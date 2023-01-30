@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { SearchUser } from "../../types";
 import { userRequest } from "../../utilities/requestMethodes";
 import { styled, alpha } from "@mui/material/styles";
-import { Avatar, IconButton, Link, Menu } from "@mui/material";
+import { IconButton, Menu } from "@mui/material";
 
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
@@ -10,28 +10,39 @@ import { SearchResults } from "./SearchResults";
 
 const Searchh = styled("div")(({ theme }) => ({
 	position: "relative",
-	borderRadius: "15px",
+	borderRadius: theme.shape.borderRadius,
 	backgroundColor: alpha(theme.palette.common.white, 0.15),
 	"&:hover": {
 		backgroundColor: alpha(theme.palette.common.white, 0.25),
 	},
+	marginRight: theme.spacing(2),
 	marginLeft: 0,
-	marginRight: "-140px",
 	width: "100%",
 	[theme.breakpoints.up("sm")]: {
-		marginLeft: theme.spacing(1),
+		marginLeft: theme.spacing(3),
 		width: "auto",
 	},
 }));
-
-const StyledInputBase = styled(InputBase)(() => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+	padding: theme.spacing(0, 2),
+	height: "100%",
+	position: "absolute",
+	pointerEvents: "none",
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "center",
+}));
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	color: "inherit",
 	"& .MuiInputBase-input": {
-		paddingTop: 15,
-
-		paddingLeft: 50,
+		padding: theme.spacing(1, 1, 1, 0),
+		// vertical padding + font size from searchIcon
+		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+		transition: theme.transitions.create("width"),
 		width: "100%",
-		height: "100%",
+		[theme.breakpoints.up("md")]: {
+			width: "20ch",
+		},
 	},
 }));
 
@@ -56,7 +67,6 @@ function Search() {
 	const handleCloseSearch = () => {
 		setAnchorSearch(null);
 	};
-	console.log("🆘 || file: Search.tsx:93 || results STATE", results);
 	const handleSubmit = async () => {
 		try {
 			const result = await userRequest.get(`user/search/${search}`);
@@ -74,9 +84,6 @@ function Search() {
 		<div>
 			{" "}
 			<Searchh>
-				{/* <SearchIconWrapper>
-        <SearchIcon />
-    </SearchIconWrapper> */}
 				<StyledInputBase
 					onClick={handleOpenSearchTemp}
 					placeholder="Search…"
@@ -85,7 +92,7 @@ function Search() {
 					ref={searchRef}
 					endAdornment={
 						<IconButton onClick={handleSubmit}>
-							<SearchIcon />
+							<SearchIcon color="myPrimary" />
 						</IconButton>
 					}
 					onChange={(event) => {

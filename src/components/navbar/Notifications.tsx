@@ -7,12 +7,8 @@ import { notificationClick } from "../../utilities/buttonsOnclick";
 import { NotificationProps } from "../../types";
 import { Notification } from "./Notification";
 
-function Notifications() {
-	const { data, isLoading, status } = useQuery(
-		["notifications"],
-		getNotifications
-	);
-	const [unseenNotifications, setUnseenNotifications] = useState(0);
+function Notifications({ color }) {
+	const { data, status } = useQuery(["notifications"], getNotifications);
 	const [anchorNotifications, setAnchorNotifications] =
 		React.useState<null | HTMLElement>(null);
 
@@ -41,14 +37,6 @@ function Notifications() {
 				})
 			);
 			queryClient.invalidateQueries([mutationKey]);
-			setUnseenNotifications(
-				data.reduce((acc: number, n: NotificationProps) => {
-					if (!n.seen) {
-						acc++;
-					}
-					return acc;
-				}, 0)
-			);
 		},
 	});
 
@@ -69,14 +57,12 @@ function Notifications() {
 					onClick={handleOpenNotifications}
 					sx={{ ml: 1, mr: 1 }}
 					color="inherit"
+					style={{ margin: "10px" }}
 				>
 					{status === "success" && (
 						<Badge badgeContent={notificationsCount} color="myDanger">
 							<NotificationsIcon color="mySecondary" fontSize="large" />
 						</Badge>
-						// <Badge badgeContent={data.length} color="myDanger">
-						// 	<NotificationsIcon color="mySecondary" fontSize="large" />
-						// </Badge>
 					)}
 				</IconButton>
 			</Tooltip>

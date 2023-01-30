@@ -11,9 +11,6 @@ interface SearchResultsProps {
 }
 
 export function SearchResults({ results }: SearchResultsProps) {
-	console.log("🆘 || file: Search.tsx:32 ||typeof results", typeof results);
-	console.log("🆘 || file: Search.tsx:32 ||  results IN COMP", results);
-
 	return (
 		<Box style={{ minWidth: 200 }} component="div">
 			<List>

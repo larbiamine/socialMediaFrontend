@@ -24,6 +24,7 @@ import { IRootState } from "./redux/store";
 import { useSelector } from "react-redux";
 import EditProfile from "./pages/EditProfile";
 import VerifyEmail from "./pages/VerifyEmail";
+import PrimarySearchAppBar from "./components/PrimarySearchAppBar";
 
 function App() {
 	const { currentUser } = useSelector((state: IRootState) => state);
@@ -82,7 +83,8 @@ function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ThemeProvider theme={myTheme}>
-				{loggedIn && <Navbar />}
+				{/* {loggedIn && <Navbar />} */}
+				{loggedIn && <PrimarySearchAppBar />}
 				<RouterProvider router={router} />
 				<ReactQueryDevtools initialIsOpen={false} />
 			</ThemeProvider>

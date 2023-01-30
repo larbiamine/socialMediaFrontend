@@ -3,28 +3,31 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import PublicIcon from "@mui/icons-material/Public";
-import { IconButton } from "@mui/material";
+// import { IconButton } from "@mui/material";
 
 import { Box } from "@mui/system";
-import Diversity1Icon from "@mui/icons-material/Diversity1";
-import HomeIcon from "@mui/icons-material/Home";
-import GroupIcon from "@mui/icons-material/Group";
+// import Diversity1Icon from "@mui/icons-material/Diversity1";
+// import HomeIcon from "@mui/icons-material/Home";
+// import GroupIcon from "@mui/icons-material/Group";
 
 import Notifications from "./navbar/Notifications";
 import Messages from "./navbar/Messages";
 import Settings from "./navbar/Settings";
 import Search from "./navbar/Search";
 
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+const logoStyle = {
+	m: 1,
+	display: { xs: "none", md: "flex" },
+	fontFamily: "monospace",
+	fontWeight: 700,
+	letterSpacing: "0.1rem",
+	color: "inherit",
+	textDecoration: "none",
+};
 function Navbar() {
-	const logoStyle = {
-		m: 1,
-		display: { xs: "none", md: "flex" },
-		fontFamily: "monospace",
-		fontWeight: 700,
-		letterSpacing: "0.1rem",
-		color: "inherit",
-		textDecoration: "none",
-	};
+	const min600 = useMediaQuery("(max-width:600px)");
 	return (
 		<AppBar sx={{ width: "100%" }} position="fixed" color="myPrimary">
 			<Container maxWidth="xl">
@@ -36,24 +39,27 @@ function Navbar() {
 								justifyContent: "space-between",
 							}}
 						>
-							<Box sx={{ display: "flex", justifyContent: "flex-start" }}>
-								<PublicIcon
-									fontSize="large"
-									sx={{ display: { xs: "none", md: "flex" }, mt: 1, ml: 0 }}
-									color="mySecondary"
-								/>
-								<Typography
-									variant="h6"
-									noWrap
-									component="a"
-									href="/"
-									sx={logoStyle}
-								>
-									LOGO☢
-								</Typography>
-								<Search />
-							</Box>
-							<Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+							{!min600 && (
+								<Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+									<PublicIcon
+										fontSize="large"
+										sx={{ display: { xs: "none", md: "flex" }, mt: 1, ml: 0 }}
+										color="mySecondary"
+									/>
+									<Typography
+										variant="h6"
+										noWrap
+										component="a"
+										href="/"
+										sx={logoStyle}
+									>
+										LOGO☢
+									</Typography>
+									<Search />
+								</Box>
+							)}
+
+							{/* <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
 								<IconButton color="inherit">
 									<HomeIcon color="mySecondary" fontSize="large" />
 								</IconButton>
@@ -63,9 +69,9 @@ function Navbar() {
 								<IconButton color="inherit">
 									<GroupIcon color="mySecondary" fontSize="large" />
 								</IconButton>
-							</Box>
+							</Box> */}
 							<Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-								<Messages />
+								{/* <Messages /> */}
 								<Notifications />
 								<Settings />
 							</Box>

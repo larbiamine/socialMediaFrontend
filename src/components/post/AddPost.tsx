@@ -192,12 +192,13 @@ export default function AddPost() {
 
 	return (
 		<Card
-			sx={{
+			style={{
 				marginBottom: "30px",
 				marginLeft: "auto",
 				marginRight: "auto",
 				maxWidth: "70%",
 			}}
+			className="addPost"
 		>
 			<CardHeader
 				avatar={<MyAvatar />}

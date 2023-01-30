@@ -68,7 +68,7 @@ function Sidebar({ avatar, _id, username }: User) {
 	};
 
 	return (
-		<div style={{ marginTop: "60px", position: "fixed" }}>
+		<div className="sidebar" style={{ marginTop: "60px", position: "fixed" }}>
 			<Box style={styles.menuSliderContainer} component="div">
 				<Divider />
 				<List>
