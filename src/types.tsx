@@ -86,6 +86,7 @@ export function isRedirectData(object: unknown): object is RedirectData {
 }
 
 export type partialUser = Pick<User, "username" | "avatar">;
+export type SearchUser = Pick<User, "username" | "avatar" | "_id">;
 
 export interface Comment {
 	user: partialUser;

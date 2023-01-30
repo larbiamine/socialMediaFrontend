@@ -1,15 +1,12 @@
 import React, { useState, useRef } from "react";
-import { User } from "../../types";
+import { SearchUser } from "../../types";
 import { userRequest } from "../../utilities/requestMethodes";
 import { styled, alpha } from "@mui/material/styles";
-import { Box } from "@mui/system";
 import { Avatar, IconButton, Link, Menu } from "@mui/material";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { SearchResults } from "./SearchResults";
 
 const Searchh = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -27,32 +24,6 @@ const Searchh = styled("div")(({ theme }) => ({
 	},
 }));
 
-const SearchResults = (results: Array<User>) => {
-	return (
-		<Box style={{ minWidth: 200 }} component="div">
-			<List>
-				{results &&
-					results.map((item) => (
-						<ListItem key={item._id}>
-							<Link
-								style={{
-									textDecoration: "none",
-									color: "black",
-								}}
-								href={`/profile/${item._id}`}
-							>
-								<ListItemIcon>
-									<Avatar style={{ marginRight: "13px" }} src={item.avatar} />
-									<ListItemText primary={item.username} />
-								</ListItemIcon>
-							</Link>
-						</ListItem>
-					))}
-			</List>
-		</Box>
-	);
-};
-
 const StyledInputBase = styled(InputBase)(() => ({
 	color: "inherit",
 	"& .MuiInputBase-input": {
@@ -66,7 +37,7 @@ const StyledInputBase = styled(InputBase)(() => ({
 
 function Search() {
 	const [search, setSearch] = useState("");
-	const [results, setResults] = useState<Array<User>>([]);
+	const [results, setResults] = useState<Array<SearchUser>>([]);
 	const [fetchedSearch, setFetchedSearch] = useState(false);
 	const searchRef = useRef(null);
 	const [anchorSearch, setAnchorSearch] = React.useState<null | HTMLElement>(
@@ -85,10 +56,12 @@ function Search() {
 	const handleCloseSearch = () => {
 		setAnchorSearch(null);
 	};
+	console.log("🆘 || file: Search.tsx:93 || results STATE", results);
 	const handleSubmit = async () => {
 		try {
 			const result = await userRequest.get(`user/search/${search}`);
 			setResults(result.data);
+
 			setFetchedSearch(true);
 
 			handleOpenSearch();
@@ -140,7 +113,7 @@ function Search() {
 				open={Boolean(anchorSearch)}
 				onClose={handleCloseSearch}
 			>
-				{fetchedSearch && <SearchResults {...results} />}
+				{fetchedSearch && <SearchResults results={results} />}
 			</Menu>
 		</div>
 	);

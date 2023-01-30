@@ -48,7 +48,7 @@ export async function getPosts(data: postConfig, page: number) {
 // 	return res.data;
 // }
 export async function getFeedPosts(
-	userFollowing: Array<string>,
+	userFollowing: Array<String>,
 	pageParam: number
 ) {
 	const res = await userRequest.get("post/getfeedposts", {
