@@ -88,9 +88,6 @@ function Login() {
 								variant="outlined"
 								helperText={usernameError ? "Username is required" : ""}
 								fullWidth
-								onBlur={() => {
-									console.log(`💢 Here ✔`);
-								}}
 							/>
 							<TextField
 								error={passwordError}
