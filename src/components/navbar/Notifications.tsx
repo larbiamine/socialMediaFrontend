@@ -52,15 +52,15 @@ function Notifications() {
 		},
 	});
 
-	const notificationsCount = data.reduce(
-		(acc: number, n: NotificationProps) => {
-			if (!n.seen) {
-				acc++;
-			}
-			return acc;
-		},
-		0
-	);
+	const notificationsCount =
+		status === "success"
+			? data.reduce((acc: number, n: NotificationProps) => {
+					if (!n.seen) {
+						acc++;
+					}
+					return acc;
+			  }, 0)
+			: 0;
 
 	return (
 		<div>
