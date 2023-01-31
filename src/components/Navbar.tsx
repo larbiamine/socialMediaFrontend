@@ -119,6 +119,7 @@ export default function Navbar() {
 						</IconButton> */}
 
 						<Messages color={"myPrimary"} />
+
 						<Notifications color={"myPrimary"} />
 
 						<Settings />

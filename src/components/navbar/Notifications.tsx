@@ -6,6 +6,7 @@ import { getNotifications, seeNotifications } from "../../utilities/fetchApi";
 import { notificationClick } from "../../utilities/buttonsOnclick";
 import { NotificationProps } from "../../types";
 import { Notification } from "./Notification";
+import { Link } from "react-router-dom";
 
 function Notifications({ color }) {
 	const { data, status } = useQuery(["notifications"], getNotifications);
@@ -85,7 +86,6 @@ function Notifications({ color }) {
 				onClose={handleCloseNotifications}
 			>
 				{status === "success" &&
-					data != "undefined" &&
 					data.map((notification: NotificationProps) => (
 						<MenuItem
 							key={notification._id}
@@ -97,7 +97,16 @@ function Notifications({ color }) {
 								)
 							}
 						>
-							{status === "success" && <Notification {...notification} />}{" "}
+							{status === "success" &&
+							notification.content.type === "Followed You" ? (
+								<a href={`/profile/${notification.liker}`}>
+									<Notification {...notification} />
+								</a>
+							) : (
+								<a href={`/post/${notification.content.id}`}>
+									<Notification {...notification} />
+								</a>
+							)}
 						</MenuItem>
 					))}
 			</Menu>

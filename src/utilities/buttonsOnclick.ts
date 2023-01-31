@@ -39,4 +39,8 @@ export const notificationClick = (
 ) => {
 	mutation.mutate(notification._id);
 	setAnchorNotifications(null);
+	console.log(notification);
+	// if (notification.content.type === "Followed You") {
+	// 	navigate(`profile/${notification.liker}`);
+	// }
 };

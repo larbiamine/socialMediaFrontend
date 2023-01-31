@@ -24,8 +24,6 @@ import { IRootState } from "./redux/store";
 import { useSelector } from "react-redux";
 import EditProfile from "./pages/EditProfile";
 import VerifyEmail from "./pages/VerifyEmail";
-import PrimarySearchAppBar from "./components/Navbar";
-import Post from "./pages/Post";
 
 function App() {
 	const { currentUser } = useSelector((state: IRootState) => state);
