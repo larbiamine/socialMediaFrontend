@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IconButton, Menu, MenuItem, Badge, Tooltip } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -12,6 +12,7 @@ function Notifications() {
 		["notifications"],
 		getNotifications
 	);
+	const [unseenNotifications, setUnseenNotifications] = useState(0);
 	const [anchorNotifications, setAnchorNotifications] =
 		React.useState<null | HTMLElement>(null);
 
@@ -29,7 +30,7 @@ function Notifications() {
 	const mutation = useMutation({
 		mutationFn: seeNotifications,
 		mutationKey: mutationKey,
-		onSuccess: (variables) => {
+		onSuccess: (data, variables) => {
 			queryClient.setQueryData(mutationKey, (oldData) =>
 				oldData.map((n: NotificationProps) => {
 					if (n._id === variables._id) {
@@ -40,8 +41,26 @@ function Notifications() {
 				})
 			);
 			queryClient.invalidateQueries([mutationKey]);
+			setUnseenNotifications(
+				data.reduce((acc: number, n: NotificationProps) => {
+					if (!n.seen) {
+						acc++;
+					}
+					return acc;
+				}, 0)
+			);
 		},
 	});
+
+	const notificationsCount = data.reduce(
+		(acc: number, n: NotificationProps) => {
+			if (!n.seen) {
+				acc++;
+			}
+			return acc;
+		},
+		0
+	);
 
 	return (
 		<div>
@@ -52,16 +71,7 @@ function Notifications() {
 					color="inherit"
 				>
 					{status === "success" && (
-						<Badge
-							badgeContent={data.length}
-							// badgeContent={data.reduce((acc: number, n: NotificationProps) => {
-							// 	if (!n.seen) {
-							// 		acc++;
-							// 	}
-							// 	return acc;
-							// }, 0)}
-							color="myDanger"
-						>
+						<Badge badgeContent={notificationsCount} color="myDanger">
 							<NotificationsIcon color="mySecondary" fontSize="large" />
 						</Badge>
 						// <Badge badgeContent={data.length} color="myDanger">
