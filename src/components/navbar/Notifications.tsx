@@ -61,7 +61,7 @@ function Notifications({ color }) {
 				>
 					{status === "success" && (
 						<Badge badgeContent={notificationsCount} color="myDanger">
-							<NotificationsIcon color="mySecondary" fontSize="large" />
+							<NotificationsIcon color={color} fontSize="medium" />
 						</Badge>
 					)}
 				</IconButton>

@@ -10,23 +10,23 @@ import "../styles/feed.css";
 function Feed() {
 	const { currentUser } = useSelector((state: IRootState) => state);
 
-	const min600 = useMediaQuery("(max-width:600px)");
+	const min700 = useMediaQuery("(max-width:700px)");
 
 	document.title = "Home";
 	return (
 		<div className="feed">
 			<Grid container columns={10}>
-				{!min600 && (
-					<Grid item xs={min600 ? 0 : 2}>
+				{!min700 && (
+					<Grid item xs={min700 ? 0 : 2}>
 						<Sidebar {...currentUser} />
 					</Grid>
 				)}
-				<Grid sx={{ marginTop: "80px" }} item xs={min600 ? 10 : 6}>
+				<Grid sx={{ marginTop: "80px" }} item xs={min700 ? 10 : 6}>
 					<AddPost />
 					<FeedPosts {...currentUser?.following} />
 				</Grid>
-				{!min600 && (
-					<Grid item xs={min600 ? 0 : 2}>
+				{!min700 && (
+					<Grid item xs={min700 ? 0 : 2}>
 						<Suggestions />
 					</Grid>
 				)}
