@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { IconButton, Menu, MenuItem, Badge, Tooltip } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -6,7 +6,6 @@ import { getNotifications, seeNotifications } from "../../utilities/fetchApi";
 import { notificationClick } from "../../utilities/buttonsOnclick";
 import { NotificationProps } from "../../types";
 import { Notification } from "./Notification";
-import { Link } from "react-router-dom";
 
 function Notifications({ color }) {
 	const { data, status } = useQuery(["notifications"], getNotifications);

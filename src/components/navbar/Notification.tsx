@@ -1,4 +1,3 @@
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { NotificationProps } from "../../types";
 import { Avatar, Badge } from "@mui/material";
 
