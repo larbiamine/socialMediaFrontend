@@ -53,12 +53,13 @@ function Notifications() {
 				>
 					{status === "success" && (
 						<Badge
-							badgeContent={data.reduce((acc: number, n: NotificationProps) => {
-								if (!n.seen) {
-									acc++;
-								}
-								return acc;
-							}, 0)}
+							badgeContent={data.length}
+							// badgeContent={data.reduce((acc: number, n: NotificationProps) => {
+							// 	if (!n.seen) {
+							// 		acc++;
+							// 	}
+							// 	return acc;
+							// }, 0)}
 							color="myDanger"
 						>
 							<NotificationsIcon color="mySecondary" fontSize="large" />
