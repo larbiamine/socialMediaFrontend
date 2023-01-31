@@ -26,23 +26,23 @@ function EditProfile() {
 	const { currentUser } = useSelector((state: IRootState) => state);
 	const { isFetching } = useSelector((state: IRootState) => state);
 	const { isLoginError } = useSelector((state: IRootState) => state);
-	const [imgSrc, setImgSrc] = useState(currentUser.avatar);
+	const [imgSrc, setImgSrc] = useState(currentUser!.avatar);
 	const dispatch = useDispatch();
 	const [imgFile, setImgFile] = useState<File>();
 	const [gender, setGender] = useState(
-		currentUser.gender ? currentUser.gender : ""
+		currentUser!.gender ? currentUser!.gender : ""
 	);
-	const [bio, setBio] = useState(currentUser.bio ? currentUser.bio : "");
+	const [bio, setBio] = useState(currentUser!.bio ? currentUser!.bio : "");
 	const [firstname, setFirstname] = useState(
-		currentUser.firstname ? currentUser.firstname : ""
+		currentUser!.firstname ? currentUser!.firstname : ""
 	);
 	const [lastname, setLastname] = useState(
-		currentUser.lastname ? currentUser.lastname : ""
+		currentUser!.lastname ? currentUser!.lastname : ""
 	);
 
 	const [openToastAlert, setOpenToastAlert] = useState(false);
 
-	const [privacy, setPrivacy] = useState(currentUser.privacy);
+	const [privacy, setPrivacy] = useState(currentUser!.privacy);
 
 	const handleGenderChange = (event: SelectChangeEvent) => {
 		setGender(event.target.value as string);
@@ -63,9 +63,10 @@ function EditProfile() {
 					gender,
 					privacy,
 				},
-				currentUser.avatar
+				currentUser!.avatar
 			);
 			setOpenToastAlert(true);
+			setImgSrc(currentUser!.avatar);
 		} catch (error) {
 			console.log(error);
 		}
