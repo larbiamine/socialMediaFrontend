@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import EditProfile from "./pages/EditProfile";
 import VerifyEmail from "./pages/VerifyEmail";
 import PrimarySearchAppBar from "./components/Navbar";
+import Post from "./pages/Post";
 
 function App() {
 	const { currentUser } = useSelector((state: IRootState) => state);
@@ -72,6 +73,10 @@ function App() {
 				<Route
 					path="/profile/:id"
 					element={loggedIn ? <Profile /> : <Navigate to="/login" />}
+				/>
+				<Route
+					path="/post/:id"
+					element={loggedIn ? <Feed /> : <Navigate to="/login" />}
 				/>
 				<Route
 					path="/editprofile"

@@ -6,12 +6,19 @@ import AddPost from "../components/post/AddPost";
 import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useLocation } from "react-router-dom";
 import "../styles/feed.css";
+import Post from "../components/Post";
 function Feed() {
+	const location = useLocation();
+	const url = location.pathname.split("/");
+
+	const postPage = url[1] === "post" && url[2].length === 24;
+
+	console.log(postPage);
+
 	const { currentUser } = useSelector((state: IRootState) => state);
-
 	const min700 = useMediaQuery("(max-width:700px)");
-
 	document.title = "Home";
 	return (
 		<div className="feed">
@@ -21,10 +28,18 @@ function Feed() {
 						<Sidebar {...currentUser} />
 					</Grid>
 				)}
+
 				<Grid sx={{ marginTop: "80px" }} item xs={min700 ? 10 : 6}>
-					<AddPost />
-					<FeedPosts {...currentUser?.following} />
+					{postPage ? (
+						<Post id={url[2]} />
+					) : (
+						<>
+							<AddPost />
+							<FeedPosts {...currentUser?.following} />)
+						</>
+					)}
 				</Grid>
+
 				{!min700 && (
 					<Grid item xs={min700 ? 0 : 2}>
 						<Suggestions />

@@ -239,3 +239,9 @@ export async function confirmEmail(code: string) {
 
 	return res.data;
 }
+
+export async function getPost(id: String) {
+	const res = await userRequest.get(`post/find/${id}`);
+
+	return res.data;
+}

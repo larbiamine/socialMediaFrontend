@@ -29,7 +29,6 @@ import { timeAgo } from "../../utilities/time";
 import HeaderMenu from "./HeaderMenu";
 import { Post } from "../../types";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
-import { typography } from "@mui/system";
 
 interface User {
 	userId: string;
