@@ -21,6 +21,7 @@ function Notifications({ color }) {
 	const handleCloseNotifications = () => {
 		setAnchorNotifications(null);
 	};
+	const notificationStyle = { color: "black", textDecoration: "none" };
 
 	const mutationKey = ["notifications"];
 	const queryClient = useQueryClient();
@@ -86,29 +87,45 @@ function Notifications({ color }) {
 				onClose={handleCloseNotifications}
 			>
 				{status === "success" &&
-					data.map((notification: NotificationProps) => (
-						<MenuItem
-							key={notification._id}
-							onClick={() =>
-								notificationClick(
-									mutation,
-									notification,
-									setAnchorNotifications
-								)
-							}
-						>
-							{status === "success" &&
-							notification.content.type === "Followed You" ? (
-								<a href={`/profile/${notification.liker}`}>
+					data.map((notification: NotificationProps) =>
+						notification.content.type === "Followed You" ? (
+							<a
+								style={notificationStyle}
+								href={`/profile/${notification.liker}`}
+							>
+								<MenuItem
+									key={notification._id}
+									onClick={() =>
+										notificationClick(
+											mutation,
+											notification,
+											setAnchorNotifications
+										)
+									}
+								>
 									<Notification {...notification} />
-								</a>
-							) : (
-								<a href={`/post/${notification.content.id}`}>
+								</MenuItem>
+							</a>
+						) : (
+							<a
+								style={notificationStyle}
+								href={`/post/${notification.content.id}`}
+							>
+								<MenuItem
+									key={notification._id}
+									onClick={() =>
+										notificationClick(
+											mutation,
+											notification,
+											setAnchorNotifications
+										)
+									}
+								>
 									<Notification {...notification} />
-								</a>
-							)}
-						</MenuItem>
-					))}
+								</MenuItem>
+							</a>
+						)
+					)}
 			</Menu>
 		</div>
 	);
