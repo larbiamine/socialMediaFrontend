@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 
 import { useEffect, useState } from "react";
 import { checkRedirect } from "../../utilities/security";
+import Loading from "./Loading";
 
 function FeedPosts(userFollowing: Array<String>) {
 	const navigate = useNavigate();

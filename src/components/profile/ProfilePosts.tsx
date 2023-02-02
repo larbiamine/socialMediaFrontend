@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, CircularProgress } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import PostCard from "../post/PostCard";
 import { getPosts } from "../../utilities/fetchApi";
@@ -25,26 +25,27 @@ function ProfilePosts(id: string) {
 	// 	getPosts(config)
 	// );
 
-	const { isLoading, data, fetchNextPage } = useInfiniteQuery(
-		queryKey,
-		({ pageParam = 0 }) => getPosts(config, pageParam),
-		{
-			getNextPageParam: (page) => {
-				const currentPage = parseInt(page.page);
-				const numberOfPages = parseInt(page.numberOfPages);
+	const { isLoading, data, isFetchingNextPage, fetchNextPage } =
+		useInfiniteQuery(
+			queryKey,
+			({ pageParam = 0 }) => getPosts(config, pageParam),
+			{
+				getNextPageParam: (page) => {
+					const currentPage = parseInt(page.page);
+					const numberOfPages = parseInt(page.numberOfPages);
 
-				if (currentPage + 1 >= numberOfPages) {
-					return undefined;
-				}
-				return currentPage + 1;
-			},
-			onSuccess: (data) => {
-				if (checkRedirect(dispatch, navigate, data?.pages[0])) {
-					setMyError(true);
-				}
-			},
-		}
-	);
+					if (currentPage + 1 >= numberOfPages) {
+						return undefined;
+					}
+					return currentPage + 1;
+				},
+				onSuccess: (data) => {
+					if (checkRedirect(dispatch, navigate, data?.pages[0])) {
+						setMyError(true);
+					}
+				},
+			}
+		);
 	const handleScroll = () => {
 		let fetching = false;
 		const bottom =
@@ -72,20 +73,35 @@ function ProfilePosts(id: string) {
 	}, []);
 
 	return (
-		!isLoading &&
-		!myError && (
-			<Grid sx={{ marginTop: 5 }} container rowSpacing={3}>
-				<Grid container rowSpacing={3}>
-					{data?.pages.map((page) =>
+		<Grid
+			container
+			direction="column"
+			alignItems="center"
+			justify="center"
+			spacing={3}
+			style={{ marginTop: 15 }}
+		>
+			<Grid item>
+				{!isLoading &&
+					!myError &&
+					data?.pages.map((page) =>
 						page.posts.map((post) => (
 							<Grid key={post._id} item xs={12}>
 								<PostCard {...post} />
 							</Grid>
 						))
 					)}
-				</Grid>
 			</Grid>
-		)
+			<Grid item xs={3}>
+				{(isLoading || isFetchingNextPage) && (
+					<CircularProgress
+						style={{
+							marginTop: "10px",
+						}}
+					/>
+				)}
+			</Grid>
+		</Grid>
 	);
 }
 

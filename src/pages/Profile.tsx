@@ -9,14 +9,7 @@ import { IRootState } from "../redux/store";
 import { getUser } from "../utilities/fetchApi";
 import { useQuery } from "@tanstack/react-query";
 import PrivateProfile from "../components/profile/PrivateProfile";
-
-const profileBox = {
-	marginTop: "70px",
-	paddingTop: "50px",
-	paddingLeft: "170px",
-	paddingRight: "170px",
-	backgroundColor: "myPrimary",
-};
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function Profile() {
 	const location = useLocation();
@@ -25,6 +18,16 @@ function Profile() {
 	// console.log(currentUser);
 
 	const { data, status } = useQuery([`user ${id}`], () => getUser(id));
+	const min700 = useMediaQuery("(max-width:700px)");
+	const min950 = useMediaQuery("(max-width:950px)");
+
+	const profileBox = {
+		marginTop: "70px",
+		paddingTop: "50px",
+		paddingLeft: min700 ? "0px" : "170px",
+		paddingRight: min700 ? "0px" : "170px",
+		backgroundColor: "myPrimary",
+	};
 
 	const myProfile = () => {
 		if (status === "success") {
@@ -54,7 +57,7 @@ function Profile() {
 	return (
 		status === "success" && (
 			<Box sx={profileBox}>
-				<ProfileHead user={data} currentUser={currentUser} />
+				<ProfileHead min700={min950} user={data} currentUser={currentUser} />
 				{myProfile() || isPublic() || (isPrivate() && isFollowing()) ? (
 					<ProfilePosts id={data._id.toString()} />
 				) : (

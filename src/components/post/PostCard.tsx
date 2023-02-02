@@ -17,7 +17,7 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 import AddComment from "./AddComment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -213,14 +213,14 @@ export default function PostCard({
 				});
 		}
 	};
-
+	const min950 = useMediaQuery("(max-width:950px)");
 	return (
 		<Card
 			sx={{
-				marginLeft: "auto",
-				marginRight: "auto",
+				marginLeft: min950 ? 0 : "auto",
+				marginRight: min950 ? 0 : "auto",
 				marginBottom: "20px",
-				maxWidth: "70%",
+				maxWidth: min950 ? "100%" : "70%",
 			}}
 		>
 			<CardHeader
