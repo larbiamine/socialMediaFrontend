@@ -15,8 +15,6 @@ function Feed() {
 
 	const postPage = url[1] === "post" && url[2].length === 24;
 
-	console.log(postPage);
-
 	const { currentUser } = useSelector((state: IRootState) => state);
 	const min700 = useMediaQuery("(max-width:700px)");
 	document.title = "Home";

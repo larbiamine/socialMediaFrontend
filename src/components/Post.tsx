@@ -14,7 +14,6 @@ function Post({ id }: post) {
 
 	const { data, isLoading, status } = useQuery(queryKey, () => getPost(id));
 
-	status === "success" && console.log("🆘 || file: Post.tsx:18 || data", data);
 	return status === "success" && <PostCard {...data} />;
 }
 

@@ -8,7 +8,9 @@ import { NotificationProps } from "../../types";
 import { Notification } from "./Notification";
 
 function Notifications({ color }) {
+	const mutationKey = ["notifications"];
 	const { data, status } = useQuery(["notifications"], getNotifications);
+
 	const [anchorNotifications, setAnchorNotifications] =
 		React.useState<null | HTMLElement>(null);
 
@@ -22,12 +24,11 @@ function Notifications({ color }) {
 	};
 	const notificationStyle = { color: "black", textDecoration: "none" };
 
-	const mutationKey = ["notifications"];
 	const queryClient = useQueryClient();
 	const mutation = useMutation({
 		mutationFn: seeNotifications,
 		mutationKey: mutationKey,
-		onSuccess: (data, variables) => {
+		onSuccess: (variables) => {
 			queryClient.setQueryData(mutationKey, (oldData) =>
 				oldData.map((n: NotificationProps) => {
 					if (n._id === variables._id) {
@@ -91,9 +92,9 @@ function Notifications({ color }) {
 							<a
 								style={notificationStyle}
 								href={`/profile/${notification.liker}`}
+								key={notification._id}
 							>
 								<MenuItem
-									key={notification._id}
 									onClick={() =>
 										notificationClick(
 											mutation,
@@ -109,9 +110,9 @@ function Notifications({ color }) {
 							<a
 								style={notificationStyle}
 								href={`/post/${notification.content.id}`}
+								key={notification._id}
 							>
 								<MenuItem
-									key={notification._id}
 									onClick={() =>
 										notificationClick(
 											mutation,
