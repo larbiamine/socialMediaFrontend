@@ -16,13 +16,25 @@ import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import { editProfile } from "../utilities/fetchApi";
 import AlertToast from "../components/AlertToast";
-const avatar = {
-	marginTop: 4,
-	width: 200,
-	height: 200,
-};
+
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+// const avatar = {
+// 	marginTop: 4,
+// 	width: 200,
+// 	height: 200,
+// };
 
 function EditProfile() {
+	const min900 = useMediaQuery("(max-width:900px)");
+
+	const avatar = {
+		marginTop: 4,
+		width: min900 ? 120 : 200,
+		height: min900 ? 120 : 200,
+		marginBottom: min900 ? 20 : 0,
+	};
+
 	const { currentUser } = useSelector((state: IRootState) => state);
 	const { isFetching } = useSelector((state: IRootState) => state);
 	const { isLoginError } = useSelector((state: IRootState) => state);
@@ -84,26 +96,46 @@ function EditProfile() {
 				noValidate
 				sx={{ mt: 1 }}
 			>
-				<Grid container spacing={2}>
-					<Grid sx={{ marginTop: 5 }} item xs={4}>
-						<div>
-							<label htmlFor="file-input">
-								<Avatar style={avatar} src={imgSrc} />
-							</label>
-							<input
-								type="file"
-								id="file-input"
-								style={{ display: "none" }}
-								accept="image/*"
-								// ref={imgFileRef}
-								onChange={(e) => {
-									setImgFile(e.target.files[0]);
-									setImgSrc(URL.createObjectURL(e.target.files[0]));
-								}}
-							/>
-						</div>
-					</Grid>
-					<Grid sx={{ marginTop: 5 }} item xs={8}>
+				<Grid container={!min900} spacing={2}>
+					{!min900 && (
+						<Grid sx={{ marginTop: 5 }} item xs={4}>
+							<div>
+								<label htmlFor="file-input">
+									<Avatar style={avatar} src={imgSrc} />
+								</label>
+								<input
+									type="file"
+									id="file-input"
+									style={{ display: "none" }}
+									accept="image/*"
+									// ref={imgFileRef}
+									onChange={(e) => {
+										setImgFile(e.target.files[0]);
+										setImgSrc(URL.createObjectURL(e.target.files[0]));
+									}}
+								/>
+							</div>
+						</Grid>
+					)}
+					<Grid sx={{ marginTop: 5 }} item xs={min900 ? 0 : 8}>
+						{min900 && (
+							<Grid container justifyContent="center">
+								<label htmlFor="file-input">
+									<Avatar style={avatar} src={imgSrc} />
+								</label>
+								<input
+									type="file"
+									id="file-input"
+									style={{ display: "none" }}
+									accept="image/*"
+									// ref={imgFileRef}
+									onChange={(e) => {
+										setImgFile(e.target.files[0]);
+										setImgSrc(URL.createObjectURL(e.target.files[0]));
+									}}
+								/>
+							</Grid>
+						)}
 						<Grid style={{ display: "flex", gap: "1rem" }}>
 							<TextField
 								// error={isLoginError}

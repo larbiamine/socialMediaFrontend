@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { login } from "../authApi";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -43,19 +44,21 @@ function Login() {
 			console.log("not good");
 		}
 	};
+	const min900 = useMediaQuery("(max-width:900px)");
 	return (
 		//
-		<Grid container spacing={-4}>
+		<Grid container direction={min900 ? "column" : "row"} spacing={-4}>
 			<Grid
 				style={{
 					display: "flex",
 					alignItems: "center",
+					marginTop: min900 ? 40 : 0,
 				}}
 				item
 				xs={6}
 			>
 				<Container maxWidth="xs">
-					<Welcome />
+					<Welcome min900={min900} />
 				</Container>
 			</Grid>
 			<Grid item xs={6}>
@@ -65,12 +68,14 @@ function Login() {
 							display: "flex",
 							flexDirection: "column",
 							alignItems: "center",
-							mt: 16,
+							mt: min900 ? 8 : 16,
 						}}
 					>
-						<Typography sx={{ mb: 5 }} component="h1" variant="h4">
-							Sign in
-						</Typography>
+						{!min900 && (
+							<Typography sx={{ mb: 5 }} component="h1" variant="h4">
+								Sign in
+							</Typography>
+						)}
 						<Box
 							component={"form"}
 							onSubmit={handleSubmit}

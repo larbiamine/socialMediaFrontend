@@ -84,7 +84,7 @@ function Register() {
 					noValidate
 					sx={{ mt: 1 }}
 				>
-					<div style={{ paddingLeft: "140px", paddingRight: "140px" }}>
+					<Grid container justifyContent="center">
 						<label htmlFor="file-input">
 							<Avatar
 								style={{
@@ -106,7 +106,7 @@ function Register() {
 								setImgSrc(URL.createObjectURL(e.target.files[0]));
 							}}
 						/>
-					</div>
+					</Grid>
 					<TextField
 						error={usernameError}
 						margin="normal"
